@@ -4,6 +4,9 @@
             <thead>
                 <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
                     <th class="px-4 py-3">
+                        <div class="flex item-center">#</div>
+                    </th>
+                    <th class="px-4 py-3">
                         <div class="flex item-center">First name</div>
                     </th>
                     <th class="px-4 py-3">
@@ -28,6 +31,7 @@
             <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
                 @foreach($students as $student)
                 <tr class="text-gray-700 dark:text-gray-400" wire:key="{{$student->id}}">
+                    <td class="px-4 py-3">{{ $student->id }}</td>
                     <td class="px-4 py-3">{{ $student->first_name }}</td>
                     <td class="px-4 py-3 text-sm">{{ $student->last_name }}</td>
                     <td class="px-4 py-3 text-sm">{{ $student->gender? 'Male':'Female' }}</td>
@@ -55,7 +59,7 @@
             </tbody>
         </table>
     </div>
-    <div class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800">
-        {{ $students->links() }}
+    <div class="w-full overflow-x-auto px-4 py-3">
+    {{ $students->links() }}
     </div>
 </div>

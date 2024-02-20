@@ -10,8 +10,6 @@ class Students extends Component
 {
     use WithPagination;
 
-    public $female;
-
     public function render()
     {
         $students = Student::where('user_id', auth()->user()->id)->paginate(10);

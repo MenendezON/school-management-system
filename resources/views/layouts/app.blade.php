@@ -73,7 +73,7 @@
                                     <x-slot name="trigger">
                                         <span class="inline-flex rounded-md">
                                             <button type="button" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none focus:bg-gray-50 active:bg-gray-50 transition ease-in-out duration-150">
-                                                
+
 
                                                 <svg class="h-6 w-6 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" alt="Hello">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
@@ -84,7 +84,7 @@
                                     </x-slot>
 
                                     <x-slot name="content">
-                                        <div class="w-60">
+                                        <div class="w-64">
                                             <!-- Team Management -->
                                             <div class="block px-4 py-2 text-xs text-gray-400">
                                                 {{ __('Manage Team') }}
@@ -142,31 +142,33 @@
                                     </x-slot>
 
                                     <x-slot name="content">
-                                        <!-- Account Management -->
-                                        <div class="block px-4 py-2 text-xs text-gray-400">
-                                            {{ __('Manage Account') }}
-                                        </div>
+                                        <div class="w-64">
+                                            <!-- Account Management -->
+                                            <div class="block px-4 py-2 text-xs text-gray-400">
+                                                {{ __('Manage Account') }}
+                                            </div>
 
-                                        <x-dropdown-link href="{{ route('profile.show') }}">
-                                            {{ __('Profile') }}
-                                        </x-dropdown-link>
-
-                                        @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
-                                        <x-dropdown-link href="{{ route('api-tokens.index') }}">
-                                            {{ __('API Tokens') }}
-                                        </x-dropdown-link>
-                                        @endif
-
-                                        <div class="border-t border-gray-200"></div>
-
-                                        <!-- Authentication -->
-                                        <form method="POST" action="{{ route('logout') }}" x-data>
-                                            @csrf
-
-                                            <x-dropdown-link href="{{ route('logout') }}" @click.prevent="$root.submit();">
-                                                {{ __('Log Out') }}
+                                            <x-dropdown-link href="{{ route('profile.show') }}">
+                                                {{ __('Profile') }}
                                             </x-dropdown-link>
-                                        </form>
+
+                                            @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
+                                            <x-dropdown-link href="{{ route('api-tokens.index') }}">
+                                                {{ __('API Tokens') }}
+                                            </x-dropdown-link>
+                                            @endif
+
+                                            <div class="border-t border-gray-200"></div>
+
+                                            <!-- Authentication -->
+                                            <form method="POST" action="{{ route('logout') }}" x-data>
+                                                @csrf
+
+                                                <x-dropdown-link href="{{ route('logout') }}" @click.prevent="$root.submit();">
+                                                    {{ __('Log Out') }}
+                                                </x-dropdown-link>
+                                            </form>
+                                        </div>
                                     </x-slot>
                                 </x-dropdown>
                             </div>
