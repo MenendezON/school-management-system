@@ -2,12 +2,14 @@
 
 namespace App\Livewire;
 
+use App\Models\Student;
 use Livewire\Component;
 
 class Dashboard extends Component
 {
     public function render()
     {
-        return view('livewire.dashboard');
+        $students = Student::all();
+        return view('livewire.dashboard', ['students' => $students])->layout('layouts.app');
     }
 }

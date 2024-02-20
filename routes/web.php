@@ -1,5 +1,7 @@
 <?php
 
+use App\Livewire\Dashboard;
+use App\Livewire\Students;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,13 +20,14 @@ Route::get('/', function () {
 });
 
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified', ])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
-});
+    // Route::get('/dashboard', function () {
+    //     return view('dashboard');
+    // })->name('dashboard');
+    
+    // Route::get('/students', function () {
+    //     return view('students');
+    // })->name('students');
 
-Route::middleware(['auth:sanctum', config('jetstream.auth_session'),'verified',])->group(function () {
-    Route::get('/students', function () {
-        return view('students');
-    })->name('students');
+    Route::get('dashboard', Dashboard::class)->name('dashboard.index');
+    Route::get('students', Students::class)->name('student.index');
 });

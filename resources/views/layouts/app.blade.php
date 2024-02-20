@@ -21,6 +21,7 @@
 
     <!-- Styles -->
     @livewireStyles
+
 </head>
 
 <body>
@@ -183,6 +184,7 @@
             </main>
         </div>
     </div>
+    @livewireScripts
 </body>
 
 </html>

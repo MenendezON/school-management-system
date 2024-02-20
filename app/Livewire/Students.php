@@ -12,7 +12,7 @@ class Students extends Component
 
     public function render()
     {
-        $students = Student::where('user_id', auth()->user()->id)->paginate(10);
-        return view('livewire.students', ['students'=> $students]);
+        $students = Student::where('user_id', auth()->user()->id)->paginate(12);
+        return view('livewire.students', ['students'=> $students])->layout('layouts.app');
     }
 }
