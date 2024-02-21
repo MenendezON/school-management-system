@@ -2,8 +2,6 @@
 
 namespace App\Livewire\Student;
 
-use App\Models\Student;
-use App\Models\User;
 use Livewire\Attributes\Rule;
 use Livewire\Component;
 
