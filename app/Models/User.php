@@ -12,6 +12,7 @@ use Laravel\Jetstream\HasTeams;
 use Laravel\Sanctum\HasApiTokens;
 
 use App\Models\Student;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class User extends Authenticatable
 {
@@ -61,7 +62,7 @@ class User extends Authenticatable
         'profile_photo_url',
     ];
 
-    public function students(){
+    public function students(): HasMany{
         return $this->hasMany(Student::class);
     }
 }

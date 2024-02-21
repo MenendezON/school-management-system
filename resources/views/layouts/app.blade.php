@@ -7,19 +7,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>Hell world{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="{{ URL::asset('assets/css/tailwind.output.css') }}" />
     <!--script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
     <script src="{{ URL::asset('assets/js/init-alpine.js') }}"></script-->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css" />
+    <!--link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css" /-->
     <!--script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js" defer></script>
     <script src="{{ URL::asset('assets/js/charts-lines.js') }}" defer></script>
     <script src="{{ URL::asset('assets/js/charts-pie.js') }}" defer></script-->
 
     <!-- Styles -->
+
     @livewireStyles
 
 </head>
@@ -40,16 +41,7 @@
                         </svg>
                     </button>
                     <!-- Search input -->
-                    <div class="flex justify-center flex-1 lg:mr-32">
-                        <div class="relative w-full max-w-xl mr-6 focus-within:text-purple-500">
-                            <div class="absolute inset-y-0 flex items-center pl-2">
-                                <svg class="w-4 h-4" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path>
-                                </svg>
-                            </div>
-                            <input class="w-full pl-8 pr-2 text-sm text-gray-700 placeholder-gray-600 bg-gray-100 border-0 rounded-md dark:placeholder-gray-500 dark:focus:shadow-outline-gray dark:focus:placeholder-gray-600 dark:bg-gray-700 dark:text-gray-200 focus:placeholder-gray-500 focus:bg-white focus:border-purple-300 focus:outline-none focus:shadow-outline-purple form-input" type="text" placeholder="Search for projects" aria-label="Search" />
-                        </div>
-                    </div>
+                    @livewire('student.search')
                     <ul class="flex items-center flex-shrink-0 space-x-6">
                         <!-- Theme toggler -->
                         <li class="flex">
@@ -185,6 +177,14 @@
         </div>
     </div>
     @livewireScripts
+    <script>
+    document.addEventListener('livewire:load', function () {
+        Livewire.on('studentAdded', () => {
+            // Reload the page or update the student list in another way
+            window.location.reload();
+        });
+    });
+</script>
 </body>
 
 </html>

@@ -1,7 +1,8 @@
 <?php
 
 use App\Livewire\Dashboard;
-use App\Livewire\Students;
+use App\Livewire\Student\StudentCreate;
+use App\Livewire\Student\StudentIndex;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,6 +29,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
     //     return view('students');
     // })->name('students');
 
-    Route::get('dashboard', Dashboard::class)->name('dashboard.index');
-    Route::get('students', Students::class)->name('student.index');
+    Route::get('dashboard', Dashboard::class)->name('dashboard');
+    Route::get('students', StudentIndex::class)->name('student-index');
+    Route::get('students/create', StudentCreate::class)->name('student-create');
 });

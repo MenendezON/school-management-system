@@ -1,14 +1,21 @@
+
 <div class="container-fluid px-6 mx-auto grid">
+
     <div class="flex">
         <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
             Dashboard hello
         </h2>
     </div>
     <div class="px-6 my-6">
-            <button class="flex items-center justify-between w-20 px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
-                Create new student
+            <!-- <button wire:click="navigateToAnotherPage" wire:navigate class="flex items-center justify-between w-20 px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+            Add Student
                 <span class="ml-2" aria-hidden="true">+</span>
-            </button>
+            </button> -->
+
+            <a wire:navigate href="{{ route('student-create')}}" class="flex items-center justify-between w-2 px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+            Add Student
+                <span class="ml-2" aria-hidden="true">+</span>
+            </a>
         </div>
     <div class="w-full overflow-hidden rounded-lg shadow-xs">
         <div class="w-full overflow-x-auto">

@@ -15,10 +15,10 @@
                 </div>
                 <div>
                     <p class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
-                        Total clients
+                        Total students
                     </p>
                     <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
-                        {{ $students->where('gender', 1)->count() }}
+                        {{ $students->count() }}
                     </p>
                 </div>
             </div>
@@ -31,10 +31,11 @@
                 </div>
                 <div>
                     <p class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
-                        Account balance
+                       Number of women
                     </p>
                     <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
-                        $ 46,760.89
+                        
+                    {{ $students->where('gender', 0)->count() }}
                     </p>
                 </div>
             </div>
