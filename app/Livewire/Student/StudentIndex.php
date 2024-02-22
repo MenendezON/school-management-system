@@ -50,13 +50,16 @@ class StudentIndex extends Component
         $this->createPostModal = false;
     }
 
-    public function removeflash(){
+    public function removeflash()
+    {
         session()->remove('success');
     }
 
     public function render()
     {
-        $students = Student::where('user_id', auth()->user()->id)->paginate(10);
+        $students = Student::where('user_id', auth()->user()->id)
+            ->orderBy('id', 'desc')
+            ->paginate(10);
         return view('livewire.student.student-index', ['students' => $students])->layout('layouts.app');
     }
 }

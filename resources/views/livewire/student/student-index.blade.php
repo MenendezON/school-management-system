@@ -14,7 +14,7 @@
     </div>
 
     <div>
-        <x-button wire:click="showCreatePostModal">
+        <x-button wire:click="showCreatePostModal" class="mb-2">
             {{ __('Add new student') }}
         </x-button>
         <!-- Create post modal -->
