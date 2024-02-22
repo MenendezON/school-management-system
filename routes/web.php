@@ -31,5 +31,4 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
 
     Route::get('dashboard', Dashboard::class)->name('dashboard');
     Route::get('students', StudentIndex::class)->name('student-index');
-    Route::get('students/create', StudentCreate::class)->name('student-create');
 });

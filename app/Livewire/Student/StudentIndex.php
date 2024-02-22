@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Student;
 
+use Livewire\Attributes\Rule;
 use Livewire\Component;
 use App\Models\Student;
 use Livewire\WithPagination;
@@ -10,41 +11,52 @@ class StudentIndex extends Component
 {
     use WithPagination;
 
-    public function navigateToAnotherPage(){
-        return redirect()->to('/students/create');
-    }
+    #[Rule("required|min:2|max:50")]
+    public $first_name;
+    #[Rule("required|min:2|max:50")]
+    public $last_name;
+    #[Rule("required|min:2|max:50")]
+    public $date_of_birth;
+    #[Rule("required|min:2|max:50")]
+    public $place_of_birth;
+    #[Rule("required|min:2|max:50")]
+    public $city;
+    #[Rule("required")]
+    public $country;
+    #[Rule("required|min:2|max:50")]
+    public $email;
+    #[Rule("required|min:2|max:50")]
+    public $phone;
 
-    public $modalVisible = false;
-    public $name; // Add other fields as needed
+    #[Rule("required")]
+    public $gender;
+    #[Rule("required|min:2|max:50")]
+    public $address;
 
-    public function openModal()
+    public $createPostModal = false;
+
+    public function showCreatePostModal()
     {
-        $this->modalVisible = true;
+        $this->createPostModal = true;
     }
 
-    public function closeModal()
+    public function create()
     {
-        $this->modalVisible = false;
+        $this->validate();
+        auth()->user()->students()->create($this->only(['first_name', 'last_name', 'date_of_birth', 'country', 'gender', 'phone', 'place_of_birth', 'city', 'email', 'address']));
+        $this->reset('first_name', 'last_name', 'date_of_birth', 'country', 'gender', 'phone', 'place_of_birth', 'city', 'email', 'address');
+
+        session()->flash('success', 'The student has been added successfully!');
+        $this->createPostModal = false;
     }
 
-    public function addStudent()
-    {
-        // Validation can be added here if needed
-        Student::create([
-            'name' => $this->name,
-            // Add other fields as needed
-        ]);
-
-        // Emit an event to close the modal
-        $this->emit('studentAdded');
-        $this->reset(); // Reset form fields
-        $this->modalVisible = false; // Close modal
+    public function removeflash(){
+        session()->remove('success');
     }
-    
 
     public function render()
     {
-        $students = Student::where('user_id', auth()->user()->id)->paginate(12);
-        return view('livewire.student.student-index', ['students'=> $students])->layout('layouts.app');
+        $students = Student::where('user_id', auth()->user()->id)->paginate(10);
+        return view('livewire.student.student-index', ['students' => $students])->layout('layouts.app');
     }
 }
