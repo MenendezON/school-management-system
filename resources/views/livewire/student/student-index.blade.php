@@ -173,7 +173,7 @@
                 <thead>
                     <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
                         <th class="px-4 py-3">
-                            <div class="flex item-center">#</div>
+                            <div class="flex item-center">Matricule</div>
                         </th>
                         <th class="px-4 py-3">
                             <div class="flex item-center">First name</div>
@@ -200,7 +200,11 @@
                 <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
                     @foreach($students as $student)
                     <tr class="text-gray-700 dark:text-gray-400" wire:key="{{$student->id}}">
-                        <td class="px-4 py-3">{{ $student->id }}</td>
+                        <td class="px-4 py-3">
+                            <x-nav-link href="{{ route('student-show', ['id' => $student->id]) }}" wire:navigate>
+                            {{ $student->id }}
+                            </x-nav-link>
+                        </td>
                         <td class="px-4 py-3">{{ ucwords($student->first_name) }}</td>
                         <td class="px-4 py-3 text-sm">{{ strtoupper($student->last_name) }}</td>
                         <td class="px-4 py-3 text-sm">{{ $student->gender? 'Male':'Female' }}</td>

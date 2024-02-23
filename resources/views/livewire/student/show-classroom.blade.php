@@ -18,7 +18,7 @@
                     <h2 class="my-6 mb-2 text-2xl font-semibold text-gray-700 dark:text-gray-200">{{ $classroom->value('name') }}</h2>
                     <h3>Type: {{ $classroom->value('type') }}</h3>
                     <p class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
-                        Total students {{ $classroom->count() }}
+                        Total: {{ $classroom->count() }} students
                     </p>
                     </p>
                 </div>

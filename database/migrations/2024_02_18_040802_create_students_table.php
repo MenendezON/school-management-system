@@ -22,9 +22,9 @@ return new class extends Migration
             $table->string('city');
             $table->string('country');
             $table->foreignIdFor(User::class);
-            $table->string('email')->unique();
+            $table->string('email')->nullable();
             $table->string('address');
-            $table->string('phone');
+            $table->string('phone')->nullable();
             $table->enum('gender', ['Homme', 'Femme'])->default('Homme');
             $table->timestamps();
         });
