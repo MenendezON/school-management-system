@@ -9,16 +9,16 @@
 
     <div class="flex">
         <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
-            Classroom
+            Academic year
         </h2>
     </div>
 
     <div>
-        <x-button wire:click="showCreateClassroomModal" class="mb-2">
-            {{ __('Add new classroom') }}
+        <x-button wire:click="showCreateStudentClassroomModal" class="mb-2">
+            {{ __('New enrolment') }}
         </x-button>
         <!-- Create classroom modal -->
-        <x-dialog-modal wire:model="createClassroomModal">
+        <x-dialog-modal wire:model="createStudentClassroomModal">
             <x-slot name="title">
                 {{ __('Create classroom') }}
             </x-slot>
@@ -29,10 +29,15 @@
                         <div class="w-full md:w-1 mr-4 ml-4">
                             <label class="block mt-4 text-sm">
                                 <span class="text-gray-700 dark:text-gray-400">
-                                    Name
+                                    Classroom {{ $classroomId }}
                                 </span>
-                                <input wire:model="name" class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" />
-                                @error('name')
+                                <select wire:model="classroomId" class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
+                                    <option>Select a type...</option>
+                                    @foreach (\App\Models\Classroom::all() as $classroom)
+                                    <option value="{{ $classroom->id }}">{{ $classroom->name }}</option>
+                                    @endforeach
+                                </select>
+                                @error('type')
                                 <span class="text-xs text-red-600 dark:text-gray-400">{{ $message }}</span>
                                 @enderror
                             </label>
@@ -42,12 +47,31 @@
                         <div class="w-full md:w-1 mr-4 ml-4">
                             <label class="block mt-4 text-sm">
                                 <span class="text-gray-700 dark:text-gray-400">
-                                    Type
+                                    Student {{ $studentId }}
                                 </span>
-                                <select wire:model="type" class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
+                                <select wire:model="studentId" class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
                                     <option>Select a type...</option>
-                                    <option value="Senegal">Senegal</option>
-                                    <option value="Haiti">Haiti</option>
+                                    @foreach (\App\Models\Student::all() as $student)
+                                    <option value="{{ $student->id }}">(Matricule) - {{ $student->first_name }} {{ $student->last_name }} </option>
+                                    @endforeach
+                                </select>
+                                @error('type')
+                                <span class="text-xs text-red-600 dark:text-gray-400">{{ $message }}</span>
+                                @enderror
+                            </label>
+                        </div>
+                    </div>
+                    <div class="flex px-2 my-2">
+                        <div class="w-full md:w-1 mr-4 ml-4">
+                            <label class="block mt-4 text-sm">
+                                <span class="text-gray-700 dark:text-gray-400">
+                                    School Year {{ $schoolyear }}
+                                </span>
+                                <select wire:model="schoolyear" class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
+                                    <option>Select a type...</option>
+                                    @foreach($generateSchoolYears as $year)
+                                    <option>{{ $year }} - {{ $year+1 }}</option>
+                                    @endforeach
                                 </select>
                                 @error('type')
                                 <span class="text-xs text-red-600 dark:text-gray-400">{{ $message }}</span>
@@ -75,33 +99,30 @@
                 <thead>
                     <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
                         <th class="px-4 py-3">
+                            <div class="flex item-center">#</div>
+                        </th>
+                        <th class="px-4 py-3">
+                            <div class="flex item-center">Student</div>
+                        </th>
+                        <th class="px-4 py-3">
                             <div class="flex item-center">Classroom</div>
                         </th>
-                        <th class="px-4 py-3">
-                            <div class="flex item-center">Type</div>
-                        </th>
-                        <th class="px-4 py-3">
-                            <div class="flex item-center">Students</div>
-                        </th>
-                        <th class="px-4 py-3">
-                            <div class="flex item-center">Created by</div>
-                        </th>
-                        <th class="px-4 py-3">Last updated</th>
-                        <th class="px-4 py-3">Created by</th>
+                        <th class="px-4 py-3">Academic year</th>
+                        <th class="px-4 py-3">Action</th>
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
-                    @foreach($classrooms as $classroom)
-                    <tr class="text-gray-700 dark:text-gray-400" wire:key="{{$classroom->id}}">
+                    @foreach ($students as $student)
+                    @foreach ($student->classrooms as $classroom)
+                    <tr class="text-gray-700 dark:text-gray-400" wire:key="{{$student->id}}">
+                        <td class="px-4 py-3">{{ $classroom->pivot->id }}</td>
+                        <td class="px-4 py-3">{{ ucwords($student->first_name) }} {{ strtoupper($student->last_name) }}</td>
                         <td class="px-4 py-3">
                             <x-nav-link href="{{ route('classroom-show', ['id' => $classroom->id]) }}" wire:navigate>
-                            {{ $classroom->name }}
+                            {{ $classroom->name }}, {{ $classroom->type }}
                             </x-nav-link>
                         </td>
-                        <td class="px-4 py-3 text-sm">{{ $classroom->type }}</td>
-                        <td class="px-4 py-3">{{ $classroom->students->count() }}</td>
-                        <td class="px-4 py-3 text-sm">{{ $classroom->user->name }}</td>
-                        <td class="px-4 py-3 text-sm">{{ $classroom->updated_at->diffForHumans() }}</td>
+                        <td class="px-4 py-3">{{ $classroom->pivot->schoolyear }}</td>
                         <td class="px-4 py-3">
                             <div class="flex items-center space-x-4 text-sm">
                                 <button class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray" aria-label="Edit">
@@ -119,11 +140,12 @@
                         </td>
                     </tr>
                     @endforeach
+                    @endforeach
                 </tbody>
             </table>
         </div>
         <div class="w-full overflow-x-auto px-4 py-3">
-            {{ $classrooms->links() }}
+            {{ $students->links() }}
         </div>
     </div>
 </div>

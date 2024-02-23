@@ -38,6 +38,18 @@
                     <span class="ml-4">{{ __('Classrooms') }}</span>
                 </x-nav-link>
             </li>
+            <li class="relative px-6 py-3">
+                <x-nav-link href="{{ route('studentclassroom-index') }}" :active="request()->routeIs('cstudentclassroom-index')" wire:navigate>
+                    <svg class="h-5 w-5 text-purple-600" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" />
+                        <circle cx="7" cy="5" r="2" />
+                        <path d="M5 22v-5l-1-1v-4a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4l-1 1v5" />
+                        <circle cx="17" cy="5" r="2" />
+                        <path d="M15 22v-4h-2l2 -6a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1l2 6h-2v4" />
+                    </svg>
+                    <span class="ml-4">{{ __('Academic year') }}</span>
+                </x-nav-link>
+            </li>
         </ul>
     </div>
 </aside>

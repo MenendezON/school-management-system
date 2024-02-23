@@ -201,8 +201,8 @@
                     @foreach($students as $student)
                     <tr class="text-gray-700 dark:text-gray-400" wire:key="{{$student->id}}">
                         <td class="px-4 py-3">{{ $student->id }}</td>
-                        <td class="px-4 py-3">{{ $student->first_name }}</td>
-                        <td class="px-4 py-3 text-sm">{{ $student->last_name }}</td>
+                        <td class="px-4 py-3">{{ ucwords($student->first_name) }}</td>
+                        <td class="px-4 py-3 text-sm">{{ strtoupper($student->last_name) }}</td>
                         <td class="px-4 py-3 text-sm">{{ $student->gender? 'Male':'Female' }}</td>
                         <td class="px-4 py-3 text-sm"><a href="mailto:{{ $student->email }}">{{ $student->email }}</a></td>
                         <td class="px-4 py-3 text-sm">{{ $student->phone }}</td>
