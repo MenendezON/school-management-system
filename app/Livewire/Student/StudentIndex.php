@@ -57,8 +57,7 @@ class StudentIndex extends Component
 
     public function render()
     {
-        $students = Student::where('user_id', auth()->user()->id)
-            ->orderBy('id', 'desc')
+        $students = Student::orderBy('id', 'desc')
             ->paginate(10);
         return view('livewire.student.student-index', ['students' => $students])->layout('layouts.app');
     }

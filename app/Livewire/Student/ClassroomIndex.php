@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Student;
 
-use App\Models\classroom;
+use App\Models\Classroom;
 use Livewire\Attributes\Rule;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -40,8 +40,7 @@ class ClassroomIndex extends Component
 
     public function render()
     {
-        $classrooms = classroom::where('user_id', auth()->user()->id)
-            ->orderBy('id', 'desc')
+        $classrooms = Classroom::orderBy('id', 'desc')
             ->paginate(10);
         return view('livewire.student.classroom-index', ['classrooms' => $classrooms])->layout('layouts.app');
     }
