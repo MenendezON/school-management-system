@@ -16,6 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('student_id');
             $table->unsignedBigInteger('classroom_id');
             $table->string('schoolyear');
+            $table->text('observations')->nullable();
 
             // Add foreign keys
             $table->foreign('student_id')->references('id')->on('students')->onDelete('cascade');
