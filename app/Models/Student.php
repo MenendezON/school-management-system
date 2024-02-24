@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Student extends Model
 {
@@ -20,7 +21,12 @@ class Student extends Model
 
     public function classrooms(): BelongsToMany
     {
-        return $this->belongsToMany(Classroom::class)->withPivot('id', 'schoolyear');
+        return $this->belongsToMany(Classroom::class)->withPivot('id', 'schoolyear', 'observations');
+    }
+
+    public function Tutors(): HasMany
+    {
+        return $this->hasMany(Tutor::class);
     }
     
 }
