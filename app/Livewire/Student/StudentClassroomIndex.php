@@ -12,6 +12,7 @@ class StudentClassroomIndex extends Component
     public $schoolyear;
     public $studentId;
     public $classroomId;
+    public $observations = '';
 
     
 
@@ -22,9 +23,9 @@ class StudentClassroomIndex extends Component
         $classroom = Classroom::find($this->classroomId);
 
     // Adding the product to the cart with the specified quantity
-        $classroom->students()->attach($student->id, ['schoolyear' => $this->schoolyear]);
+        $classroom->students()->attach($student->id, ['schoolyear' => $this->schoolyear, 'observations'=> $this->observations]);
 
-        $this->reset('studentId', 'classroomId', 'schoolyear');
+        $this->reset('studentId', 'classroomId', 'schoolyear', 'observations');
 
         session()->flash('success', 'The student has beed added successfully to the classroom');
         $this->createStudentClassroomModal = false;
