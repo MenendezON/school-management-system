@@ -21,7 +21,7 @@ class Student extends Model
 
     public function classrooms(): BelongsToMany
     {
-        return $this->belongsToMany(Classroom::class)->withPivot('id', 'schoolyear', 'observations');
+        return $this->belongsToMany(Classroom::class, 'registration')->withPivot('id', 'schoolyear', 'observations');
     }
 
     public function Tutors(): HasMany
