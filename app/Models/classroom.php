@@ -11,7 +11,7 @@ class Classroom extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'type'];
+    protected $fillable = ['name', 'type', 'capacity'];
 
     public function user(): BelongsTo
     {
@@ -20,6 +20,6 @@ class Classroom extends Model
 
     public function students(): BelongsToMany
     {
-        return $this->belongsToMany(Student::class, 'registration')->withPivot('id', 'schoolyear', 'observations');
+        return $this->belongsToMany(Student::class, 'registrations')->withPivot('id', 'schoolyear', 'observations');
     }
 }
