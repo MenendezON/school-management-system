@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreignIdFor(Student::class);   
             $table->bigInteger('label');
             $table->bigInteger('amount');
+            $table->timestamps();
         });
     }
 

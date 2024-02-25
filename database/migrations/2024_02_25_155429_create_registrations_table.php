@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignIdFor(Student::class);
             $table->integer('academic_year');
             $table->text('observations');
+            $table->timestamps();
         });
     }
 

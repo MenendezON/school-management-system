@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('label');
             $table->float('value');
             $table->foreignIdFor(Classroom::class);
+            $table->timestamps();
         });
     }
 

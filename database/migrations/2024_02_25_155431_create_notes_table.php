@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreignIdFor(Student::class);
             $table->float('average');
             $table->string('appreciation');
+            $table->timestamps();
         });
     }
 
