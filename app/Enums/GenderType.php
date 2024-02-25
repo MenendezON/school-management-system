@@ -7,4 +7,3 @@ enum GenderType: String
     case FEMALE = "Female";
 }
 
-?>

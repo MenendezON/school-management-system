@@ -107,8 +107,9 @@
                                 </span>
                                 <select wire:model="gender" class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
                                     <option>Select a gender...</option>
-                                    <option value="1">Male</option>
-                                    <option value="0">Female</option>
+                                    @foreach(\App\Enums\GenderType::cases() as $gender)
+                                    <option value="{{ $gender->value }}">{{ $gender->name }}</option>
+                                    @endforeach
                                 </select>
                                 @error('gender')
                                 <span class="text-xs text-red-600 dark:text-gray-400">{{ $message }}</span>
