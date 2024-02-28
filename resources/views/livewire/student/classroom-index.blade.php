@@ -46,10 +46,24 @@
                                 </span>
                                 <select wire:model="type" class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
                                     <option>Select a type...</option>
-                                    <option value="Senegal">Senegal</option>
-                                    <option value="Haiti">Haiti</option>
+                                    @foreach(\App\Enums\ClassroomType::cases() as $type)
+                                    <option value="{{ $type->value }}">{{ $type->name }}</option>
+                                    @endforeach
                                 </select>
                                 @error('type')
+                                <span class="text-xs text-red-600 dark:text-gray-400">{{ $message }}</span>
+                                @enderror
+                            </label>
+                        </div>
+                    </div>
+                    <div class="flex px-2 my-2">
+                        <div class="w-full md:w-1 mr-4 ml-4">
+                            <label class="block mt-4 text-sm">
+                                <span class="text-gray-700 dark:text-gray-400">
+                                    Capacity
+                                </span>
+                                <input wire:model="capacity" type="number" class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" />
+                                @error('capacity')
                                 <span class="text-xs text-red-600 dark:text-gray-400">{{ $message }}</span>
                                 @enderror
                             </label>
@@ -81,13 +95,11 @@
                             <div class="flex item-center">Type</div>
                         </th>
                         <th class="px-4 py-3">
-                            <div class="flex item-center">Students</div>
+                            <div class="flex item-center">Capacity</div>
                         </th>
-                        <th class="px-4 py-3">
-                            <div class="flex item-center">Created by</div>
-                        </th>
-                        <th class="px-4 py-3">Last updated</th>
-                        <th class="px-4 py-3">Created by</th>
+                        <th class="px-4 py-3">Created</th>
+                        <th class="px-4 py-3">Updated</th>
+                        <th class="px-4 py-3">Action</th>
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
@@ -99,8 +111,8 @@
                             </x-nav-link>
                         </td>
                         <td class="px-4 py-3 text-sm">{{ $classroom->type }}</td>
-                        <td class="px-4 py-3">{{ $classroom->students->count() }}</td>
-                        <td class="px-4 py-3 text-sm">{{ $classroom->user->name }}</td>
+                        <td class="px-4 py-3">{{ $classroom->capacity }}</td>
+                        <td class="px-4 py-3 text-sm">{{ $classroom->created_at->diffForHumans() }}</td>
                         <td class="px-4 py-3 text-sm">{{ $classroom->updated_at->diffForHumans() }}</td>
                         <td class="px-4 py-3">
                             <div class="flex items-center space-x-4 text-sm">

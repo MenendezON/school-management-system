@@ -21,17 +21,17 @@ class Student extends Model
 
     public function classrooms(): BelongsToMany
     {
-        return $this->belongsToMany(Classroom::class, 'registration')->withPivot('schoolyear', 'observations');
+        return $this->belongsToMany(Classroom::class, 'registrations')->withPivot('academic_year', 'observations')->withTimestamps();
     }
 
     public function classroomfees(): BelongsToMany
     {
-        return $this->belongsToMany(Classroom::class, 'tuition')->withPivot('id', 'schoolyear', 'observations');
+        return $this->belongsToMany(Classroom::class, 'tuitions')->withPivot('id', 'academic_year', 'label', 'amount')->withTimestamps();
     }
 
     public function subjects(): BelongsToMany
     {
-        return $this->belongsToMany(Subject::class, 'notes')->withPivot('average', 'appreciation');
+        return $this->belongsToMany(Subject::class, 'notes')->withPivot('average', 'appreciation')->withTimestamps();
     }
 
     public function Tutors(): HasMany

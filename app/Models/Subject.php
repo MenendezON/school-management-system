@@ -21,7 +21,7 @@ class Subject extends Model
 
     public function Students(): BelongsToMany
     {
-        return $this->belongsToMany(Classroom::class, 'notes')->withPivot('average', 'appreciation');
+        return $this->belongsToMany(Classroom::class, 'notes')->withPivot('average', 'appreciation')->withTimestamps();
     }
     
 }

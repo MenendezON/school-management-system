@@ -20,6 +20,11 @@ class Classroom extends Model
 
     public function students(): BelongsToMany
     {
-        return $this->belongsToMany(Student::class, 'registrations')->withPivot('id', 'schoolyear', 'observations');
+        return $this->belongsToMany(Student::class, 'registrations')->withPivot('academic_year', 'observations')->withTimestamps();
+    }
+
+    public function studentsfees(): BelongsToMany
+    {
+        return $this->belongsToMany(Student::class, 'tuitions')->withPivot('id', 'academic_year', 'label', 'amount')->withTimestamps();
     }
 }

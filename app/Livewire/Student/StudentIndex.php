@@ -22,16 +22,22 @@ class StudentIndex extends Component
     #[Rule("required|min:2|max:50")]
     public $city;
     #[Rule("required")]
-    public $country;
-    #[Rule("required|min:2|max:50")]
+    public $nationality;
     public $email;
-    #[Rule("required|min:2|max:50")]
     public $phone;
-
     #[Rule("required")]
     public $gender;
     #[Rule("required|min:2|max:50")]
     public $address;
+    #[Rule("required")]
+    public $previous_school;
+    #[Rule("required")]
+    public $blood_group;
+    #[Rule("required")]
+    public $medical_history;
+    #[Rule("required")]
+    public $allergies;
+    public $comments;
 
     public $createPostModal = false;
 
@@ -43,8 +49,8 @@ class StudentIndex extends Component
     public function create()
     {
         $this->validate();
-        auth()->user()->students()->create($this->only(['first_name', 'last_name', 'date_of_birth', 'country', 'gender', 'phone', 'place_of_birth', 'city', 'email', 'address']));
-        $this->reset('first_name', 'last_name', 'date_of_birth', 'country', 'gender', 'phone', 'place_of_birth', 'city', 'email', 'address');
+        auth()->user()->students()->create($this->only(['first_name', 'last_name', 'date_of_birth', 'nationality', 'gender', 'phone', 'place_of_birth', 'city', 'email', 'address', 'previous_school', 'blood_group', 'medical_history', 'allergies', 'comments']));
+        $this->reset('first_name', 'last_name', 'date_of_birth', 'nationality', 'gender', 'phone', 'place_of_birth', 'city', 'email', 'address', 'previous_school', 'blood_group', 'medical_history', 'allergies', 'comments');
 
         session()->flash('success', 'The student has been added successfully!');
         $this->createPostModal = false;

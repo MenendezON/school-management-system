@@ -5,6 +5,7 @@ use App\Livewire\Student\ClassroomIndex;
 use App\Livewire\Student\ShowClassroom;
 use App\Livewire\Student\StudentclassroomIndex;
 use App\Livewire\Student\StudentIndex;
+use App\Livewire\Student\TuitionIndex;
 use App\Livewire\Student\StudentShow;
 use Illuminate\Support\Facades\Route;
 
@@ -41,5 +42,6 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
 
 
     Route::get('/studentclassroom', StudentclassroomIndex::class)->name('studentclassroom-index');
+    Route::get('/tuition', TuitionIndex::class)->name('tuition-index');
 
 });

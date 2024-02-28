@@ -14,12 +14,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('tuitions', function (Blueprint $table) {
-            $table->id();
             $table->foreignIdFor(Classroom::class); 
-            $table->foreignIdFor(Student::class);   
-            $table->bigInteger('label');
+            $table->foreignIdFor(Student::class); 
+            $table->string('academic_year');  
+            $table->string('label');
             $table->bigInteger('amount');
             $table->timestamps();
+
+            $table->primary(['classroom_id', 'student_id', 'academic_year', 'label']);
         });
     }
 

@@ -31,11 +31,11 @@ class ShowClassroom extends Component
 
     public function render()
     {
-        $classroom = DB::table('classroom_student')
-            ->join('students', 'classroom_student.student_id', '=', 'students.id')
-            ->join('classrooms', 'classroom_student.classroom_id', '=', 'classrooms.id')
-            ->where('classroom_student.classroom_id', $this->id)
-            ->where('classroom_student.schoolyear', 'like', '%'.$this->yearfilter.'%')
+        $classroom = DB::table('registrations')
+            ->join('students', 'registrations.student_id', '=', 'students.id')
+            ->join('classrooms', 'registrations.classroom_id', '=', 'classrooms.id')
+            ->where('registrations.classroom_id', $this->id)
+            ->where('registrations.academic_year', 'like', '%'.$this->yearfilter.'%')
             ->get();
 
         return view('livewire.student.show-classroom', [

@@ -23,11 +23,11 @@
                 <div>
                     <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
                         <h2 class="my-6 mb-2 text-2xl font-semibold text-gray-700 dark:text-gray-200">
-                            {{ $students->value('first_name') }} {{ $students->value('last_name') }}
+                            {{ $students->first_name }} {{ $students->last_name }}
                         </h2>
-                        <h3>{{ $students->value('date_of_birth') }}, {{ $students->value('place_of_birth') }}</h3>
+                        <h3>{{ $students->date_of_birth }}, {{ $students->place_of_birth }}</h3>
                         <p class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
-                            {{ $students->value('country') }}
+                            {{ $students->nationality }}
                         </p>
                     </p>
                 </div>
@@ -52,13 +52,24 @@
             <form>
                 <x-slot name="content">
                     <div class="flex px-2 my-2">
-                        <div class="w-full md:w-1 mr-4 ml-4">
+                        <div class="w-full md:w-1/2 mr-4 ml-4">
                             <label class="block mt-4 text-sm">
                                 <span class="text-gray-700 dark:text-gray-400">
-                                    Name
+                                    First name
                                 </span>
-                                <input wire:model="name" class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" />
-                                @error('name')
+                                <input wire:model="first_name" class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" />
+                                @error('first_name')
+                                <span class="text-xs text-red-600 dark:text-gray-400">{{ $message }}</span>
+                                @enderror
+                            </label>
+                        </div>
+                        <div class="w-full md:w-1/2 mr-4 ml-4">
+                            <label class="block mt-4 text-sm">
+                                <span class="text-gray-700 dark:text-gray-400">
+                                    Last name
+                                </span>
+                                <input wire:model="last_name" class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" />
+                                @error('last_name')
                                 <span class="text-xs text-red-600 dark:text-gray-400">{{ $message }}</span>
                                 @enderror
                             </label>
@@ -70,15 +81,13 @@
                                 <span class="text-gray-700 dark:text-gray-400">
                                     Relative link
                                 </span>
-                                <select wire:model="relation" class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
+                                <select wire:model="relationship" class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
                                     <option>Select a type...</option>
-                                    <option value="Father">Father</option>
-                                    <option value="Mother">Mother</option>
-                                    <option value="Uncle">Uncle</option>
-                                    <option value="Aunty">Aunty</option>
-                                    <option value="Other">Other</option>
+                                    @foreach(\App\Enums\RelationType::cases() as $relation)
+                                    <option value="{{ $relation->value }}">{{ $relation->name }}</option>
+                                    @endforeach
                                 </select>
-                                @error('relation')
+                                @error('relationship')
                                 <span class="text-xs text-red-600 dark:text-gray-400">{{ $message }}</span>
                                 @enderror
                             </label>
@@ -162,8 +171,8 @@
                 <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
                     @foreach($students->tutors as $tutor)
                     <tr class="text-gray-700 dark:text-gray-400" wire:key="{{$tutor->id}}">
-                        <td class="px-4 py-3">{{ $tutor->name }}</td>
-                        <td class="px-4 py-3 text-sm">{{ $tutor->relation }}</td>
+                        <td class="px-4 py-3">{{ $tutor->first_name }} {{ $tutor->last_name }}</td>
+                        <td class="px-4 py-3 text-sm">{{ $tutor->relationship }}</td>
                         <td class="px-4 py-3">{{ $tutor->email?$tutor->email:'-' }}</td>
                         <td class="px-4 py-3 text-sm">{{ $tutor->phone_1 }}</td>
                         <td class="px-4 py-3 text-sm">{{ $tutor->phone_2?$tutor->email:'-' }}</td>
@@ -222,10 +231,10 @@
                 <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
                     @foreach($students->classrooms as $classroom)
                     <tr class="text-gray-700 dark:text-gray-400" wire:key="">
-                        <td class="px-4 py-3 text-sm">{{ $classroom->pivot->schoolyear }}</td>
+                        <td class="px-4 py-3 text-sm">{{ $classroom->pivot->academic_year }}</td>
                         <td class="px-4 py-3">{{ $classroom->name }}</td>
                         <td class="px-4 py-3 text-sm">{{ $classroom->type }}</td>
-                        <td class="px-4 py-3 text-sm">{{ $classroom->pivot->observations }}</td>
+                        <td class="px-4 py-3 text-sm">{{ $classroom->pivot->observations?$classroom->pivot->observations:'-' }}</td>
                         <td class="px-4 py-3 text-sm">{{ $classroom->updated_at->diffForHumans() }}</td>
                         <td class="px-4 py-3">
                             <div class="flex items-center space-x-4 text-sm">

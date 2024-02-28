@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('registrations', function (Blueprint $table) {
             $table->foreignIdFor(Classroom::class);
             $table->foreignIdFor(Student::class);
-            $table->integer('academic_year');
+            $table->string('academic_year');
             $table->text('observations');
             $table->timestamps();
         });

@@ -72,34 +72,6 @@
                                 @enderror
                             </label>
                         </div>
-                        <div class="w-full md:w-1/3 mr-4 ml-4">
-                            <label class="block mt-4 text-sm">
-                                <span class="text-gray-700 dark:text-gray-400">
-                                    City
-                                </span>
-                                <input wire:model="city" type="text" class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" />
-                                @error('city')
-                                <span class="text-xs text-red-600 dark:text-gray-400">{{ $message }}</span>
-                                @enderror
-                            </label>
-                        </div>
-                        <div class="w-full md:w-1/3 mr-4 ml-4">
-                            <label class="block mt-4 text-sm">
-                                <span class="text-gray-700 dark:text-gray-400">
-                                    Country {{ $country }}
-                                </span>
-                                <select wire:model="country" class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
-                                    <option>Select a country...</option>
-                                    <option value="Senegal">Senegal</option>
-                                    <option value="Haiti">Haiti</option>
-                                </select>
-                                @error('country')
-                                <span class="text-xs text-red-600 dark:text-gray-400">{{ $message }}</span>
-                                @enderror
-                            </label>
-                        </div>
-                    </div>
-                    <div class="flex px-2 my-2">
                         <div class="w-full md:w-1/4 mr-4 ml-4">
                             <label class="block mt-4 text-sm">
                                 <span class="text-gray-700 dark:text-gray-400">
@@ -116,13 +88,41 @@
                                 @enderror
                             </label>
                         </div>
-                        <div class="w-full md:w-1/4 mr-4 ml-4">
+                        <div class="w-full md:w-1/3 mr-4 ml-4">
                             <label class="block mt-4 text-sm">
                                 <span class="text-gray-700 dark:text-gray-400">
-                                    Phone number
+                                    Nationality
                                 </span>
-                                <input type="tel" wire:model="phone" pattern="^\+221\d{9}$" title="Please enter a valid Senegalese phone number starting with +221 followed by 9 digits" class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" />
-                                @error('phone')
+                                <select wire:model="nationality" class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
+                                    <option>Select a country...</option>
+                                    <option value="Senegal">Senegal</option>
+                                    <option value="Haiti">Haiti</option>
+                                </select>
+                                @error('nationality')
+                                <span class="text-xs text-red-600 dark:text-gray-400">{{ $message }}</span>
+                                @enderror
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="flex px-2 my-2">
+                        <div class="w-full md:w-1/3 mr-4 ml-4">
+                            <label class="block mt-4 text-sm">
+                                <span class="text-gray-700 dark:text-gray-400">
+                                    Blood group
+                                </span>
+                                <select wire:model="blood_group" class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
+                                    <option>Select a country...</option>
+                                    <option value="A+">A+</option>
+                                    <option value="O+">O+</option>
+                                    <option value="B+">B+</option>
+                                    <option value="AB+">AB+</option>
+                                    <option value="A-">A-</option>
+                                    <option value="O-">O-</option>
+                                    <option value="B-">B-</option>
+                                    <option value="AB-">AB-</option>
+                                </select>
+                                @error('blood_group')
                                 <span class="text-xs text-red-600 dark:text-gray-400">{{ $message }}</span>
                                 @enderror
                             </label>
@@ -138,9 +138,20 @@
                                 @enderror
                             </label>
                         </div>
+                        <div class="w-full md:w-1/4 mr-4 ml-4">
+                            <label class="block mt-4 text-sm">
+                                <span class="text-gray-700 dark:text-gray-400">
+                                    Phone number
+                                </span>
+                                <input type="tel" wire:model="phone" pattern="^\+221\d{9}$" title="Please enter a valid Senegalese phone number starting with +221 followed by 9 digits" class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" />
+                                @error('phone')
+                                <span class="text-xs text-red-600 dark:text-gray-400">{{ $message }}</span>
+                                @enderror
+                            </label>
+                        </div>
                     </div>
                     <div class="flex px-2 my-2">
-                        <div class="w-full md:w-3/3 mr-4 ml-4">
+                        <div class="w-full md:w-2/3 mr-4 ml-4">
                             <label class="block mt-4 text-sm">
                                 <span class="text-gray-700 dark:text-gray-400">
                                     Full address
@@ -151,9 +162,70 @@
                                 @enderror
                             </label>
                         </div>
+                        <div class="w-full md:w-1/3 mr-4 ml-4">
+                            <label class="block mt-4 text-sm">
+                                <span class="text-gray-700 dark:text-gray-400">
+                                    City
+                                </span>
+                                <input wire:model="city" type="text" class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" />
+                                @error('city')
+                                <span class="text-xs text-red-600 dark:text-gray-400">{{ $message }}</span>
+                                @enderror
+                            </label>
+                        </div>
                     </div>
-
-
+                    <div class="flex px-2 my-2">
+                        <div class="w-full md:w-1 mr-4 ml-4">
+                            <label class="block mt-4 text-sm">
+                                <span class="text-gray-700 dark:text-gray-400">
+                                    Previous school
+                                </span>
+                                <input wire:model="previous_school" type="text" class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" />
+                                @error('previous_school')
+                                <span class="text-xs text-red-600 dark:text-gray-400">{{ $message }}</span>
+                                @enderror
+                            </label>
+                        </div>
+                    </div>
+                    <div class="flex px-2 my-2">
+                        <div class="w-full md:w-1 mr-4 ml-4">
+                            <label class="block mt-4 text-sm">
+                                <span class="text-gray-700 dark:text-gray-400">
+                                    Medical history
+                                </span>
+                                <textarea wire:model="medical_history" class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"></textarea>
+                                @error('medical_history')
+                                <span class="text-xs text-red-600 dark:text-gray-400">{{ $message }}</span>
+                                @enderror
+                            </label>
+                        </div>
+                    </div>
+                    <div class="flex px-2 my-2">
+                        <div class="w-full md:w-1 mr-4 ml-4">
+                            <label class="block mt-4 text-sm">
+                                <span class="text-gray-700 dark:text-gray-400">
+                                    Allergies
+                                </span>
+                                <textarea wire:model="allergies" class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"></textarea>
+                                @error('allergies')
+                                <span class="text-xs text-red-600 dark:text-gray-400">{{ $message }}</span>
+                                @enderror
+                            </label>
+                        </div>
+                    </div>
+                    <div class="flex px-2 my-2">
+                        <div class="w-full md:w-1 mr-4 ml-4">
+                            <label class="block mt-4 text-sm">
+                                <span class="text-gray-700 dark:text-gray-400">
+                                    Comments
+                                </span>
+                                <textarea wire:model="comments" class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"></textarea>
+                                @error('comments')
+                                <span class="text-xs text-red-600 dark:text-gray-400">{{ $message }}</span>
+                                @enderror
+                            </label>
+                        </div>
+                    </div>
                 </x-slot>
                 <x-slot name="footer">
                     <div class="px-2 my-2">
@@ -203,15 +275,15 @@
                     <tr class="text-gray-700 dark:text-gray-400" wire:key="{{$student->id}}">
                         <td class="px-4 py-3">
                             <x-nav-link href="{{ route('student-show', ['id' => $student->id]) }}" wire:navigate>
-                            {{ $student->id }}
+                                {{ $student->id }}
                             </x-nav-link>
                         </td>
                         <td class="px-4 py-3">{{ ucwords($student->first_name) }}</td>
                         <td class="px-4 py-3 text-sm">{{ strtoupper($student->last_name) }}</td>
                         <td class="px-4 py-3 text-sm">{{ $student->gender? 'Male':'Female' }}</td>
-                        <td class="px-4 py-3 text-sm"><a href="mailto:{{ $student->email }}">{{ $student->email }}</a></td>
-                        <td class="px-4 py-3 text-sm">{{ $student->phone }}</td>
-                        <td class="px-4 py-3 text-sm">{{ $student->date_of_birth }}, {{ $student->place_of_birth }}</td>
+                        <td class="px-4 py-3 text-sm"><a href="mailto:{{ $student->email }}">{{ $student->email?$student->email:'-' }}</a></td>
+                        <td class="px-4 py-3 text-sm">{{ $student->phone?$student->phone:'-' }}</td>
+                        <td class="px-4 py-3 text-sm">{{ \Carbon\Carbon::parse($student->date_of_birth)->format('d M Y') }}, {{ $student->place_of_birth }}</td>
                         <td class="px-4 py-3 text-sm">{{ $student->updated_at->diffForHumans() }}</td>
                         <td class="px-4 py-3">
                             <div class="flex items-center space-x-4 text-sm">

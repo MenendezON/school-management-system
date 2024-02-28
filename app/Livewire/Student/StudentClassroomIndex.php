@@ -5,11 +5,14 @@ namespace App\Livewire\Student;
 use Livewire\Component;
 use App\Models\Classroom;
 use App\Models\Student;
+use Livewire\WithPagination;
 
 class StudentClassroomIndex extends Component
 {
 
-    public $schoolyear;
+    use WithPagination;
+
+    public $academic_year;
     public $studentId;
     public $classroomId;
     public $observations = '';
@@ -23,9 +26,9 @@ class StudentClassroomIndex extends Component
         $classroom = Classroom::find($this->classroomId);
 
     // Adding the product to the cart with the specified quantity
-        $classroom->students()->attach($student->id, ['schoolyear' => $this->schoolyear, 'observations'=> $this->observations]);
+        $classroom->students()->attach($student->id, ['observations'=> $this->observations, 'academic_year' => $this->academic_year]);
 
-        $this->reset('studentId', 'classroomId', 'schoolyear', 'observations');
+        $this->reset('studentId', 'classroomId', 'academic_year', 'observations');
 
         session()->flash('success', 'The student has beed added successfully to the classroom');
         $this->createStudentClassroomModal = false;

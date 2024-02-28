@@ -15,9 +15,11 @@ class StudentShow extends Component
 
 
     #[Rule("required|min:5|max:50")]
-    public $name;
+    public $first_name;
+    #[Rule("required|min:5|max:50")]
+    public $last_name;
     #[Rule("required")]
-    public $relation;
+    public $relationship;
     #[Rule("required|min:13|max:20")]
     public $phone_1;
     public $phone_2;
@@ -25,14 +27,15 @@ class StudentShow extends Component
 
     public function mount($id){
         $this->id = $id;
+        $this->reset('students');
         $this->students = Student::findOrfail($id);
     }
 
+    // Create a new tutor for a specific student
     public function create(){
         $this->validate();
-        //Tutor::create($this->only(['name','relation','phone_1', 'phone_2', 'email']));
-        $this->students->tutors()->create($this->only(['name','relation','phone_1', 'phone_2', 'email']));
-        $this->reset('name', 'relation', 'phone_1', 'phone_2', 'email');
+        $this->students->tutors()->create($this->only(['first_name', 'last_name','relationship','phone_1', 'phone_2', 'email']));
+        $this->reset('first_name', 'last_name', 'relationship', 'phone_1', 'phone_2', 'email');
         session()->flash('success', 'The tutor has been added successfully!');
         $this->createTutorModal = false;
 
