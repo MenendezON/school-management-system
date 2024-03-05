@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Classroom;
+use App\Models\Teacher;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -18,6 +19,7 @@ return new class extends Migration
             $table->string('label');
             $table->float('value');
             $table->foreignIdFor(Classroom::class);
+            $table->foreignIdFor(Teacher::class);
             $table->timestamps();
         });
     }

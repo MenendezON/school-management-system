@@ -13,7 +13,7 @@ class Subject extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['category', 'label', 'value'];
+    protected $fillable = ['category', 'label', 'value', 'teacher_id'];
 
     public function classroom(): BelongsTo{
         return $this->belongsTo(Classroom::class);
@@ -22,6 +22,11 @@ class Subject extends Model
     public function Students(): BelongsToMany
     {
         return $this->belongsToMany(Classroom::class, 'notes')->withPivot('average', 'appreciation')->withTimestamps();
+    }
+
+    public function Teacher(): BelongsTo
+    {
+        return $this->belongsTo(Teacher::class);
     }
     
 }

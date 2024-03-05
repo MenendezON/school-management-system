@@ -97,6 +97,9 @@
                         <th class="px-4 py-3">
                             <div class="flex item-center">Capacity</div>
                         </th>
+                        <th class="px-4 py-3">
+                            <div class="flex item-center">Subject</div>
+                        </th>
                         <th class="px-4 py-3">Created</th>
                         <th class="px-4 py-3">Updated</th>
                         <th class="px-4 py-3">Action</th>
@@ -107,11 +110,16 @@
                     <tr class="text-gray-700 dark:text-gray-400" wire:key="{{$classroom->id}}">
                         <td class="px-4 py-3">
                             <x-nav-link href="{{ route('classroom-show', ['id' => $classroom->id]) }}" wire:navigate>
-                            {{ $classroom->name }}
+                                {{ $classroom->name }}
                             </x-nav-link>
                         </td>
                         <td class="px-4 py-3 text-sm">{{ $classroom->type }}</td>
                         <td class="px-4 py-3">{{ $classroom->capacity }}</td>
+                        <td class="px-4 py-3">
+                            <x-nav-link href="{{ route('subject-index', ['id' => $classroom->id]) }}" wire:navigate>
+                                {{ $classroom->Subjects->count() }}
+                            </x-nav-link>
+                        </td>
                         <td class="px-4 py-3 text-sm">{{ $classroom->created_at->diffForHumans() }}</td>
                         <td class="px-4 py-3 text-sm">{{ $classroom->updated_at->diffForHumans() }}</td>
                         <td class="px-4 py-3">

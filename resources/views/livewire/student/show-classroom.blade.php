@@ -4,7 +4,7 @@
             Dashboard
         </h2>
 
-        
+
 
         <!-- Cards -->
         <div class="grid gap-6 mb-8 md:grid-cols-8 xl:grid-cols-16">

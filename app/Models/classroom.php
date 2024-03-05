@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Classroom extends Model
 {
@@ -26,5 +27,10 @@ class Classroom extends Model
     public function studentsfees(): BelongsToMany
     {
         return $this->belongsToMany(Student::class, 'tuitions')->withPivot('id', 'academic_year', 'label', 'amount')->withTimestamps();
+    }
+
+    public function Subjects(): HasMany
+    {
+        return $this->hasMany(Subject::class);
     }
 }
