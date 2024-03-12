@@ -3,7 +3,7 @@ namespace App\Enums;
 
 enum GenderType: String
 {
-    case MALE = "Male";
-    case FEMALE = "Female";
+    case MASCULIN = "Masculin";
+    case FEMININ = "Féminin";
 }
 

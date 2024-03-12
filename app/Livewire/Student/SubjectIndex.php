@@ -16,7 +16,7 @@ class SubjectIndex extends Component
     public $createSubjectModal = false;
 
     public function mount($id){
-        $this->classroom = Classroom::findOrfail($id);
+        $this->classroom = Classroom::find($id);
     }
 
     public function showSubjectModal()

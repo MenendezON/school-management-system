@@ -15,7 +15,7 @@ class ClassroomIndex extends Component
     public $name;
     #[Rule("required")]
     public $type;
-    public $capacity;
+    public $capacity = 0;
 
     public $createClassroomModal = false;
 
