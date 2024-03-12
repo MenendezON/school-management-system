@@ -25,10 +25,11 @@ return new class extends Migration
             $table->string('email')->nullable();
             $table->string('phone')->nullable();
             $table->string('previous_school');
+            $table->stirng('previous_grade');
             $table->string('blood_group');
             $table->text('medical_history');
             $table->text('allergies');
-            $table->text('comments')->nullable();
+            $table->string('decision');
             $table->foreignIdFor(User::class);
             $table->timestamps();
         });
