@@ -9,7 +9,7 @@
 
     <div class="flex">
         <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
-            Academic year
+            Année académique
         </h2>
     </div>
 
@@ -29,24 +29,6 @@
                         <div class="w-full md:w-1 mr-4 ml-4">
                             <label class="block mt-4 text-sm">
                                 <span class="text-gray-700 dark:text-gray-400">
-                                    Classroom
-                                </span>
-                                <select wire:model="classroomId" class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
-                                    <option>Select a type...</option>
-                                    @foreach (\App\Models\Classroom::all() as $classroom)
-                                    <option value="{{ $classroom->id }}">{{ $classroom->name }} ({{ $classroom->type }})</option>
-                                    @endforeach
-                                </select>
-                                @error('classroomId')
-                                <span class="text-xs text-red-600 dark:text-gray-400">{{ $message }}</span>
-                                @enderror
-                            </label>
-                        </div>
-                    </div>
-                    <div class="flex px-2 my-2">
-                        <div class="w-full md:w-1 mr-4 ml-4">
-                            <label class="block mt-4 text-sm">
-                                <span class="text-gray-700 dark:text-gray-400">
                                     Student
                                 </span>
                                 <select wire:model="studentId" class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
@@ -56,6 +38,24 @@
                                     @endforeach
                                 </select>
                                 @error('studentId')
+                                <span class="text-xs text-red-600 dark:text-gray-400">{{ $message }}</span>
+                                @enderror
+                            </label>
+                        </div>
+                    </div>
+                    <div class="flex px-2 my-2">
+                        <div class="w-full md:w-1 mr-4 ml-4">
+                            <label class="block mt-4 text-sm">
+                                <span class="text-gray-700 dark:text-gray-400">
+                                    Classroom
+                                </span>
+                                <select wire:model="classroomId" wire:click="fillClassroom" class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
+                                    <option>Select a type...</option>
+                                    @foreach ($speclassroom as $classroom)
+                                    <option value="{{ $classroom->id }}">{{ $classroom->name }}</option>
+                                    @endforeach
+                                </select>
+                                @error('classroomId')
                                 <span class="text-xs text-red-600 dark:text-gray-400">{{ $message }}</span>
                                 @enderror
                             </label>

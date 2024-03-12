@@ -25,7 +25,9 @@
                         @foreach($classroomID as $student)
                         <tr class="text-gray-700 dark:text-gray-400 flex" wire:key="{{$student->id}}">
                             <td class="w-1/9">#</td>
-                            <td class="w-1/9">First name</dh>
+                            <td class="w-1/9">
+                                <input type="number" class="w-1/9"/>
+                            </td>
                             <td class="w-1/9">Last name</td>
                             <td class="w-1/9">Compo 1</td>
                             <td class="w-1/9">Finale 1</td>

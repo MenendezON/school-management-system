@@ -215,12 +215,17 @@
                     </div>
                     <div class="flex px-2 my-2">
                         <div class="w-full md:w-1 mr-4 ml-4">
-                            <label class="block mt-4 text-sm">
+                        <label class="block mt-4 text-sm">
                                 <span class="text-gray-700 dark:text-gray-400">
-                                    Comments
+                                    Réservé à l'administration
                                 </span>
-                                <textarea wire:model="comments" class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"></textarea>
-                                @error('comments')
+                                <select wire:model="decision" class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
+                                    <option>Select a decision...</option>
+                                    @foreach(\App\Enums\ClassroomType::cases() as $decision)
+                                    <option value="{{ $decision->value }}">{{ $decision->name }}</option>
+                                    @endforeach
+                                </select>
+                                @error('decision')
                                 <span class="text-xs text-red-600 dark:text-gray-400">{{ $message }}</span>
                                 @enderror
                             </label>
@@ -246,16 +251,16 @@
                 <thead>
                     <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
                         <th class="px-4 py-3">
-                            <div class="flex item-center">Matricule</div>
+                            <div class="flex item-center">#</div>
                         </th>
                         <th class="px-4 py-3">
-                            <div class="flex item-center">First name</div>
+                            <div class="flex item-center">Prénom</div>
                         </th>
                         <th class="px-4 py-3">
-                            <div class="flex item-center">Last name</div>
+                            <div class="flex item-center">NOM</div>
                         </th>
                         <th class="px-4 py-3">
-                            <div class="flex item-center">Gender</div>
+                            <div class="flex item-center">Sexe</div>
                         </th>
                         <th class="px-4 py-3">
                             <div class="flex item-center">Email</div>
@@ -264,9 +269,12 @@
                             <div class="flex item-center">Phone</div>
                         </th>
                         <th class="px-4 py-3">
-                            <div class="flex item-center">Date and place of birth</div>
+                            <div class="flex item-center">Date de naissance</div>
                         </th>
-                        <th class="px-4 py-3">Last updated</th>
+                        <th class="px-4 py-3">
+                            <div class="flex item-center">Lieu de naissance</div>
+                        </th>
+                        <th class="px-4 py-3">Edité</th>
                         <th class="px-4 py-3">Created by</th>
                     </tr>
                 </thead>
@@ -283,7 +291,8 @@
                         <td class="px-4 py-3 text-sm">{{ $student->gender? 'Male':'Female' }}</td>
                         <td class="px-4 py-3 text-sm"><a href="mailto:{{ $student->email }}">{{ $student->email?$student->email:'-' }}</a></td>
                         <td class="px-4 py-3 text-sm">{{ $student->phone?$student->phone:'-' }}</td>
-                        <td class="px-4 py-3 text-sm">{{ \Carbon\Carbon::parse($student->date_of_birth)->format('d M Y') }}, {{ $student->place_of_birth }}</td>
+                        <td class="px-4 py-3 text-sm">{{ \Carbon\Carbon::parse($student->date_of_birth)->format('d M Y') }}, {{ \Carbon\Carbon::parse($student->date_of_birth)->diffForHumans() }}</td>
+                        <td class="px-4 py-3 text-sm">{{ $student->place_of_birth }}</td>
                         <td class="px-4 py-3 text-sm">{{ $student->updated_at->diffForHumans() }}</td>
                         <td class="px-4 py-3">
                             <div class="flex items-center space-x-4 text-sm">
