@@ -14,15 +14,18 @@ class StudentShow extends Component
     public $createTutorModal = false;
 
 
-    #[Rule("required|min:5|max:50")]
+    #[Rule("required|min:3|max:50")]
     public $first_name;
-    #[Rule("required|min:5|max:50")]
+    #[Rule("required|min:2|max:50")]
     public $last_name;
     #[Rule("required")]
     public $relationship;
+    public $nationality;
+    public $address;
+    public $occupation;
+    public $duty_station;
     #[Rule("required|min:13|max:20")]
-    public $phone_1;
-    public $phone_2;
+    public $phone;
     public $email = '';
 
     public function mount($id){
@@ -34,8 +37,8 @@ class StudentShow extends Component
     // Create a new tutor for a specific student
     public function create(){
         $this->validate();
-        $this->students->tutors()->create($this->only(['first_name', 'last_name','relationship','phone_1', 'phone_2', 'email']));
-        $this->reset('first_name', 'last_name', 'relationship', 'phone_1', 'phone_2', 'email');
+        $this->students->tutors()->create($this->only(['first_name', 'last_name','relationship', 'nationality', 'address', 'occupation', 'duty_station', 'phone', 'email']));
+        $this->reset('first_name', 'last_name','relationship', 'nationality', 'address', 'occupation', 'duty_station', 'phone', 'email');
         session()->flash('success', 'The tutor has been added successfully!');
         $this->createTutorModal = false;
 

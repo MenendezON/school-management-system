@@ -10,7 +10,7 @@ class Tutor extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['first_name', 'last_name', 'relationship', 'email', 'phone_1', 'phone_2'];
+    protected $fillable = ['first_name', 'last_name', 'relationship', 'nationality', 'address', 'occupation', 'duty_station', 'email', 'phone'];
 
     public function student(): BelongsTo
     {

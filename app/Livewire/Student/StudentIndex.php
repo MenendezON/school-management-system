@@ -11,7 +11,7 @@ class StudentIndex extends Component
 {
     use WithPagination;
 
-    #[Rule("required|min:2|max:50")]
+    #[Rule("required|min:3|max:50")]
     public $first_name;
     #[Rule("required|min:2|max:50")]
     public $last_name;
