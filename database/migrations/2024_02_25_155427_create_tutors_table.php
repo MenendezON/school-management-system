@@ -17,9 +17,12 @@ return new class extends Migration
             $table->string('first_name');
             $table->string('last_name');
             $table->string('relationship');
+            $table->string('nationality');
+            $table->string('address');
+            $table->string('occupation');
+            $table->string('duty_station');
             $table->string('email')->nullable();
-            $table->string('phone_1');
-            $table->string('phone_2')->nullable();
+            $table->string('phone');
             $table->foreignIdFor(Student::class);
             $table->timestamps();
         });
