@@ -13,7 +13,7 @@ class Student extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['first_name', 'last_name','place_of_birth','user_id','date_of_birth','address','city', 'country', 'email', 'phone', 'gender'];
+    protected $fillable = ['first_name', 'last_name','place_of_birth', 'date_of_birth', 'gender', 'nationality', 'address','city', 'email', 'phone', 'previous_school', 'blood_group', 'medical_history', 'allergies', 'decision'];
 
     public function user(): BelongsTo{
         return $this->belongsTo(User::class);
@@ -21,7 +21,17 @@ class Student extends Model
 
     public function classrooms(): BelongsToMany
     {
-        return $this->belongsToMany(Classroom::class)->withPivot('id', 'schoolyear', 'observations');
+        return $this->belongsToMany(Classroom::class, 'registrations')->withPivot('academic_year', 'observations')->withTimestamps();
+    }
+
+    public function classroomfees(): BelongsToMany
+    {
+        return $this->belongsToMany(Classroom::class, 'tuitions')->withPivot('id', 'academic_year', 'label', 'amount')->withTimestamps();
+    }
+
+    public function subjects(): BelongsToMany
+    {
+        return $this->belongsToMany(Subject::class, 'notes')->withPivot('average', 'appreciation')->withTimestamps();
     }
 
     public function Tutors(): HasMany

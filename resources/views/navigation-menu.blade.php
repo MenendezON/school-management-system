@@ -11,7 +11,7 @@
                     <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
                         <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
                     </svg>
-                    <span class="ml-4">{{ __('Dashboard') }}</span>
+                    <span class="ml-4">{{ __('Tableau de bord') }}</span>
                 </x-nav-link>
             </li>
             <li class="relative px-6 py-3">
@@ -23,9 +23,34 @@
                         <circle cx="17" cy="5" r="2" />
                         <path d="M15 22v-4h-2l2 -6a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1l2 6h-2v4" />
                     </svg>
-                    <span class="ml-4">{{ __('Students') }}</span>
+                    <span class="ml-4">{{ __('Elèves') }}</span>
                 </x-nav-link>
             </li>
+            <li class="relative px-6 py-3">
+                <x-nav-link href="{{ route('studentclassroom-index') }}" :active="request()->routeIs('studentclassroom-index')" wire:navigate>
+                    <svg class="h-5 w-5 text-purple-600" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" />
+                        <circle cx="7" cy="5" r="2" />
+                        <path d="M5 22v-5l-1-1v-4a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4l-1 1v5" />
+                        <circle cx="17" cy="5" r="2" />
+                        <path d="M15 22v-4h-2l2 -6a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1l2 6h-2v4" />
+                    </svg>
+                    <span class="ml-4">{{ __('Année académique') }}</span>
+                </x-nav-link>
+            </li>
+            <li class="relative px-6 py-3">
+                <x-nav-link href="{{ route('tuition-index') }}" :active="request()->routeIs('tuition-index')" wire:navigate>
+                    <svg class="h-5 w-5 text-purple-600" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" />
+                        <circle cx="7" cy="5" r="2" />
+                        <path d="M5 22v-5l-1-1v-4a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4l-1 1v5" />
+                        <circle cx="17" cy="5" r="2" />
+                        <path d="M15 22v-4h-2l2 -6a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1l2 6h-2v4" />
+                    </svg>
+                    <span class="ml-4">{{ __('Scolarité') }}</span>
+                </x-nav-link>
+            </li>
+            <hr/>
             <li class="relative px-6 py-3">
                 <x-nav-link href="{{ route('classroom-index') }}" :active="request()->routeIs('classroom-index')" wire:navigate>
                     <svg class="h-5 w-5 text-purple-600" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -35,11 +60,11 @@
                         <circle cx="17" cy="5" r="2" />
                         <path d="M15 22v-4h-2l2 -6a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1l2 6h-2v4" />
                     </svg>
-                    <span class="ml-4">{{ __('Classrooms') }}</span>
+                    <span class="ml-4">{{ __('Salle de classe') }}</span>
                 </x-nav-link>
             </li>
             <li class="relative px-6 py-3">
-                <x-nav-link href="{{ route('studentclassroom-index') }}" :active="request()->routeIs('cstudentclassroom-index')" wire:navigate>
+                <x-nav-link href="{{ route('teacher-index') }}" :active="request()->routeIs('teacher-index')" wire:navigate>
                     <svg class="h-5 w-5 text-purple-600" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                         <path stroke="none" d="M0 0h24v24H0z" />
                         <circle cx="7" cy="5" r="2" />
@@ -47,7 +72,7 @@
                         <circle cx="17" cy="5" r="2" />
                         <path d="M15 22v-4h-2l2 -6a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1l2 6h-2v4" />
                     </svg>
-                    <span class="ml-4">{{ __('Academic year') }}</span>
+                    <span class="ml-4">{{ __('Enseignants') }}</span>
                 </x-nav-link>
             </li>
         </ul>

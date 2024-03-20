@@ -1,10 +1,9 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-
-use App\Models\User;
 
 return new class extends Migration
 {
@@ -17,17 +16,24 @@ return new class extends Migration
             $table->id();
             $table->string('first_name');
             $table->string('last_name');
-            $table->string('place_of_birth');
             $table->date('date_of_birth');
-            $table->string('city');
-            $table->string('country');
-            $table->foreignIdFor(User::class);
-            $table->string('email')->nullable();
+            $table->string('place_of_birth');
+            $table->string('gender');
+            $table->string('nationality');
             $table->string('address');
+            $table->string('city');
+            $table->string('email')->nullable();
             $table->string('phone')->nullable();
-            $table->enum('gender', ['Homme', 'Femme'])->default('Homme');
+            $table->string('previous_school');
+            $table->stirng('previous_grade');
+            $table->string('blood_group');
+            $table->text('medical_history');
+            $table->text('allergies');
+            $table->string('decision');
+            $table->foreignIdFor(User::class);
             $table->timestamps();
         });
+
     }
 
     /**

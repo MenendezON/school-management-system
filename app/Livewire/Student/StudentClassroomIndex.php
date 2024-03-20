@@ -5,30 +5,39 @@ namespace App\Livewire\Student;
 use Livewire\Component;
 use App\Models\Classroom;
 use App\Models\Student;
+use Livewire\WithPagination;
 
 class StudentClassroomIndex extends Component
 {
 
-    public $schoolyear;
+    use WithPagination;
+
+    public $academic_year;
     public $studentId;
     public $classroomId;
     public $observations = '';
 
-    
+    public $speclassroom = [];
 
-    public function create(){
-
+    public function create()
+    {
         //$this->validate();
         $student = Student::find($this->studentId);
         $classroom = Classroom::find($this->classroomId);
 
-    // Adding the product to the cart with the specified quantity
-        $classroom->students()->attach($student->id, ['schoolyear' => $this->schoolyear, 'observations'=> $this->observations]);
+        // Adding the product to the cart with the specified quantity
+        $classroom->students()->attach($student->id, ['observations' => $this->observations, 'academic_year' => $this->academic_year]);
 
-        $this->reset('studentId', 'classroomId', 'schoolyear', 'observations');
+        $this->reset('studentId', 'classroomId', 'academic_year', 'observations');
 
         session()->flash('success', 'The student has beed added successfully to the classroom');
         $this->createStudentClassroomModal = false;
+    }
+
+    public function fillClassroom()
+    {
+        $dec = Student::find($this->studentId)->decision;
+        $this->speclassroom = Classroom::where('type', $dec)->get();
     }
 
     public function generateSchoolYears()
@@ -37,7 +46,7 @@ class StudentClassroomIndex extends Component
         $schoolYear = [];
 
         for ($year = $currentYear; $year >= 2000; $year--) {
-            $schoolYear[] = $year; 
+            $schoolYear[] = $year;
         }
         return $schoolYear;
     }
@@ -51,13 +60,17 @@ class StudentClassroomIndex extends Component
 
     public function render()
     {
-       
 
 
-        $students = Student::orderBy('id','desc')->paginate(10);
+
+        $students = Student::orderBy('id', 'desc')->paginate(10);
 
         // find product in the order and access extra field 'quantity' from pivot
         //$quantity = $order->products->find($product->id)->pivot->quantity;
-        return view('livewire.student.studentclassroom-index', ['students' => $students, 'generateSchoolYears' => $this->generateSchoolYears()])->layout('layouts.app');
+        return view('livewire.student.studentclassroom-index', [
+            'students' => $students,
+            'generateSchoolYears' => $this->generateSchoolYears(),
+            'speclassroom' => $this->speclassroom,
+        ])->layout('layouts.app');
     }
 }

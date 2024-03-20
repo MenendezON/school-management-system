@@ -2,10 +2,14 @@
 
 use App\Livewire\Dashboard;
 use App\Livewire\Student\ClassroomIndex;
+use App\Livewire\Student\NoteIndex;
 use App\Livewire\Student\ShowClassroom;
 use App\Livewire\Student\StudentclassroomIndex;
 use App\Livewire\Student\StudentIndex;
+use App\Livewire\Student\TuitionIndex;
 use App\Livewire\Student\StudentShow;
+use App\Livewire\Student\SubjectIndex;
+use App\Livewire\Student\TeacherIndex;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -38,8 +42,12 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
     //Route::get('/students/{id}/tutors', StudentShow::class)->name('student-tutor-index');
     Route::get('/classrooms', ClassroomIndex::class)->name('classroom-index');
     Route::get('/classrooms/{id}', ShowClassroom::class)->name('classroom-show');
+    Route::get('/classrooms/{id}/subjects', SubjectIndex::class)->name('subject-index');
+    Route::get('/classrooms/{idclassroom}/subjects/{idsubject}/notes', NoteIndex::class)->name('note-index');
 
 
     Route::get('/studentclassroom', StudentclassroomIndex::class)->name('studentclassroom-index');
+    Route::get('/tuition', TuitionIndex::class)->name('tuition-index');
+    Route::get('/teacher', TeacherIndex::class)->name('teacher-index');
 
 });

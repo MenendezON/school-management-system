@@ -15,6 +15,7 @@ class ClassroomIndex extends Component
     public $name;
     #[Rule("required")]
     public $type;
+    public $capacity = 0;
 
     public $createClassroomModal = false;
 
@@ -26,8 +27,8 @@ class ClassroomIndex extends Component
     public function create()
     {
         $this->validate();
-        auth()->user()->classrooms()->create($this->only(['name', 'type']));
-        $this->reset('name', 'type');
+        Classroom::create($this->only(['name', 'type', 'capacity']));
+        $this->reset('name', 'type', 'capacity');
 
         session()->flash('success', 'The classroom has been added successfully!');
         $this->createClassroomModal = false;
