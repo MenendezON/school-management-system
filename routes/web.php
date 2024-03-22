@@ -9,6 +9,8 @@ use App\Livewire\Student\StudentIndex;
 use App\Livewire\Student\TuitionIndex;
 use App\Livewire\Student\StudentShow;
 use App\Livewire\Student\SubjectIndex;
+use App\Livewire\Student\SurveyIndex;
+use App\Livewire\Student\SurveyShow;
 use App\Livewire\Student\TeacherIndex;
 use Illuminate\Support\Facades\Route;
 
@@ -39,6 +41,8 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
     Route::get('/dashboard', Dashboard::class)->name('dashboard');
     Route::get('/students', StudentIndex::class)->name('student-index');
     Route::get('/students/{id}', StudentShow::class)->name('student-show');
+    Route::get('/survey', SurveyIndex::class)->name('survey-index');
+    Route::get('/survey/{id}', SurveyShow::class)->name('survey-show');
     //Route::get('/students/{id}/survey', SurveyIndex::class)->name('survey-index');
     //Route::get('/students/{id}/tutors', StudentShow::class)->name('student-tutor-index');
     Route::get('/classrooms', ClassroomIndex::class)->name('classroom-index');
