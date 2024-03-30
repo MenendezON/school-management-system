@@ -12,7 +12,7 @@ class NoteIndex extends Component
     public $subjectID = 'subject ID';
 
     public function mount($idclassroom, $idsubject){
-        $this->classroomID = Classroom::find($idclassroom)->students()->where('academic_year', '2024 - 2025')->get();
+        $this->classroomID = Classroom::find($idclassroom)->students()->where('academic_year', '2024-2025')->get();
         $this->subjectID = Classroom::find($idclassroom)->Subjects()->get();//Subject::find($idsubject);
     }
 

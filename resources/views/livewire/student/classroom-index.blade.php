@@ -88,11 +88,12 @@
             <table class="w-full whitespace-no-wrap">
                 <thead>
                     <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-                        <th class="px-4 py-3">
-                            <div class="flex item-center">Nom de la classe</div>
-                        </th>
+                        
                         <th class="px-4 py-3">
                             <div class="flex item-center">Type</div>
+                        </th>
+                        <th class="px-4 py-3">
+                            <div class="flex item-center">Nom de la classe</div>
                         </th>
                         <th class="px-4 py-3">
                             <div class="flex item-center">Capacité</div>
@@ -107,12 +108,12 @@
                 <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
                     @foreach($classrooms as $classroom)
                     <tr class="text-gray-700 dark:text-gray-400" wire:key="{{$classroom->id}}">
+                        <td class="px-4 py-3 text-sm">{{ $classroom->type }}</td>
                         <td class="px-4 py-3">
                             <x-nav-link href="{{ route('classroom-show', ['id' => $classroom->id]) }}" wire:navigate>
                                 {{ $classroom->name }}
                             </x-nav-link>
                         </td>
-                        <td class="px-4 py-3 text-sm">{{ $classroom->type }}</td>
                         <td class="px-4 py-3">{{ $classroom->capacity }}</td>
                         <td class="px-4 py-3">
                             <x-nav-link href="{{ route('subject-index', ['id' => $classroom->id]) }}" wire:navigate>

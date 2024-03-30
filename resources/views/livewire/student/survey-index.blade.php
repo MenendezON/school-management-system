@@ -10,6 +10,7 @@
     <div class="flex">
         <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
             Mes questionnaires
+        </h2>
     </div>
 
     <div>
@@ -78,15 +79,15 @@
                         <th class="px-4 py-3">
                             <div class="flex item-center">Questions</div>
                         </th>
-                        <th class="px-4 py-3">Créé</th>
-                        <th class="px-4 py-3">Edité</th>
+                        <th class="px-4 py-3">Création</th>
+                        <th class="px-4 py-3">Modification</th>
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
                     @foreach($surveys as $survey)
                     <tr class="text-gray-700 dark:text-gray-400" wire:key="{{$survey->id}}">
                         <td class="px-4 py-3">
-                            <x-nav-link href="{{ route('survey-show', ['id' => $survey->id]) }}" wire:navigate>
+                            <x-nav-link href="{{ route('survey-show', ['idsurvey' => $survey->id]) }}" wire:navigate>
                                 {{ $survey->title }}
                             </x-nav-link>
                         </td>
