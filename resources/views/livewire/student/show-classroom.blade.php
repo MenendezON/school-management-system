@@ -1,7 +1,7 @@
 <div>
     <div class="container-fluid px-6 mx-auto grid">
         <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
-            Dashboard
+            Salle de classe
         </h2>
 
 
@@ -17,8 +17,7 @@
                 </div>
                 <div>
                     <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
-                    <h2 class="my-6 mb-2 text-2xl font-semibold text-gray-700 dark:text-gray-200">{{ $classroom->value('name') }}</h2>
-                    <h3>Type: {{ $classroom->value('type') }}</h3>
+                    <h2 class="my-6 mb-2 text-2xl font-semibold text-gray-700 dark:text-gray-200">Pédago {{ $classroom->value('type') }} {{ $classroom->value('name') }}</h2>
                     <p class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
                         Total: {{ $classroom->count() }} students
                     </p>
@@ -39,13 +38,7 @@
                     <thead>
                         <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
                             <th class="px-4 py-3">
-                                <div class="flex item-center">#</div>
-                            </th>
-                            <th class="px-4 py-3">
-                                <div class="flex item-center">First name</div>
-                            </th>
-                            <th class="px-4 py-3">
-                                <div class="flex item-center">Last name</div>
+                                <div class="flex item-center">Nom complet</div>
                             </th>
                             <th class="px-4 py-3">
                                 <div class="flex item-center">Gender</div>
@@ -66,9 +59,21 @@
                     <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
                         @foreach($classroom as $student)
                         <tr class="text-gray-700 dark:text-gray-400" wire:key="{{$student->id}}">
-                            <td class="px-4 py-3">{{ $student->id }}</td>
-                            <td class="px-4 py-3">{{ ucwords($student->first_name) }}</td>
-                            <td class="px-4 py-3 text-sm">{{ strtoupper($student->last_name) }}</td>
+                            <td class="px-4 py-3">
+                                <x-nav-link href="{{ route('student-show', ['id' => $student->id]) }}" wire:navigate class="flex items-center text-sm">
+                                    <!-- Avatar with inset shadow -->
+                                    <div class="relative hidden w-8 h-8 mr-3 rounded-full md:block">
+                                        <img class="object-cover w-full h-full rounded-full" src="https://www.shareicon.net/data/512x512/2016/07/26/802043_man_512x512.png" alt="" loading="lazy" />
+                                        <div class="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></div>
+                                    </div>
+                                    <div>
+                                        <p>{{ ucwords($student->first_name) }}</p>
+                                        <p class="text-xs text-gray-600 dark:text-gray-400">
+                                            {{ strtoupper($student->last_name) }}
+                                        </p>
+                                    </div>
+                                </x-nav-link>
+                            </td>
                             <td class="px-4 py-3 text-sm">{{ $student->gender? 'Male':'Female' }}</td>
                             <td class="px-4 py-3 text-sm"><a href="mailto:{{ $student->email }}">{{ $student->email }}</a></td>
                             <td class="px-4 py-3 text-sm">{{ $student->phone }}</td>

@@ -38,5 +38,10 @@ class Student extends Model
     {
         return $this->hasMany(Tutor::class);
     }
+
+    public function options():HasMany
+    {
+        return $this->hasMany(Option::class);
+    }
     
 }

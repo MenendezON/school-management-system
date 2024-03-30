@@ -15,12 +15,13 @@ class ShowClassroom extends Component
     public function mount($id)
     {
         $this->id = $id;
-        date('m') <= 7 ? $this->yearfilter = (date('Y') - 1) . ' - ' . date('Y') : $this->yearfilter = date('Y') . ' - ' . (date('Y') + 1);
+        date('m') <= 7 ? $this->yearfilter = (date('Y') - 1) . '-' . date('Y') : $this->yearfilter = date('Y') . '-' . (date('Y') + 1);
     }
 
     public function generateSchoolYears()
     {
-        $currentYear = date('Y');
+        date('m') <= 6 ? $currentYear = date('Y')-1 : $currentYear = date('Y');
+        //$currentYear = date('Y');
         $schoolYear = [];
 
         for ($year = $currentYear; $year >= 2000; $year--) {

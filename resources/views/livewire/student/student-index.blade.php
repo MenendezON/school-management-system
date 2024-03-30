@@ -269,6 +269,9 @@
                             <div class="flex item-center">Lieu de naissance</div>
                         </th>
                         <th class="px-4 py-3">
+                            <div class="flex item-center">Classe</div>
+                        </th>
+                        <th class="px-4 py-3">
                             <div class="flex item-center">Tuteur</div>
                         </th>
                     </tr>
@@ -297,6 +300,12 @@
                         <td class="px-4 py-3 text-sm">{{ $student->phone?$student->phone:'-' }}</td>
                         <td class="px-4 py-3 text-sm">{{ \Carbon\Carbon::parse($student->date_of_birth)->format('d M Y') }}, {{ \Carbon\Carbon::parse($student->date_of_birth)->diffForHumans() }}</td>
                         <td class="px-4 py-3 text-sm">{{ $student->place_of_birth }}</td>
+                        <td class="px-4 py-3 text-sm">
+                            @foreach($student->classrooms as $classroom)
+                              Pédago {{ $classroom->type }} {{ $classroom->name }}
+                              @break
+                            @endforeach
+                        </td>
                         @foreach($student->tutors as $tutor)
                         <td class="px-4 py-3 text-sm">{{ $tutor->relationship=='Tuteur'?$tutor->first_name:'' }} {{ $tutor->relationship=='Tuteur'?strtoupper($tutor->last_name):'' }}</td>
                         @endforeach

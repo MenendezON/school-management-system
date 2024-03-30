@@ -42,7 +42,7 @@ class ClassroomIndex extends Component
     public function render()
     {
         $classrooms = Classroom::orderBy('id', 'desc')
-            ->paginate(10);
+            ->paginate(13);
         return view('livewire.student.classroom-index', ['classrooms' => $classrooms])->layout('layouts.app');
     }
 }

@@ -2,7 +2,9 @@
 
 namespace App\Livewire\Student;
 
+use App\Models\Option;
 use App\Models\Student;
+use App\Models\Survey;
 use App\Models\Tutor;
 use Livewire\Attributes\Rule;
 use Livewire\Component;
@@ -51,6 +53,17 @@ class StudentShow extends Component
 
     public function render()
     {
-        return view('livewire.student.student-show', ['student' => $this->students])->layout('layouts.app');
+        $evaluations = Option::select('options.quarter', 'surveys.title', 'options.academic_year')
+        ->join('questions', 'options.question_id', '=', 'questions.id')
+        ->join('surveys', 'questions.survey_id', '=', 'surveys.id')
+        ->where('options.student_id', $this->id)
+        ->groupBy('options.quarter', 'surveys.title', 'options.academic_year')
+        ->get();
+
+        //dd($evaluation);
+        return view('livewire.student.student-show', [
+            'student' => $this->students,
+            'evaluations' => $evaluations,
+            ])->layout('layouts.app');
     }
 }
