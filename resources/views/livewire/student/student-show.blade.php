@@ -8,7 +8,7 @@
     @endif
 
     <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
-        Dossier de l'élève
+        {{ Str::of("Dossier de l'élève")->headline() }}
     </h2>
 
     <!-- Cards -->
@@ -23,11 +23,11 @@
             <div>
                 <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
                 <h2 class="my-6 mb-2 text-2xl font-semibold text-gray-700 dark:text-gray-200">
-                    {{ $students->first_name }} {{ $students->last_name }}
+                    {{ $student->first_name }} {{ $student->last_name }}
                 </h2>
-                <h3>{{ $students->date_of_birth }}, {{ $students->place_of_birth }}</h3>
+                <h3>{{ $student->date_of_birth }}, {{ $student->place_of_birth }}</h3>
                 <p class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
-                    {{ $students->nationality }}
+                    {{ $student->nationality }}
                 </p>
                 </p>
             </div>
@@ -36,7 +36,7 @@
 
     <div class="flex mt-6">
         <h2 class="my-2 mr-3 text-2xl font-semibold text-gray-700 dark:text-gray-200">
-            Tutor(s)
+            {{ Str::of('Lien parenté')->headline() }}
         </h2>
         <x-button wire:click="showCreateTutorModal" class="mb-2">
             {{ __('Add new') }}
@@ -55,7 +55,7 @@
                         <div class="w-full md:w-1/2 mr-4 ml-4">
                             <label class="block mt-4 text-sm">
                                 <span class="text-gray-700 dark:text-gray-400">
-                                    First name
+                                    {{ _('Prénom') }}
                                 </span>
                                 <input wire:model="first_name" class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" />
                                 @error('first_name')
@@ -66,7 +66,7 @@
                         <div class="w-full md:w-1/2 mr-4 ml-4">
                             <label class="block mt-4 text-sm">
                                 <span class="text-gray-700 dark:text-gray-400">
-                                    Last name
+                                    {{ _('Nom') }}
                                 </span>
                                 <input wire:model="last_name" class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" />
                                 @error('last_name')
@@ -179,7 +179,7 @@
                     <div class="px-2 my-2">
                         <div class="w-full md:w-2/3 mr-4 ml-4">
                             <x-button wire:click="create">
-                                {{ __('Create') }}
+                                {{ __('Créer') }}
                             </x-button>
                         </div>
                     </div>
@@ -212,7 +212,7 @@
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
-                    @foreach($students->tutors as $tutor)
+                    @foreach($student->tutors as $tutor)
                     <tr class="text-gray-700 dark:text-gray-400" wire:key="{{$tutor->id}}">
                         <td class="px-4 py-3">{{ $tutor->first_name }} {{ $tutor->last_name }}</td>
                         <td class="px-4 py-3 text-sm">{{ $tutor->relationship }}</td>
@@ -246,11 +246,8 @@
 
     <div class="flex mt-6">
         <h2 class="my-2 mr-3 text-2xl font-semibold text-gray-700 dark:text-gray-200">
-            Année académique
+            {{ Str::of("Année académique")->headline() }}
         </h2>
-        <x-button wire:click="showCreateTutorModal" class="mb-2">
-            {{ __('Add new') }}
-        </x-button>
     </div>
     <div class="w-full overflow-hidden rounded-lg shadow-xs">
         <div class="w-full overflow-x-auto">
@@ -271,7 +268,7 @@
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
-                    @foreach($students->classrooms as $classroom)
+                    @foreach($student->classrooms as $classroom)
                     <tr class="text-gray-700 dark:text-gray-400" wire:key="">
                         <td class="px-4 py-3 text-sm">{{ $classroom->pivot->academic_year }}</td>
                         <td class="px-4 py-3">Pédago {{ $classroom->type }} {{ $classroom->name }}</td>
@@ -291,9 +288,12 @@
                                 <x-slot name="content">
                                     <div class="w-66">
                                         @if(route('student-show', ['id' => $student->id]))
-                                        @if(strtoupper($classroom->name) === "INDIGO")
-                                        <x-dropdown-link href="{{ route('student-survey-show', ['id' => $student->id, 'idsurvey' => 1]) }}">{{ __('Progression des apprentissages') }}</x-dropdown-link>
-                                        @endif
+                                            @if(strtoupper($classroom->name) === "INDIGO")
+                                                <x-dropdown-link href="{{ route('student-survey-show', ['id' => $student->id, 'idsurvey' => 1]) }}?ay={{ $classroom->pivot->academic_year }}">{{ __('Progression des apprentissages') }}</x-dropdown-link>
+                                            @endif
+                                            @if($classroom->name === "Académique")
+                                                <x-dropdown-link href="{{ route('student-survey-show', ['id' => $student->id, 'idsurvey' => 2]) }}">{{ __('Progression des apprentissages') }}</x-dropdown-link>
+                                            @endif
                                         @endif
                                     </div>
                                 </x-slot>
