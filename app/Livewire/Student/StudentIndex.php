@@ -5,11 +5,15 @@ namespace App\Livewire\Student;
 use Livewire\Attributes\Rule;
 use Livewire\Component;
 use App\Models\Student;
+use Livewire\Attributes\On;
 use Livewire\WithPagination;
 
 class StudentIndex extends Component
 {
     use WithPagination;
+
+    public ?Student $student;
+    public $editMode = false;
 
     #[Rule("required|min:3|max:50")]
     public $first_name;
@@ -41,6 +45,27 @@ class StudentIndex extends Component
 
     public $createPostModal = false;
 
+    public function setStudent($student)
+    {
+        $this->student = $student;
+        $this->editMode = true;
+        $this->first_name = $student->first_name;
+        $this->last_name = $student->last_name;
+        $this->date_of_birth = $student->date_of_birth;
+        $this->place_of_birth = $student->place_of_birth;
+        $this->gender = $student->gender;
+        $this->nationality = $student->nationality;
+        $this->blood_group = $student->blood_group;
+        $this->email = $student->email;
+        $this->phone = $student->phone;
+        $this->address = $student->address;
+        $this->city = $student->city;
+        $this->previous_school = $student->previous_school;
+        $this->medical_history = $student->medical_history;
+        $this->allergies = $student->allergies;
+        $this->decision = $student->decision;
+    }
+
 
     public function showCreatePostModal()
     {
@@ -50,11 +75,19 @@ class StudentIndex extends Component
     public function create()
     {
         $this->validate();
-        auth()->user()->students()->create($this->only(['first_name', 'last_name', 'date_of_birth', 'nationality', 'gender', 'phone', 'place_of_birth', 'city', 'email', 'address', 'previous_school', 'blood_group', 'medical_history', 'allergies', 'decision']));
-        $this->reset('first_name', 'last_name', 'date_of_birth', 'nationality', 'gender', 'phone', 'place_of_birth', 'city', 'email', 'address', 'previous_school', 'blood_group', 'medical_history', 'allergies', 'decision');
 
-        session()->flash('success', 'The student has been added successfully!');
-        $this->createPostModal = false;
+        if ($this->editMode) {
+            $this->student->update($this->all());
+            $this->reset();
+            request()->session()->flash('success', _("L'élève a été mise à jour!"));
+            $this->createPostModal = false;
+        } else {
+            auth()->user()->students()->create($this->only(['first_name', 'last_name', 'date_of_birth', 'nationality', 'gender', 'phone', 'place_of_birth', 'city', 'email', 'address', 'previous_school', 'blood_group', 'medical_history', 'allergies', 'decision']));
+            $this->reset();
+
+            request()->session()->flash('success', _('The student has been added successfully!'));
+            $this->createPostModal = false;
+        }
     }
 
     public function removeflash()
@@ -62,15 +95,29 @@ class StudentIndex extends Component
         session()->remove('success');
     }
 
-    
+    #[On('edit-student')]
+    public function editStudent($id)
+    {
+        $student = Student::findOrFail($id);
+        $this->setStudent($student);
+
+        $this->showCreatePostModal();
+        //dd($student);
+    }
+
+    public function deleteStudent(Student $student)
+    {
+        $student->delete();
+    }
+
 
     public function render()
     {
         $students = Student::orderBy('id', 'desc')
             ->paginate(10);
         return view('livewire.student.student-index', [
-            'students' => $students, 
-            ])
+            'students' => $students,
+        ])
             ->layout('layouts.app');
     }
 }
