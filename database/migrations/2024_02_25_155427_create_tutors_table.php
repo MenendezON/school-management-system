@@ -19,8 +19,8 @@ return new class extends Migration
             $table->string('relationship');
             $table->string('nationality');
             $table->string('address');
-            $table->string('occupation');
-            $table->string('duty_station');
+            $table->string('occupation')->nullable();
+            $table->string('duty_station')->nullable();
             $table->string('email')->nullable();
             $table->string('phone');
             $table->foreignIdFor(Student::class);
