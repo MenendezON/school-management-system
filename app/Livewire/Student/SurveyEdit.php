@@ -7,6 +7,7 @@ use App\Models\Option;
 use App\Models\Question;
 use App\Models\Student;
 use App\Models\Survey;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
@@ -23,14 +24,14 @@ class SurveyEdit extends Component
     public $questions = [];
     public $option = [];
 
-    public function mount($idsurvey, $id)
+    public function mount(Request $request, $idsurvey, $id)
     {
         $this->student = Student::find($id);
         $this->classroom = DB::table('registrations')
             ->join('students', 'registrations.student_id', '=', 'students.id')
             ->join('classrooms', 'registrations.classroom_id', '=', 'classrooms.id')
             ->where('students.id', $id)
-            ->where('academic_year', '2024-2025')
+            ->where('academic_year', $request->input('ay'))
             ->get();
         $this->survey = Survey::find($idsurvey);
 

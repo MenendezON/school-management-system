@@ -34,7 +34,7 @@
                                 <select wire:model="studentId" class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
                                     <option>Select a type...</option>
                                     @foreach (\App\Models\Student::all() as $student)
-                                    <option value="{{ $student->id }}">(Matricule) - {{ $student->first_name }} {{ $student->last_name }} </option>
+                                    <option value="{{ $student->id }}">{{ $student->first_name }} {{ $student->last_name }} </option>
                                     @endforeach
                                 </select>
                                 @error('studentId')
