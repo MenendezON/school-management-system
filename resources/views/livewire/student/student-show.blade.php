@@ -34,6 +34,29 @@
         </div>
     </div>
 
+    <div x-data="{ tab: window.location.hash ? window.location.hash : '#tab1' }">
+        <div class="flex flex-row justify-between">
+
+            <a class="px-4 border-b-2 border-gray-900 hover:border-teal-300" href="#" x-on:click.prevent="tab='#tab1'">Tab1</a>
+
+            <a class="px-4 border-b-2 border-gray-900 hover:border-teal-300" href="#" x-on:click.prevent="tab='#tab2'">Tab2</a>
+
+            <a class="px-4 border-b-2 border-gray-900 hover:border-teal-300" href="#" x-on:click.prevent="tab='#tab3'">Tab3</a>
+
+        </div>
+        <div x-show="tab == '#tab1'" x-cloak>
+            <p>This is the content of Tab 1</p>
+        </div>
+
+        <div x-show="tab == '#tab2'" x-cloak>
+            <p>This is the content of Tab 2</p>
+        </div>
+
+        <div x-show="tab == '#tab3'" x-cloak>
+            <p>This is the content of Tab 3</p>
+        </div>
+    </div>
+
     <div class="flex mt-6">
         <h2 class="my-2 mr-3 text-2xl font-semibold text-gray-700 dark:text-gray-200">
             {{ Str::of('Lien parenté')->headline() }}

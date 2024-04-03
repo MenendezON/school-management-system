@@ -320,12 +320,12 @@
                             @endforeach
                         </td>
                         <td class="px-4 py-3 text-sm">
-                        @foreach($student->tutors as $tutor)
+                            @foreach($student->tutors as $tutor)
                             @if($tutor->relationship=='Tuteur')
-                                {{ ucwords($tutor->first_name) }} {{ strtoupper($tutor->last_name) }}<br>
-                                {{ $tutor->phone }}<br>
+                            {{ ucwords($tutor->first_name) }} {{ strtoupper($tutor->last_name) }}<br>
+                            {{ $tutor->phone }}<br>
                             @endif
-                        @endforeach
+                            @endforeach
                         </td>
                         <td class="px-0 py-0">
                             <div class="flex items-center space-x-4 text-sm">
@@ -342,7 +342,7 @@
                                 </x-button>
                             </div>
                         </td>
-                        
+
                     </tr>
                     @endforeach
                 </tbody>
