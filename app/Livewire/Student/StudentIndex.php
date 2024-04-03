@@ -49,8 +49,8 @@ class StudentIndex extends Component
     {
         $this->student = $student;
         $this->editMode = true;
-        $this->first_name = $student->first_name;
-        $this->last_name = $student->last_name;
+        $this->first_name = ucwords($student->first_name);
+        $this->last_name = strtoupper($student->last_name);
         $this->date_of_birth = $student->date_of_birth;
         $this->place_of_birth = $student->place_of_birth;
         $this->gender = $student->gender;
