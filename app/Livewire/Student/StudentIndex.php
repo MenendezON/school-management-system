@@ -102,7 +102,6 @@ class StudentIndex extends Component
         $this->setStudent($student);
 
         $this->showCreatePostModal();
-        //dd($student);
     }
 
     public function deleteStudent(Student $student)
