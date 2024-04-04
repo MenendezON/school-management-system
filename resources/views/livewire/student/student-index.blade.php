@@ -95,8 +95,9 @@
                                 </span>
                                 <select wire:model="nationality" class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
                                     <option>Sélectionner un pays...</option>
-                                    <option value="Senegal">Senegal</option>
-                                    <option value="Haiti">Haiti</option>
+                                    @foreach(\App\Enums\CountryType::cases() as $country)
+                                    <option value="{{ $country->value }}">{{ $country->name }}</option>
+                                    @endforeach
                                 </select>
                                 @error('nationality')
                                 <span class="text-xs text-red-600 dark:text-gray-400">{{ $message }}</span>
@@ -175,7 +176,7 @@
                         </div>
                     </div>
                     <div class="flex px-2 my-2">
-                        <div class="w-full md:w-1 mr-4 ml-4">
+                        <div class="w-full md:w-4/4 mr-4 ml-4">
                             <label class="block mt-4 text-sm">
                                 <span class="text-gray-700 dark:text-gray-400">
                                     Ecole précédente
@@ -188,7 +189,7 @@
                         </div>
                     </div>
                     <div class="flex px-2 my-2">
-                        <div class="w-full md:w-1 mr-4 ml-4">
+                        <div class="w-full md:w-1/1 mr-4 ml-4">
                             <label class="block mt-4 text-sm">
                                 <span class="text-gray-700 dark:text-gray-400">
                                     Vaccination
@@ -201,7 +202,7 @@
                         </div>
                     </div>
                     <div class="flex px-2 my-2">
-                        <div class="w-full md:w-1 mr-4 ml-4">
+                        <div class="w-full md:w-1/1 mr-4 ml-4">
                             <label class="block mt-4 text-sm">
                                 <span class="text-gray-700 dark:text-gray-400">
                                     Allergie et diagnostique
@@ -214,7 +215,7 @@
                         </div>
                     </div>
                     <div class="flex px-2 my-2">
-                        <div class="w-full md:w-1 mr-4 ml-4">
+                        <div class="w-full md:w-1/1 mr-4 ml-4">
                             <label class="block mt-4 text-sm">
                                 <span class="text-gray-700 dark:text-gray-400">
                                     Réservé à l'administration
@@ -327,7 +328,7 @@
                             @endif
                             @endforeach
                         </td>
-                        <td class="px-0 py-0">
+                        <td class="px-4 py-3">
                             <div class="flex items-center space-x-4 text-sm">
                                 <x-button type="button" wire:click="$dispatch('edit-student', {id: {{$student->id}}})" class="bg-green-500 hover:bg-green-700" aria-label="Edit">
                                     <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
