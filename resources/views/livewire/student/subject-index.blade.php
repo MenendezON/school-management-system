@@ -13,7 +13,7 @@
 
         <!-- Cards -->
         <!-- Cards -->
-        <div class="grid gap-6 mb-8 md:grid-cols-8 xl:grid-cols-16">
+        <div class="w-full">
             <!-- Card -->
             <div class="flex items-center p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">
                 <div class="p-3 mr-4 text-orange-500 bg-orange-100 rounded-full dark:text-orange-100 dark:bg-orange-500">
@@ -51,7 +51,7 @@
             <form>
                 <x-slot name="content">
                     <div class="flex px-2 my-2">
-                        <div class="w-full md:w-1 mr-4 ml-4">
+                        <div class="w-full md:w-1/1 mr-4 ml-4">
                             <label class="block mt-4 text-sm">
                                 <span class="text-gray-700 dark:text-gray-400">
                                     Categorie de cours
@@ -93,7 +93,7 @@
                         </div>
                     </div>
                     <div class="flex px-2 my-2">
-                        <div class="w-full md:w-1 mr-4 ml-4">
+                        <div class="w-full md:w-1/1 mr-4 ml-4">
                             <label class="block mt-4 text-sm">
                                 <span class="text-gray-700 dark:text-gray-400">
                                     Enseignant
@@ -133,7 +133,7 @@
                             <div class="flex item-center">Categorie</div>
                         </th>
                         <th class="px-4 py-3">
-                            <div class="flex item-center">Cour</div>
+                            <div class="flex item-center">Cours</div>
                         </th>
                         <th class="px-4 py-3">
                             <div class="flex item-center">Note</div>
@@ -156,22 +156,20 @@
                         <td class="px-4 py-3 text-sm">{{ $subject->teacher->first_name }} {{ $subject->teacher->last_name}}</td>
                         <td class="px-4 py-3 text-sm">{{ $subject->created_at->diffForHumans() }}</td>
                         <td class="px-4 py-3 text-sm">{{ $subject->updated_at->diffForHumans() }}</td>
-                        <td>
-                            <x-dropdown align="right" width="48">
-                                <x-slot name="trigger">
-                                    <button type="button" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none focus:bg-gray-50 active:bg-gray-50 transition ease-in-out duration-150">
-                                        <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 4 15">
-                                            <path d="M3.5 1.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 6.041a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 5.959a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z" />
-                                        </svg>
-                                    </button>
-                                </x-slot>
-                                <x-slot name="content">
-                                    <div class="w-64">
-                                        <x-dropdown-link href="{{ route('subject-index', ['id' => $classroom->id]) }}">{{ __('Editer le cours') }}</x-dropdown-link>
-                                        <x-dropdown-link href="{{ route('subject-index', ['id' => $classroom->id]) }}">{{ __('Supprimer le cours') }}</x-dropdown-link>
-                                    </div>
-                                </x-slot>
-                            </x-dropdown>
+                        <td class="px-4 py-3">
+                            <div class="flex items-center space-x-4 text-sm">
+                                <x-button type="button" wire:click="$dispatch('edit-subject', {id: {{$subject->id}}})" class="bg-green-500 hover:bg-green-700" aria-label="Edit">
+                                    <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z">
+                                        </path>
+                                    </svg>
+                                </x-button>
+                                <x-button type="button" wire:click="deleteSubject({{$subject->id}})" wire:confirm="Etes-vous sûr de vouloir supprimer cette classe?" class="bg-red-500 hover:bg-red-700" aria-label="Delete">
+                                    <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+                                    </svg>
+                                </x-button>
+                            </div>
                         </td>
                     </tr>
                     @endforeach

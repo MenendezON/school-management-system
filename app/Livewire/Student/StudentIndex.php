@@ -43,6 +43,8 @@ class StudentIndex extends Component
     public $allergies;
     public $decision;
 
+    public $keyword;
+
     public $createPostModal = false;
 
     public function setStudent($student)
@@ -113,6 +115,10 @@ class StudentIndex extends Component
     public function render()
     {
         $students = Student::orderBy('id', 'desc')
+            ->where('first_name', 'like', '%' . $this->keyword . '%')
+            ->where('last_name', 'like', '%' . $this->keyword . '%')
+            ->where('address', 'like', '%' . $this->keyword . '%')
+            ->where('first_name', 'like', '%' . $this->keyword . '%')
             ->paginate(10);
         return view('livewire.student.student-index', [
             'students' => $students,

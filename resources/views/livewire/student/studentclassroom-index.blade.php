@@ -26,7 +26,7 @@
             <form>
                 <x-slot name="content">
                     <div class="flex px-2 my-2">
-                        <div class="w-full md:w-1 mr-4 ml-4">
+                        <div class="w-full md:w-1/1mr-4 ml-4">
                             <label class="block mt-4 text-sm">
                                 <span class="text-gray-700 dark:text-gray-400">
                                     Student
@@ -44,7 +44,7 @@
                         </div>
                     </div>
                     <div class="flex px-2 my-2">
-                        <div class="w-full md:w-1 mr-4 ml-4">
+                        <div class="w-full md:w-1/1mr-4 ml-4">
                             <label class="block mt-4 text-sm">
                                 <span class="text-gray-700 dark:text-gray-400">
                                     Classroom
@@ -62,7 +62,7 @@
                         </div>
                     </div>
                     <div class="flex px-2 my-2">
-                        <div class="w-full md:w-1 mr-4 ml-4">
+                        <div class="w-full md:w-1/1mr-4 ml-4">
                             <label class="block mt-4 text-sm">
                                 <span class="text-gray-700 dark:text-gray-400">
                                     School Year

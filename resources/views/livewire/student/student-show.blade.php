@@ -20,13 +20,14 @@
                     </div>
 
                     <div class="ml-4 flex flex-1 flex-col">
-                        <div class="flex justify-between font-semibold text-gray-900">
+                        <div class="flex justify-between text-gray-900">
                             <h1>
-                                <a href="#">{{ $student->first_name }} {{ $student->last_name }}</a>
+                                <a href="#" class="font-semibold">{{ $student->first_name }} {{ $student->last_name }}</a>
+                                <span class="text-sm">{{ $student->gender=="Masculin"?'(M)':'(F)' }}</span>
                             </h1>
                         </div>
                         <p class="mt-1 text-sm text-gray-500">{{ \Carbon\Carbon::parse($student->date_of_birth)->format('d M Y') }} ({{ str_replace('years ago', 'ans', \Carbon\Carbon::parse($student->date_of_birth)->diffForHumans()) }}) &#8226; {{ $student->place_of_birth }}, {{ $student->nationality }}</p>
-                        <p class="text-gray-500">Qty 1</p>
+                        <p class="text-gray-500">{{ $student->decision }}</p>
                         <div class="flex">
                             <button type="button" wire:click="$dispatch('edit-student', {id: {{$student->id}}})" class="flex font-medium text-indigo-600 hover:text-indigo-500" aria-label="Edit">
                                 {{ _('Modifier') }} 
@@ -42,32 +43,122 @@
         </div>
     </div>
 
-    <div x-data="{ tab: window.location.hash ? window.location.hash : '#tab1' }" class="mt-6">
-        <div class="flex flex-row">
+    <div x-data="{ tab: window.location.hash ? window.location.hash : '#tab1' }">
+        <div class="flex flex-row border-b-2 border-gray-900 mt-6">
 
-            <a class="px-4 border-b-2 border-gray-900 uppercase hover:border-teal-300" href="#" x-on:click.prevent="tab='#tab1'">
+            <a class="px-4 border-b-2 uppercase hover:border-green-500" href="#" x-on:click.prevent="tab='#tab1'">
                 {{ _('Vue globale' )}}
             </a>
 
-            <a class="px-4 border-b-2 border-gray-900 uppercase hover:border-teal-300" href="#" x-on:click.prevent="tab='#tab2'">
+            <a class="px-4 border-b-2 uppercase hover:border-green-300" href="#" x-on:click.prevent="tab='#tab2'">
                 {{ _('Lien parenté' )}}
             </a>
 
-            <a class="px-4 border-b-2 border-gray-900 uppercase hover:border-teal-300" href="#" x-on:click.prevent="tab='#tab3'">
+            <a class="px-4 border-b-2 uppercase hover:border-green-300" href="#" x-on:click.prevent="tab='#tab3'">
                 {{ _('Année académique' )}}
+            </a>
+
+            <a class="px-4 border-b-2 uppercase hover:border-green-300" href="#" x-on:click.prevent="tab='#tab4'">
+                {{ _('Evaluation' )}}
             </a>
 
         </div>
 
         <!-- begin Overview's tab -->
         <div x-show="tab == '#tab1'" x-cloak>
-            <p>This is the content of Tab 1</p>
+            <div class="flex justify-between mt-6 border-b-2">
+                <h2 class="my-2 mr-3 text-2xl font-normal text-gray-700 dark:text-gray-200">
+                    {{ _('Information personnelle') }}
+                </h2>
+            </div>    
+            <div class="columns-2">
+                <div class="p-4 pt-0">
+                    <div class="flex border-1 mb-0 p-3 hover:bg-gray-200">
+                        <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z">
+                            </path>
+                        </svg>
+                        <div class="ml-2">
+                            <h3 class="font-bold">Groupe sanguin</h3>
+                            <p>{{ $student->blood_group }}</p>
+                        </div>
+                    </div>
+                    <div class="flex border-1 mb-0 p-3 hover:bg-gray-200">
+                        <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z">
+                            </path>
+                        </svg>
+                        <div class="ml-2">
+                            <h3 class="font-bold">Email</h3>
+                            <p>{{ $student->email }}</p>
+                        </div>
+                    </div>
+                    <div class="flex border-1 mb-0 p-3 hover:bg-gray-200">
+                        <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z">
+                            </path>
+                        </svg>
+                        <div class="ml-2">
+                            <h3 class="font-bold">Téléphone</h3>
+                            <p>{{ $student->phone }}</p>
+                        </div>
+                    </div>
+                    <div class="flex border-1 mb-0 p-3 hover:bg-gray-200">
+                        <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z">
+                            </path>
+                        </svg>
+                        <div class="ml-2">
+                            <h3 class="font-bold">Adresse</h3>
+                            <p>{{ $student->address }}, {{ $student->city }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-4 pt-0">
+                    <div class="flex border-1 mb-0 p-3 hover:bg-gray-200">
+                        <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z">
+                            </path>
+                        </svg>
+                        <div class="ml-2">
+                            <h3 class="font-bold">Ecole précédente</h3>
+                            <p>{{ $student->previous_school }}</p>
+                        </div>
+                    </div>
+                    <div class="flex border-1 mb-0 p-3 hover:bg-gray-200">
+                        <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z">
+                            </path>
+                        </svg>
+                        <div class="ml-2">
+                            <h3 class="font-bold">Vaccination</h3>
+                            <p>{{ $student->medical_history }}</p>
+                        </div>
+                    </div>
+                    <div class="flex border-1 mb-0 p-3 hover:bg-gray-200">
+                        <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z">
+                            </path>
+                        </svg>
+                        <div class="ml-2">
+                            <h3 class="font-bold">Allergies</h3>
+                            <p>{{ $student->allergies }}</p>
+                        </div>
+                    </div>
+                    <div class="flex border-1 mb-0 p-3 hover:bg-gray-200">                     
+                        <div class="ml-2">
+                            <h3 class="font-bold"></h3>
+                            <p></p>
+                        </div>
+                    </div>                  
+                </div>
+            </div>
         </div>
 
         <!-- begin Tutor's tab -->
         <div x-show="tab == '#tab2'" x-cloak>
             <div class="flex justify-between mt-6 border-b-2">
-                <h2 class="my-2 mr-3 text-2xl font-semibold text-gray-700 dark:text-gray-200">
+                <h2 class="my-2 mr-3 text-2xl font-normal text-gray-700 dark:text-gray-200">
                     {{ Str::of('Lien parenté')->headline() }}
                 </h2>
                 <x-button wire:click="showCreateTutorModal" class="mb-2">
@@ -278,7 +369,7 @@
         <!-- begin Academic year's tab -->
         <div x-show="tab == '#tab3'" x-cloak>
             <div class="flex mt-6">
-                <h2 class="my-2 mr-3 text-2xl font-semibold text-gray-700 dark:text-gray-200">
+                <h2 class="my-2 mr-3 text-2xl font-normal text-gray-700 dark:text-gray-200">
                     {{ Str::of("Année académique")->headline() }}
                 </h2>
             </div>
@@ -338,10 +429,13 @@
                     </table>
                 </div>
             </div>
+        </div>
 
+        <!-- begin Evaluation's tab -->
+        <div x-show="tab == '#tab4'" x-cloak>
             <div class="flex mt-6">
-                <h2 class="my-2 mr-3 text-2xl font-semibold text-gray-700 dark:text-gray-200">
-                    Evaluation
+                <h2 class="my-2 mr-3 text-2xl font-normal text-gray-700 dark:text-gray-200">
+                    {{ _('Evaluation') }}
                 </h2>
             </div>
             <div class="w-full overflow-hidden rounded-lg shadow-xs">
@@ -380,8 +474,8 @@
                                 </td>
                                 <td class="px-4 py-3 text-sm">{{ $eval->academic_year }}</td>
                                 <td class="px-4 py-3">
-                                <x-nav-link href="{{ route('evaluation-index', ['id' => $student->id, 'q' => $eval->quarter, 'ay' => $eval->academic_year]) }}" wire:navigate class="flex items-center text-sm">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 15v4c0 1.1.9 2 2 2h14a2 2 0 0 0 2-2v-4M17 9l-5 5-5-5M12 12.8V2.5"/></svg>            
+                                    <x-nav-link href="{{ route('evaluation-index', ['id' => $student->id, 'q' => $eval->quarter, 'ay' => $eval->academic_year]) }}" wire:navigate class="flex items-center text-sm">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 15v4c0 1.1.9 2 2 2h14a2 2 0 0 0 2-2v-4M17 9l-5 5-5-5M12 12.8V2.5"/></svg>            
                                     </x-nav-link>
                                 </td>
                             </tr>
