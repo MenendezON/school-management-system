@@ -30,7 +30,7 @@
                         <p class="text-gray-500">{{ $student->decision }}</p>
                         <div class="flex">
                             <button type="button" wire:click="$dispatch('edit-student', {id: {{$student->id}}})" class="flex font-medium text-indigo-600 hover:text-indigo-500" aria-label="Edit">
-                                {{ _('Modifier') }} 
+                                {{ _('Modifier') }}
                                 <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
                                     <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z">
                                     </path>
@@ -44,33 +44,28 @@
     </div>
 
     <div x-data="{ tab: window.location.hash ? window.location.hash : '#tab1' }">
-        <div class="flex flex-row border-b-2 border-gray-900 mt-6">
+        <div class="flex flex-row border-b-2 border-gray-100 mt-6">
 
-            <a class="px-4 border-b-2 uppercase hover:border-green-500" href="#" x-on:click.prevent="tab='#tab1'">
-                {{ _('Vue globale' )}}
+            <a class="px-4 uppercase border-r-2 border-gray-500 hover:text-gray-500" href="#" x-on:click.prevent="tab='#tab1'">
+                {{ _('Information personnelle' )}}
             </a>
 
-            <a class="px-4 border-b-2 uppercase hover:border-green-300" href="#" x-on:click.prevent="tab='#tab2'">
-                {{ _('Lien parenté' )}}
+            <a class="px-4 uppercase border-r-2 border-gray-500 hover:text-gray-500" href="#" x-on:click.prevent="tab='#tab2'">
+                {{ _('Information médicale' )}}
             </a>
 
-            <a class="px-4 border-b-2 uppercase hover:border-green-300" href="#" x-on:click.prevent="tab='#tab3'">
-                {{ _('Année académique' )}}
+            <a class="px-4 uppercase border-r-2 border-gray-500 hover:text-gray-500" href="#" x-on:click.prevent="tab='#tab3'">
+                {{ _('Information académique' )}}
             </a>
 
-            <a class="px-4 border-b-2 uppercase hover:border-green-300" href="#" x-on:click.prevent="tab='#tab4'">
-                {{ _('Evaluation' )}}
+            <a class="px-4 uppercase border-r-0 border-gray-500 hover:text-gray-500" href="#" x-on:click.prevent="tab='#tab4'">
+                {{ _('Information financière' )}}
             </a>
 
         </div>
 
         <!-- begin Overview's tab -->
         <div x-show="tab == '#tab1'" x-cloak>
-            <div class="flex justify-between mt-6 border-b-2">
-                <h2 class="my-2 mr-3 text-2xl font-normal text-gray-700 dark:text-gray-200">
-                    {{ _('Information personnelle') }}
-                </h2>
-            </div>    
             <div class="columns-2">
                 <div class="p-4 pt-0">
                     <div class="flex border-1 mb-0 p-3 hover:bg-gray-200">
@@ -145,18 +140,15 @@
                             <p>{{ $student->allergies }}</p>
                         </div>
                     </div>
-                    <div class="flex border-1 mb-0 p-3 hover:bg-gray-200">                     
+                    <div class="flex border-1 mb-0 p-3 hover:bg-gray-200">
                         <div class="ml-2">
                             <h3 class="font-bold"></h3>
                             <p></p>
                         </div>
-                    </div>                  
+                    </div>
                 </div>
             </div>
-        </div>
-
-        <!-- begin Tutor's tab -->
-        <div x-show="tab == '#tab2'" x-cloak>
+            <!-- Relationship's tab -->
             <div class="flex justify-between mt-6 border-b-2">
                 <h2 class="my-2 mr-3 text-2xl font-normal text-gray-700 dark:text-gray-200">
                     {{ Str::of('Lien parenté')->headline() }}
@@ -344,26 +336,31 @@
                                 <td class="px-4 py-3 text-sm">{{ $tutor->updated_at->diffForHumans() }}</td>
                                 <td class="px-4 py-3">
                                 <td class="px-3 py-3">
-                            <div class="flex items-center space-x-4 text-sm">
-                                <x-button type="button" wire:click="$dispatch('edit-tutor', {id: {{$tutor->id}}})" class="bg-green-500 hover:bg-green-700" aria-label="Edit">
-                                    <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
-                                        <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z">
-                                        </path>
-                                    </svg>
-                                </x-button>
-                                <x-button type="button" wire:click="deleteTutor({{$tutor->id}})" wire:confirm="Etes-vous sûr de vouloir supprimer ce lien parenté?" class="bg-red-500 hover:bg-red-700" aria-label="Delete">
-                                    <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"></path>
-                                    </svg>
-                                </x-button>
-                            </div>
-                        </td>
+                                    <div class="flex items-center space-x-4 text-sm">
+                                        <x-button type="button" wire:click="$dispatch('edit-tutor', {id: {{$tutor->id}}})" class="bg-green-500 hover:bg-green-700" aria-label="Edit">
+                                            <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
+                                                <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z">
+                                                </path>
+                                            </svg>
+                                        </x-button>
+                                        <x-button type="button" wire:click="deleteTutor({{$tutor->id}})" wire:confirm="Etes-vous sûr de vouloir supprimer ce lien parenté?" class="bg-red-500 hover:bg-red-700" aria-label="Delete">
+                                            <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+                                            </svg>
+                                        </x-button>
+                                    </div>
+                                </td>
                             </tr>
                             @endforeach
                         </tbody>
                     </table>
                 </div>
             </div>
+        </div>
+
+        <!-- begin Tutor's tab -->
+        <div x-show="tab == '#tab2'" x-cloak>
+
         </div>
 
         <!-- begin Academic year's tab -->
@@ -412,16 +409,42 @@
                                         <x-slot name="content">
                                             <div class="w-66">
                                                 @if(route('student-show', ['id' => $student->id]))
-                                                    @if(strtoupper($classroom->name) === "INDIGO")
-                                                        <x-dropdown-link href="{{ route('student-survey-show', ['id' => $student->id, 'idsurvey' => 1]) }}?ay={{ $classroom->pivot->academic_year }}">{{ __('Progression des apprentissages') }}</x-dropdown-link>
-                                                    @endif
-                                                    @if($classroom->name === "Académique")
-                                                        <x-dropdown-link href="{{ route('student-survey-show', ['id' => $student->id, 'idsurvey' => 2]) }}">{{ __('Progression des apprentissages') }}</x-dropdown-link>
-                                                    @endif
+                                                @if(strtoupper($classroom->name) === "INDIGO")
+                                                <x-dropdown-link href="{{ route('student-survey-show', ['id' => $student->id, 'idsurvey' => 1]) }}?ay={{ $classroom->pivot->academic_year }}">{{ __('Progression des apprentissages') }}</x-dropdown-link>
+                                                @endif
+                                                @if($classroom->name === "Académique")
+                                                <x-dropdown-link href="{{ route('student-survey-show', ['id' => $student->id, 'idsurvey' => 2]) }}">{{ __('Progression des apprentissages') }}</x-dropdown-link>
+                                                @endif
                                                 @endif
                                             </div>
                                         </x-slot>
                                     </x-dropdown>
+                                </td>
+                            </tr>
+                            <tr class="text-gray-700 dark:text-gray-400" wire:key="">
+                                <td class="px-4 py-3 text-sm">&nbsp;</td>
+                                <td colspan="4" class="px-4 py-3">
+                                    @if($classroom->pivot->academic_year === $evaluations[0]->academic_year)
+                                    <table class="w-full whitespace-no-wrap">
+                                        <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+                                            @foreach($evaluations as $eval)
+                                            <tr class="text-gray-700 dark:text-gray-400" wire:key="">
+                                                <td class="px-4 py-3 text-sm">{{ $eval->title }}</td>
+                                                <td class="px-4 py-3">
+                                                    {{ $eval->quarter }}{{ $eval->quarter=='1'?'er':'ème' }} {{ _("trimestre") }} 
+                                                </td>
+                                                <td class="px-4 py-3">
+                                                    <x-nav-link href="{{ route('evaluation-index', ['id' => $student->id, 'q' => $eval->quarter, 'ay' => $eval->academic_year]) }}" wire:navigate class="flex items-center text-sm">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                            <path d="M3 15v4c0 1.1.9 2 2 2h14a2 2 0 0 0 2-2v-4M17 9l-5 5-5-5M12 12.8V2.5" />
+                                                        </svg>
+                                                    </x-nav-link>
+                                                </td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                    @endif
                                 </td>
                             </tr>
                             @endforeach
@@ -429,10 +452,7 @@
                     </table>
                 </div>
             </div>
-        </div>
-
-        <!-- begin Evaluation's tab -->
-        <div x-show="tab == '#tab4'" x-cloak>
+            <!-- Evaluation's tab -->
             <div class="flex mt-6">
                 <h2 class="my-2 mr-3 text-2xl font-normal text-gray-700 dark:text-gray-200">
                     {{ _('Evaluation') }}
@@ -461,21 +481,23 @@
                                 <td class="px-4 py-3 text-sm">{{ $eval->title }}</td>
                                 <td class="px-4 py-3">
                                     @switch($eval->quarter)
-                                        @case(1)
-                                            {{ $eval->quarter }} trimestre
-                                            @break
-                                        @case(2)
-                                            {{ $eval->quarter }} trimestre
-                                            @break
-                                        @case(3)
-                                            {{ $eval->quarter }} trimestre
-                                            @break
+                                    @case(1)
+                                    {{ $eval->quarter }} trimestre
+                                    @break
+                                    @case(2)
+                                    {{ $eval->quarter }} trimestre
+                                    @break
+                                    @case(3)
+                                    {{ $eval->quarter }} trimestre
+                                    @break
                                     @endswitch
                                 </td>
                                 <td class="px-4 py-3 text-sm">{{ $eval->academic_year }}</td>
                                 <td class="px-4 py-3">
                                     <x-nav-link href="{{ route('evaluation-index', ['id' => $student->id, 'q' => $eval->quarter, 'ay' => $eval->academic_year]) }}" wire:navigate class="flex items-center text-sm">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 15v4c0 1.1.9 2 2 2h14a2 2 0 0 0 2-2v-4M17 9l-5 5-5-5M12 12.8V2.5"/></svg>            
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M3 15v4c0 1.1.9 2 2 2h14a2 2 0 0 0 2-2v-4M17 9l-5 5-5-5M12 12.8V2.5" />
+                                        </svg>
                                     </x-nav-link>
                                 </td>
                             </tr>
@@ -484,6 +506,11 @@
                     </table>
                 </div>
             </div>
+        </div>
+
+        <!-- begin Evaluation's tab -->
+        <div x-show="tab == '#tab4'" x-cloak>
+
         </div>
     </div>
 </div>

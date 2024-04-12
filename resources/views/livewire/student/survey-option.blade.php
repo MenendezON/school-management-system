@@ -62,7 +62,7 @@
                         @if ($question->category === $category )
                         <tr class="text-gray-700 dark:text-gray-400">
                             <td>&nbsp;</td>
-                            <td class="px-4 py-3 text-sm">{{ $question->id }} {{ $question->question_text }}</td>
+                            <td class="px-4 py-3 text-sm">{{ $question->question_text }}</td>
                             <td class="px-4 py-3 text-sm">
                                 <select wire:model="option.{{ $index }}.{{ $question->id }}" class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
                                     <option>Sélectionner une valeur...</option>

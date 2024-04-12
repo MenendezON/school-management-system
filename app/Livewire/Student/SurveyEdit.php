@@ -2,13 +2,13 @@
 
 namespace App\Livewire\Student;
 
-use App\Models\Classroom;
 use App\Models\Option;
 use App\Models\Question;
 use App\Models\Student;
 use App\Models\Survey;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Livewire\Attributes\Rule;
 use Livewire\Component;
 
 class SurveyEdit extends Component
@@ -16,6 +16,7 @@ class SurveyEdit extends Component
     public $student;
     public $survey;
     public $classroom;
+    #[Rule("Required")]
     public $quarter;
 
     public $option_text;

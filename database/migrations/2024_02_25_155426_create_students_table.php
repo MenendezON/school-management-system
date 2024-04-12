@@ -28,7 +28,7 @@ return new class extends Migration
             $table->string('blood_group');
             $table->text('medical_history');
             $table->text('allergies');
-            $table->string('decision');
+            $table->string('decision')->default('Régulière');
             $table->foreignIdFor(User::class);
             $table->timestamps();
         });
