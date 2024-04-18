@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Student;
 
+use App\Models\Answer;
 use App\Models\Option;
 use App\Models\Question;
 use Illuminate\Http\Request;
@@ -50,28 +51,30 @@ class Evaluation extends Component
 
     public function extract_result($opt)
     {
-        $sexe = ($opt->gender == "Masculin") ? "Il":"Elle";
-        $result = "";
+        $result = null;
         switch ($opt->option_text) {
             case 3:
-                $result = "$sexe est capable de ".strtolower($opt->question_text)." seul.";
+                $result = $this->returnAnswer($opt, 'fait_seul');
               break;
             case 2:
-                $result = "$sexe n'est pas capable de ".strtolower($opt->question_text)." seul.";
-              break;
-            case 1:
-                $result = "$sexe est capable de ".strtolower($opt->question_text)." mais avec l'assistance de quelqu'un.";
+                $result = $this->returnAnswer($opt, 'fait_pas');
               break;
             default:
-            $result = "rien à dire sur sa capacité de ".strtolower($opt->question_text).".";
+                $result = $this->returnAnswer($opt, 'avec_aide');
           }
-        return $result;
+        return trim($result);
+    }
+
+    public function returnAnswer($opt, $answer)
+    {
+        $answer = Question::where('id', $opt->question_id)->get($answer)->value($answer);
+        $answer = str_replace('.', '', $answer);
+        $answer .= '.';
+        return $answer;
     }
 
     public function render()
     {
-        
-        //dd($this->option);
         return view('livewire.student.evaluation', [
             'categories' => $this->categories,
         ])->layout('layouts.app');

@@ -13,6 +13,7 @@
         </h2>
     </div>
 
+    <!-- Modal for create a new question -->
     <div>
         <x-button wire:click="showCreateSurveyModal" class="mb-2">
             {{ __('Ajouter une grille') }}

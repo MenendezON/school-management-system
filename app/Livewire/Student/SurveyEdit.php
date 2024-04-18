@@ -53,9 +53,12 @@ class SurveyEdit extends Component
 
     public function save()
     {
-        $this->validate([
-            'option.*.*' => 'required',
-        ]);
+        // $this->validate([
+            //option.0.32
+        //     'option.*.*' => 'required',
+        // ]);
+
+        $this->validate();
         $this->fill_question();
 
 

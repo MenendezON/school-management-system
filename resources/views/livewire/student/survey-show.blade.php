@@ -16,7 +16,7 @@
     <div class="mb-4 p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">
         <p class="text-lg font-normal text-gray-700 dark:text-gray-200">
             {{ $survey->description }}
-        </p>
+        </p> 
     </div>
     <div>
         <x-button wire:click="showCreateQuestionModal" class="mb-2 btn-link">
@@ -89,6 +89,87 @@
         </x-dialog-modal>
     </div>
 
+    <!-- Modal for create a series answers -->
+    <div>
+        <!-- Create survey modal -->
+        <x-dialog-modal wire:model="createAnswerModal">
+            <x-slot name="title">
+                {{ __('Créer un questionnaire') }}
+            </x-slot>
+
+            <form>
+                <x-slot name="content">
+                    <div class="flex px-2 my-2">
+                        <div class="w-full md:w-1/1 mr-4 ml-4">
+                            <label class="block mt-4 text-sm">
+                                <span class="text-gray-700 dark:text-gray-400">
+                                    Titre de la grille
+                                </span>
+                                <select wire:model.live="question_id" class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
+                                    <option>Sélectionner une question</option>
+                                    @foreach(\App\Models\Question::all() as $question)
+                                    <option value="{{ $question->id }}">{{ $question->question_text }}</option>
+                                    @endforeach
+                                </select>
+                                @error('question_id')
+                                <span class="text-xs text-red-600 dark:text-gray-400">{{ $message }}</span>
+                                @enderror
+                            </label>
+                        </div>
+                    </div>
+                    <div class="flex px-2 my-2">
+                        <div class="w-full md:w-1/1 mr-4 ml-4">
+                            <label class="block mt-4 text-sm">
+                                <span class="text-gray-700 dark:text-gray-400">
+                                    Fait seul
+                                </span>
+                                <input wire:model.live="fait_seul" type="text" class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" />
+                                @error('fait_seul')
+                                <span class="text-xs text-red-600 dark:text-gray-400">{{ $message }}</span>
+                                @enderror
+                            </label>
+                        </div>
+                    </div>
+                    <div class="flex px-2 my-2">
+                        <div class="w-full md:w-1/1 mr-4 ml-4">
+                            <label class="block mt-4 text-sm">
+                                <span class="text-gray-700 dark:text-gray-400">
+                                    Avec aide
+                                </span>
+                                <input wire:model.live="avec_aide" type="text" class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" />
+                                @error('avec_aide')
+                                <span class="text-xs text-red-600 dark:text-gray-400">{{ $message }}</span>
+                                @enderror
+                            </label>
+                        </div>
+                    </div>
+                    <div class="flex px-2 my-2">
+                        <div class="w-full md:w-1/1 mr-4 ml-4">
+                            <label class="block mt-4 text-sm">
+                                <span class="text-gray-700 dark:text-gray-400">
+                                    Fait pas
+                                </span>
+                                <input wire:model.live="fait_pas" type="text" class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" />
+                                @error('fait_pas')
+                                <span class="text-xs text-red-600 dark:text-gray-400">{{ $message }}</span>
+                                @enderror
+                            </label>
+                        </div>
+                    </div>
+                </x-slot>
+                <x-slot name="footer">
+                    <div class="px-2 my-2">
+                        <div class="w-full md:w-2/3 mr-4 ml-4">
+                            <x-button wire:click="create_answer">
+                                {{ __('Valider') }}
+                            </x-button>
+                        </div>
+                    </div>
+                </x-slot>
+            </form>
+        </x-dialog-modal>
+    </div>
+
     <div class="w-full overflow-hidden rounded-lg shadow-xs">
         <div class="w-full overflow-x-auto">
             <table class="w-full whitespace-no-wrap">
@@ -111,7 +192,12 @@
                     @foreach($survey->questions as $question)
                     @if ($question->category === $category )
                     <tr class="text-gray-700 dark:text-gray-400">
-                        <td>&nbsp;</td><td class="px-4 py-3 text-sm">{{ $question->question_text }}</td>
+                        <td>
+                        &nbsp;
+                        </td>
+                        <td class="px-4 py-3 text-sm">
+                            <a href="#" wire:click="showCreateAnswerModal({{$question->id}})">{{ $question->question_text }}</a>
+                        </td>
                         
                         <td class="px-4 py-3 text-sm">0</td>
                         <td class="px-4 py-3 text-sm">0</td>
