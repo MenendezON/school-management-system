@@ -15,60 +15,60 @@
 
     <div>
         <x-button wire:click="showCreateStudentClassroomModal" class="mb-2">
-            {{ __('New enrolment') }}
+            {{ __('Nouvelle classe') }}
         </x-button>
         <!-- Create classroom modal -->
         <x-dialog-modal wire:model="createStudentClassroomModal">
             <x-slot name="title">
-                {{ __('Create classroom') }}
+                {{ __('Créer une nouvelle classe') }}
             </x-slot>
 
             <form>
                 <x-slot name="content">
                     <div class="flex px-2 my-2">
-                        <div class="w-full md:w-1 mr-4 ml-4">
+                        <div class="w-full md:w-1/1mr-4 ml-4">
                             <label class="block mt-4 text-sm">
                                 <span class="text-gray-700 dark:text-gray-400">
                                     Student
                                 </span>
-                                <select wire:model="studentId" class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
-                                    <option>Select a type...</option>
-                                    @foreach (\App\Models\Student::all() as $student)
+                                <select wire:model.live="selectStudent" class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
+                                    <option>Sélectionner un élève</option>
+                                    @foreach ($students as $student)
                                     <option value="{{ $student->id }}">{{ $student->first_name }} {{ $student->last_name }} </option>
                                     @endforeach
                                 </select>
-                                @error('studentId')
+                                @error('selectStudent')
                                 <span class="text-xs text-red-600 dark:text-gray-400">{{ $message }}</span>
                                 @enderror
                             </label>
                         </div>
                     </div>
                     <div class="flex px-2 my-2">
-                        <div class="w-full md:w-1 mr-4 ml-4">
+                        <div class="w-full md:w-1/1mr-4 ml-4">
                             <label class="block mt-4 text-sm">
                                 <span class="text-gray-700 dark:text-gray-400">
                                     Classroom
                                 </span>
-                                <select wire:model="classroomId" wire:click="fillClassroom" class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
-                                    <option>Select a type...</option>
-                                    @foreach ($speclassroom as $classroom)
+                                <select wire:model.live="selectClassroom" class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
+                                    <option>Sélectionner une classe</option>
+                                    @foreach ($classrooms as $classroom)
                                     <option value="{{ $classroom->id }}">{{ $classroom->name }}</option>
                                     @endforeach
                                 </select>
-                                @error('classroomId')
+                                @error('selectClassroom')
                                 <span class="text-xs text-red-600 dark:text-gray-400">{{ $message }}</span>
                                 @enderror
                             </label>
                         </div>
                     </div>
                     <div class="flex px-2 my-2">
-                        <div class="w-full md:w-1 mr-4 ml-4">
+                        <div class="w-full md:w-1/1mr-4 ml-4">
                             <label class="block mt-4 text-sm">
                                 <span class="text-gray-700 dark:text-gray-400">
                                     School Year
                                 </span>
-                                <select wire:model="academic_year" class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
-                                    <option>Select a type...</option>
+                                <select wire:model.live="academic_year" class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
+                                    <option>Sélectionner une année scolaire</option>
                                     @foreach($generateSchoolYears as $year)
                                     <option>{{ $year }}-{{ $year+1 }}</option>
                                     @endforeach
@@ -84,7 +84,7 @@
                     <div class="px-2 my-2">
                         <div class="w-full md:w-2/3 mr-4 ml-4">
                             <x-button wire:click="create">
-                                {{ __('Create') }}
+                                {{ __('Valider') }}
                             </x-button>
                         </div>
                     </div>
@@ -110,13 +110,13 @@
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
-                    @foreach ($students as $student)
+                    @foreach ($liststudents as $student)
                     @foreach ($student->classrooms as $classroom)
                     <tr class="text-gray-700 dark:text-gray-400" wire:key="{{$student->id}}">
                         <td class="px-4 py-3">{{ ucwords($student->first_name) }} {{ strtoupper($student->last_name) }}</td>
                         <td class="px-4 py-3">
                             <x-nav-link href="{{ route('classroom-show', ['id' => $classroom->id]) }}" wire:navigate>
-                            {{ $classroom->name }}, {{ $classroom->type }}
+                                {{ $classroom->name }}, {{ $classroom->type }}
                             </x-nav-link>
                         </td>
                         <td class="px-4 py-3">{{ $classroom->pivot->academic_year }}</td>
@@ -143,7 +143,7 @@
             </table>
         </div>
         <div class="w-full overflow-x-auto px-4 py-3">
-            {{ $students->links() }}
+            {{ $liststudents->links() }}
         </div>
     </div>
 </div>

@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Student;
 
+use App\Models\Answer;
 use App\Models\Option;
 use App\Models\Question;
 use Illuminate\Http\Request;
@@ -17,40 +18,29 @@ class Evaluation extends Component
     public $reports = array();
     public $option;
 
-    public function Evaluation()
-    {
-
-    }
-
-
-    public function mount($id, $q)
+    public function mount(Request $request, $id, $q)
     {
         $this->quarterid = $q;
         $this->studentid = $id;
-
 
         $this->categories = Question::select('category')
             ->where('survey_id', 1)
             ->distinct()
             ->pluck('category');
-        
 
-            $this->data_analyse();
+            $this->data_analyse($request);
     }
 
-    public function data_analyse(){
-        
-
+    public function data_analyse($request)
+    {
         foreach($this->categories as $category){
-            
-
             $this->option = DB::table('options')
             ->join('questions', 'questions.id', '=', 'options.question_id')
             ->join('students', 'options.student_id', '=', 'students.id')
             ->where('student_id', $this->studentid)
             ->where('quarter', $this->quarterid)
             ->where('category', $category)
-            ->where('academic_year', '2024-2025')
+            ->where('academic_year', $request->input('ay'))
             ->get();
 
             foreach($this->option as $opt){
@@ -59,29 +49,32 @@ class Evaluation extends Component
         }
     }
 
-    public function extract_result($opt){
-        $sexe = ($opt->gender == "Male") ? "Il":"Elle";
-        $result = "";
+    public function extract_result($opt)
+    {
+        $result = null;
         switch ($opt->option_text) {
             case 3:
-                $result = "$sexe est capable de ".strtolower($opt->question_text)." seul.";
+                $result = $this->returnAnswer($opt, 'fait_seul');
               break;
             case 2:
-                $result = "$sexe n'est pas capable de ".strtolower($opt->question_text)." seul.";
-              break;
-            case 1:
-                $result = "$sexe est capable de ".strtolower($opt->question_text)." mais avec l'assistance de quelqu'un.";
+                $result = $this->returnAnswer($opt, 'fait_pas');
               break;
             default:
-            $result = "rien à dire sur sa capacité de ".strtolower($opt->question_text).".";
+                $result = $this->returnAnswer($opt, 'avec_aide');
           }
-        return $result;
+        return trim($result);
+    }
+
+    public function returnAnswer($opt, $answer)
+    {
+        $answer = Question::where('id', $opt->question_id)->get($answer)->value($answer);
+        $answer = str_replace('.', '', $answer);
+        $answer .= '.';
+        return $answer;
     }
 
     public function render()
     {
-        
-        //dd($this->option);
         return view('livewire.student.evaluation', [
             'categories' => $this->categories,
         ])->layout('layouts.app');

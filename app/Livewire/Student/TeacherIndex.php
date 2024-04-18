@@ -3,11 +3,15 @@
 namespace App\Livewire\Student;
 
 use Livewire\Attributes\Rule;
+use Livewire\Attributes\On;
 use App\Models\Teacher;
 use Livewire\Component;
 
 class TeacherIndex extends Component
 {
+    public ?Teacher $teacher;
+    public $editMode = false;
+
     public $createTeacherModal = false;
 
     #[Rule("required|min:3|max:50")]
@@ -15,15 +19,54 @@ class TeacherIndex extends Component
     #[Rule("required|min:2|max:50")]
     public $last_name;
     #[Rule("required|min:3|max:50")]
-    public $spec;
+    public $speciality;
     #[Rule("required|min:6|max:50")]
     public $email;
     #[Rule("required|min:3|max:50")]
     public $phone_1;
     public $phone_2;
 
+    public function setTeacher(Teacher $teacher)
+    {
+        $this->teacher = $teacher;
+        $this->editMode = true;
+        $this->first_name = ucwords($teacher->first_name);
+        $this->last_name = strtoupper($teacher->last_name);
+        $this->speciality = $teacher->speciality;
+        $this->email = $teacher->email;
+        $this->phone_1 = $teacher->phone_1;
+        $this->phone_2 = $teacher->phone_2;
+    }
+
     public function create(){
         $this->validate();
+
+        if($this->editMode)
+        {
+            $this->teacher->update($this->all());
+            $this->reset();
+            request()->session()->flash('success', "L'enseignant a été mis à jour!");
+            $this->createTeacherModal = false;
+        }else{
+            Teacher::create($this->all());
+            $this->reset();
+            session()->flash('success', "L'enseignant a été créée!");
+            $this->createTeacherModal = false;
+        }
+    }
+
+    #[On('edit-teacher')]
+    public function editTeacher($id)
+    {
+        $teacher = Teacher::findOrFail($id);
+        $this->setTeacher($teacher);
+
+        $this->showCreateTeacherModal();
+    }
+
+    public function deleteTeacher(Teacher $teacher)
+    {
+        $teacher->delete();
     }
 
     public function showCreateTeacherModal()

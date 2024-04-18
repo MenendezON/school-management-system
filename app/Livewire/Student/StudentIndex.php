@@ -43,14 +43,16 @@ class StudentIndex extends Component
     public $allergies;
     public $decision;
 
+    public $keyword;
+
     public $createPostModal = false;
 
     public function setStudent($student)
     {
         $this->student = $student;
         $this->editMode = true;
-        $this->first_name = $student->first_name;
-        $this->last_name = $student->last_name;
+        $this->first_name = ucwords($student->first_name);
+        $this->last_name = strtoupper($student->last_name);
         $this->date_of_birth = $student->date_of_birth;
         $this->place_of_birth = $student->place_of_birth;
         $this->gender = $student->gender;
@@ -102,7 +104,6 @@ class StudentIndex extends Component
         $this->setStudent($student);
 
         $this->showCreatePostModal();
-        //dd($student);
     }
 
     public function deleteStudent(Student $student)
@@ -114,6 +115,10 @@ class StudentIndex extends Component
     public function render()
     {
         $students = Student::orderBy('id', 'desc')
+            ->where('first_name', 'like', '%' . $this->keyword . '%')
+            ->where('last_name', 'like', '%' . $this->keyword . '%')
+            ->where('address', 'like', '%' . $this->keyword . '%')
+            ->where('first_name', 'like', '%' . $this->keyword . '%')
             ->paginate(10);
         return view('livewire.student.student-index', [
             'students' => $students,

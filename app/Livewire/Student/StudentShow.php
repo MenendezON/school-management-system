@@ -7,14 +7,17 @@ use App\Models\Student;
 use App\Models\Survey;
 use App\Models\Tutor;
 use Livewire\Attributes\Rule;
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 class StudentShow extends Component
 {
     public $student;
-    public $createTutorModal = false;
 
+    public ?Tutor $tutor;
+    public $editTutorMode;
 
+    
     #[Rule("required|min:3|max:50")]
     public $first_name;
     #[Rule("required|min:2|max:50")]
@@ -32,6 +35,22 @@ class StudentShow extends Component
     public $email = '';
     public $evaluations;
 
+    public $createTutorModal = false;
+
+    public function setTutor($tutor){
+        $this->tutor = $tutor;
+        $this->editTutorMode = true;
+        $this->first_name = ucwords($tutor->first_name);
+        $this->last_name = strtoupper($tutor->last_name);
+        $this->relationship = $tutor->relationship;
+        $this->nationality = $tutor->nationality;
+        $this->address = $tutor->address;
+        $this->occupation = $tutor->occupation;
+        $this->duty_station = $tutor->duty_station;
+        $this->phone = $tutor->phone;
+        $this->email = $tutor->email;
+    }
+
     public function mount($id){
         $this->reset('student');
         $this->student = Student::findOrfail($id);
@@ -47,10 +66,30 @@ class StudentShow extends Component
     // Create a new tutor for a specific student
     public function create(){
         $this->validate();
+
+        if($this->editTutorMode){
+            $this->tutor->update($this->all());
+            request()->session()->flash('success', "Un lien parenté a été modifié avec succès");
+            $this->createTutorModal = false;
+        }else{
         $this->student->tutors()->create($this->only(['first_name', 'last_name','relationship', 'nationality', 'address', 'occupation', 'duty_station', 'phone', 'email']));
-        //$this->reset();
         request()->session()->flash('success', 'The tutor has been added successfully!');
         $this->createTutorModal = false;
+        }
+    }
+
+    #[On('edit-tutor')]
+    public function editTutor($id)
+    {
+        $tutor = Tutor::findOrFail($id);
+        $this->setTutor($tutor);
+
+        $this->showCreateTutorModal();
+    }
+
+    public function deleteTutor(Tutor $tutor)
+    {
+        $tutor->delete();
     }
 
     public function showCreateTutorModal()
