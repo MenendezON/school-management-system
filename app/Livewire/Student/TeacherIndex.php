@@ -46,12 +46,12 @@ class TeacherIndex extends Component
             $this->teacher->update($this->all());
             $this->reset();
             request()->session()->flash('success', "L'enseignant a été mis à jour!");
-            $this->createClassroomModal = false;
+            $this->createTeacherModal = false;
         }else{
             Teacher::create($this->all());
             $this->reset();
             session()->flash('success', "L'enseignant a été créée!");
-            $this->createClassroomModal = false;
+            $this->createTeacherModal = false;
         }
     }
 

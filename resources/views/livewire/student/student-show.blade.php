@@ -46,19 +46,19 @@
     <div x-data="{ tab: window.location.hash ? window.location.hash : '#tab1' }">
         <div class="flex flex-row border-b-2 border-gray-100 mt-6">
 
-            <a class="px-4 uppercase border-r-2 border-gray-500 hover:text-gray-500" href="#" x-on:click.prevent="tab='#tab1'">
+            <a class="px-4 py-2 border-r-2 font-bold border-gray-500 hover:text-gray-500" href="#" x-on:click.prevent="tab='#tab1'">
                 {{ _('Information personnelle' )}}
             </a>
 
-            <a class="px-4 uppercase border-r-2 border-gray-500 hover:text-gray-500" href="#" x-on:click.prevent="tab='#tab2'">
+            <a class="px-4 py-2 border-r-2 font-bold border-gray-500 hover:text-gray-500" href="#" x-on:click.prevent="tab='#tab2'">
                 {{ _('Information médicale' )}}
             </a>
 
-            <a class="px-4 uppercase border-r-2 border-gray-500 hover:text-gray-500" href="#" x-on:click.prevent="tab='#tab3'">
+            <a class="px-4 py-2 border-r-2 font-bold border-gray-500 hover:text-gray-500" href="#" x-on:click.prevent="tab='#tab3'">
                 {{ _('Information académique' )}}
             </a>
 
-            <a class="px-4 uppercase border-r-0 border-gray-500 hover:text-gray-500" href="#" x-on:click.prevent="tab='#tab4'">
+            <a class="px-4 py-2 border-r-0 font-bold border-gray-500 hover:text-gray-500" href="#" x-on:click.prevent="tab='#tab4'">
                 {{ _('Information financière' )}}
             </a>
 
@@ -94,6 +94,18 @@
                             </path>
                         </svg>
                         <div class="ml-2">
+                            <h3 class="font-bold">Ecole précédente</h3>
+                            <p>{{ $student->previous_school }}</p>
+                        </div>
+                    </div>                 
+                </div>
+                <div class="p-4 pt-0">                
+                    <div class="flex border-1 mb-0 p-3 hover:bg-gray-200">
+                        <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z">
+                            </path>
+                        </svg>
+                        <div class="ml-2">
                             <h3 class="font-bold">Téléphone</h3>
                             <p>{{ $student->phone }}</p>
                         </div>
@@ -108,38 +120,6 @@
                             <p>{{ $student->address }}, {{ $student->city }}</p>
                         </div>
                     </div>
-                </div>
-                <div class="p-4 pt-0">
-                    <div class="flex border-1 mb-0 p-3 hover:bg-gray-200">
-                        <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z">
-                            </path>
-                        </svg>
-                        <div class="ml-2">
-                            <h3 class="font-bold">Ecole précédente</h3>
-                            <p>{{ $student->previous_school }}</p>
-                        </div>
-                    </div>
-                    <div class="flex border-1 mb-0 p-3 hover:bg-gray-200">
-                        <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z">
-                            </path>
-                        </svg>
-                        <div class="ml-2">
-                            <h3 class="font-bold">Vaccination</h3>
-                            <p>{{ $student->medical_history }}</p>
-                        </div>
-                    </div>
-                    <div class="flex border-1 mb-0 p-3 hover:bg-gray-200">
-                        <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z">
-                            </path>
-                        </svg>
-                        <div class="ml-2">
-                            <h3 class="font-bold">Allergies</h3>
-                            <p>{{ $student->allergies }}</p>
-                        </div>
-                    </div>
                     <div class="flex border-1 mb-0 p-3 hover:bg-gray-200">
                         <div class="ml-2">
                             <h3 class="font-bold"></h3>
@@ -151,7 +131,7 @@
             <!-- Relationship's tab -->
             <div class="flex justify-between mt-6 border-b-2">
                 <h2 class="my-2 mr-3 text-2xl font-normal text-gray-700 dark:text-gray-200">
-                    {{ Str::of('Lien parenté')->headline() }}
+                    {{ Str::of('Parents ou tuteur')->headline() }}
                 </h2>
                 <x-button wire:click="showCreateTutorModal" class="mb-2">
                     {{ __('Nouveau') }}
@@ -306,7 +286,7 @@
                 <div class="w-full overflow-x-auto">
                     <table class="w-full whitespace-no-wrap">
                         <thead>
-                            <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+                            <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
                                 <th class="px-4 py-3">
                                     <div class="flex item-center">Nom complet</div>
                                 </th>
@@ -374,7 +354,7 @@
                 <div class="w-full overflow-x-auto">
                     <table class="w-full whitespace-no-wrap">
                         <thead>
-                            <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+                            <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
                                 <th class="px-4 py-3">
                                     <div class="flex item-center">Année scolaire</div>
                                 </th>
@@ -424,26 +404,28 @@
                             <tr class="text-gray-700 dark:text-gray-400" wire:key="">
                                 <td class="px-4 py-3 text-sm">&nbsp;</td>
                                 <td colspan="4" class="px-4 py-3">
-                                    @if($classroom->pivot->academic_year === $evaluations[0]->academic_year)
-                                    <table class="w-full whitespace-no-wrap">
-                                        <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
-                                            @foreach($evaluations as $eval)
-                                            <tr class="text-gray-700 dark:text-gray-400" wire:key="">
-                                                <td class="px-4 py-3 text-sm">{{ $eval->title }}</td>
-                                                <td class="px-4 py-3">
-                                                    {{ $eval->quarter }}{{ $eval->quarter=='1'?'er':'ème' }} {{ _("trimestre") }} 
-                                                </td>
-                                                <td class="px-4 py-3">
-                                                    <x-nav-link href="{{ route('evaluation-index', ['id' => $student->id, 'q' => $eval->quarter, 'ay' => $eval->academic_year]) }}" wire:navigate class="flex items-center text-sm">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                                            <path d="M3 15v4c0 1.1.9 2 2 2h14a2 2 0 0 0 2-2v-4M17 9l-5 5-5-5M12 12.8V2.5" />
-                                                        </svg>
-                                                    </x-nav-link>
-                                                </td>
-                                            </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
+                                    @if(sizeof($evaluations)!=0)
+                                        @if($classroom->pivot->academic_year === json_decode($evaluations, true)[0]['academic_year'] )
+                                        <table class="w-full whitespace-no-wrap">
+                                            <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+                                                @foreach($evaluations as $eval)
+                                                <tr class="text-gray-700 dark:text-gray-400" wire:key="">
+                                                    <td class="px-4 py-3 text-sm">{{ $eval->title }}</td>
+                                                    <td class="px-4 py-3">
+                                                        {{ $eval->quarter }}{{ $eval->quarter=='1'?'er':'ème' }} {{ _("trimestre") }} 
+                                                    </td>
+                                                    <td class="px-4 py-3">
+                                                        <x-nav-link href="{{ route('evaluation-index', ['id' => $student->id, 'q' => $eval->quarter, 'ay' => $eval->academic_year]) }}" wire:navigate class="flex items-center text-sm">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                                <path d="M3 15v4c0 1.1.9 2 2 2h14a2 2 0 0 0 2-2v-4M17 9l-5 5-5-5M12 12.8V2.5" />
+                                                            </svg>
+                                                        </x-nav-link>
+                                                    </td>
+                                                </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                        @endif
                                     @endif
                                 </td>
                             </tr>
@@ -462,7 +444,7 @@
                 <div class="w-full overflow-x-auto">
                     <table class="w-full whitespace-no-wrap">
                         <thead>
-                            <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+                            <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
                                 <th class="px-4 py-3">
                                     <div class="flex item-center">Année scolaire</div>
                                 </th>
