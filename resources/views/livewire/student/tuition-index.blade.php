@@ -9,30 +9,30 @@
 
     <div class="flex">
         <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
-            Tuition fees
+            {{_('Frais scolaire')}}
         </h2>
     </div>
 
     <div>
         <x-button wire:click="showCreateTuitionModal" class="mb-2">
-            {{ __('New payment') }}
+            {{ __('Nouveau paiement') }}
         </x-button>
         <!-- Create classroom modal -->
         <x-dialog-modal wire:model="createTuitionModal">
             <x-slot name="title">
-                {{ __('Create classroom') }}
+                {{ __('Enregistrer un paiement') }}
             </x-slot>
 
             <form>
                 <x-slot name="content">
                     <div class="flex px-2 my-2">
-                        <div class="w-full md:w-1 mr-4 ml-4">
+                        <div class="w-full md:w-1/1 mr-4 ml-4">
                             <label class="block mt-4 text-sm">
                                 <span class="text-gray-700 dark:text-gray-400">
-                                    Student
+                                    Elève
                                 </span>
-                                <select wire:model="studentId" class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
-                                    <option>Select a type...</option>
+                                <select wire:model.live="studentId" class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
+                                    <option>Séléctionnez l'élève</option>
                                     @foreach (\App\Models\Student::all() as $student)
                                     <option value="{{ $student->id }}">(Matricule) {{ $student->first_name }} {{ $student->last_name }}</option>
                                     @endforeach
@@ -44,13 +44,13 @@
                         </div>
                     </div>
                     <div class="flex px-2 my-2">
-                        <div class="w-full md:w-1 mr-4 ml-4">
+                        <div class="w-full md:w-1/1 mr-4 ml-4">
                             <label class="block mt-4 text-sm">
                                 <span class="text-gray-700 dark:text-gray-400">
-                                    Class
+                                    Classe
                                 </span>
                                 <select wire:model="classroomId" wire:click="fillSelect" class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
-                                    <option>Select a type...</option>
+                                    <option>Sélectionnez la classe</option>
                                     @foreach ($classrooms as $classroom)
                                     <option value="{{ $classroom->id }},{{isset($classroom->pivot->academic_year)?$classroom->pivot->academic_year:''}}">({{isset($classroom->pivot->academic_year)?$classroom->pivot->academic_year:''}}) | {{ $classroom->name }} - {{ $classroom->type }} </option>
                                     @endforeach
@@ -65,10 +65,10 @@
                         <div class="w-full md:w-2/3 mr-4 ml-4">
                             <label class="block mt-4 text-sm">
                                 <span class="text-gray-700 dark:text-gray-400">
-                                    Label
+                                    Intitulé
                                 </span>
                                 <select wire:model="label" class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
-                                    <option>Select a type...</option>
+                                    <option>Sélectionnez l'intitulé</option>
                                     @foreach(\App\Enums\LabelType::cases() as $label)
                                     <option value="{{ $label->value }}">{{ $label->name }}</option>
                                     @endforeach
@@ -79,9 +79,9 @@
                             </label>
                         </div>
                         <div class="w-full md:w-1/3 mr-4 ml-4">
-                        <label class="block mt-4 text-sm">
+                            <label class="block mt-4 text-sm">
                                 <span class="text-gray-700 dark:text-gray-400">
-                                    Amount
+                                    Montant
                                 </span>
                                 <input type="number" wire:model="amount" class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input" />
                                 @error('amount')
@@ -95,7 +95,7 @@
                     <div class="px-2 my-2">
                         <div class="w-full md:w-2/3 mr-4 ml-4">
                             <x-button wire:click="create">
-                                {{ __('Create') }}
+                                {{ __('Valider') }}
                             </x-button>
                         </div>
                     </div>
@@ -103,23 +103,25 @@
             </form>
         </x-dialog-modal>
     </div>
-
+    <div class="flex">
+        <input type="text" wire:model.live="field_search" class="px-2 py-0 my-2 rounded text-sm placeholder:text-gray-400 text-gray-400" placeholder="Saisissez un nom">
+    </div>
     <div class="w-full overflow-hidden rounded-lg shadow-xs">
         <div class="w-full overflow-x-auto">
             <table class="w-full whitespace-no-wrap">
                 <thead>
                     <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
                         <th class="px-4 py-3">
-                            <div class="flex item-center">Student</div>
+                            <div class="flex item-center">Elève</div>
                         </th>
                         <th class="px-4 py-3">
-                            <div class="flex item-center">Classroom</div>
+                            <div class="flex item-center">Classe</div>
                         </th>
-                        <th class="px-4 py-3">Academic year</th>
+                        <th class="px-4 py-3">Année scolaire</th>
 
-                        <th class="px-4 py-3">Label</th>
-                        <th class="px-4 py-3">Amount</th>
-                        <th class="px-4 py-3">Action</th>
+                        <th class="px-4 py-3">Intitulé</th>
+                        <th class="px-4 py-3">Montant</th>
+                        <th class="px-4 py-3">&nbsp;</th>
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
@@ -128,7 +130,7 @@
                         <td class="px-4 py-3">{{ ucwords($student->first_name) }} {{ strtoupper($student->last_name) }}</td>
                         <td class="px-4 py-3">
                             <x-nav-link href="{{ route('classroom-show', ['id' => $student->id]) }}" wire:navigate>
-                            {{ $student->name }}, {{ $student->type }}
+                                Pédago {{ $student->type }} {{ $student->name }}
                             </x-nav-link>
                         </td>
                         <td class="px-4 py-3">{{ $student->academic_year }}</td>
