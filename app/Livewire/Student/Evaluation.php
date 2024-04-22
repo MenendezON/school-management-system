@@ -61,7 +61,8 @@ class Evaluation extends Component
               break;
             default:
                 $result = $this->returnAnswer($opt, 'avec_aide');
-          }
+        }
+        $result .= '.';
         return trim($result);
     }
 
@@ -69,7 +70,6 @@ class Evaluation extends Component
     {
         $answer = Question::where('id', $opt->question_id)->get($answer)->value($answer);
         $answer = str_replace('.', '', $answer);
-        $answer .= '.';
         return $answer;
     }
 
