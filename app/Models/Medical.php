@@ -10,10 +10,10 @@ class Medical extends Model
 {
     use HasFactory;
 
-    protected $fillable = [];
+    protected $fillable = ['field1'];
 
-    public function user(): BelongsTo
+    public function student()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Student::class);
     }
 }
