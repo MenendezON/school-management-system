@@ -43,5 +43,10 @@ class Student extends Model
     {
         return $this->hasMany(Option::class);
     }
+
+    public function medical()
+    {
+        return $this->hasOne(Medical::class);
+    }
     
 }
