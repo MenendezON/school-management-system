@@ -5,22 +5,29 @@ namespace App\Livewire\Student;
 use App\Models\Classroom;
 use App\Models\Student;
 use Illuminate\Support\Facades\DB;
+use Livewire\Attributes\Rule;
 use Livewire\Component;
 use Livewire\WithPagination;
 
 class TuitionIndex extends Component
 {
     use WithPagination;
+
     public $createTuitionModal = false;
+
+    #[Rule("Required")]
     public $studentId;
-
+    #[Rule("Required")]
     public $classroomId;
-
+    #[Rule("Required")]
     public $label;
+    #[Rule("Required|min:5")]
     public $amount;
-    //public $schoolYear = 
+
+    public $field_search;
 
     public $classrooms=[];
+
 
     public function showCreateTuitionModal()
     {
@@ -28,6 +35,7 @@ class TuitionIndex extends Component
     }
 
     public function create(){
+        $this->validate();
         $tab = explode(',',$this->classroomId);
         
         $student = Student::find($this->studentId);
@@ -44,13 +52,29 @@ class TuitionIndex extends Component
         $this->classrooms = Student::findOrFail($this->studentId)->classrooms()->withPivot('academic_year', 'observations')->get();
     }
 
+    public function generateSchoolYears()
+    {
+        $currentYear = date('Y');
+        $schoolYear = [];
+
+        for ($year = $currentYear; $year >= 2000; $year--) {
+            $schoolYear[] = $year;
+        }
+        return $schoolYear;
+    }
+
     public function render()
     {
         $students = DB::table('tuitions')
         ->join('students', 'tuitions.student_id', '=', 'students.id')
         ->join('classrooms', 'tuitions.classroom_id', '=', 'classrooms.id')
+        ->where('first_name', 'like', "%$this->field_search%")
+        ->orWhere('last_name', 'like', "%$this->field_search%")
         ->get();
         
-        return view('livewire.student.tuition-index', ['students'=>$students])->layout('layouts.app');
+        return view('livewire.student.tuition-index', [
+            'students'=>$students,
+            'generateSchoolYears' => $this->generateSchoolYears(),
+            ])->layout('layouts.app');
     }
 }
