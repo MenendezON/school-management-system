@@ -17,8 +17,6 @@ class MedicalIndex extends Component
     public function render()
     {
         $medical = Medical::all();
-        return view('livewire.student.medical-index', [
-            'medical'=> $medical
-        ]);
+        return view('livewire.student.medical-index');
     }
 }
