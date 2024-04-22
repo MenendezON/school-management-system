@@ -3,6 +3,7 @@
 namespace App\Livewire\Student;
 
 use App\Models\Classroom;
+use Livewire\Attributes\Layout;
 use Livewire\Attributes\Rule;
 use Livewire\Attributes\On;
 use Livewire\Component;
@@ -74,10 +75,11 @@ class ClassroomIndex extends Component
         session()->remove('success');
     }
 
+    #[Layout('layouts.app')] 
     public function render()
     {
         $classrooms = Classroom::orderBy('id', 'desc')
             ->paginate(13);
-        return view('livewire.student.classroom-index', ['classrooms' => $classrooms])->layout('layouts.app');
+        return view('livewire.student.classroom-index', ['classrooms' => $classrooms]);
     }
 }

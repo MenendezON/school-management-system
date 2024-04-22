@@ -340,7 +340,7 @@
 
         <!-- begin Tutor's tab -->
         <div x-show="tab == '#tab2'" x-cloak>
-
+            <livewire:student.medical-index :student="$student" />
         </div>
 
         <!-- begin Academic year's tab -->

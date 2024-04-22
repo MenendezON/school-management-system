@@ -116,9 +116,8 @@ class StudentIndex extends Component
     {
         $students = Student::orderBy('id', 'desc')
             ->where('first_name', 'like', '%' . $this->keyword . '%')
-            ->where('last_name', 'like', '%' . $this->keyword . '%')
-            ->where('address', 'like', '%' . $this->keyword . '%')
-            ->where('first_name', 'like', '%' . $this->keyword . '%')
+            ->orWhere('last_name', 'like', '%' . $this->keyword . '%')
+            ->orwhere('address', 'like', '%' . $this->keyword . '%')
             ->paginate(10);
         return view('livewire.student.student-index', [
             'students' => $students,
