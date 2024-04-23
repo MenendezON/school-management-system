@@ -31,9 +31,15 @@ class MedicalCreate extends Component
     public function create()
     {
         //$this->validate();
-        $this->student->medical()->create($this->only(['field1']));
-        request()->session()->flash("success", "Le dossier médical a été crée");
-        $this->createMedicalModal = false;
+        if($this->editMode){
+            $this->student->medical()->update($this->only(['field1']));
+            request()->session()->flash("success", "Le dossier médical a été crée");
+            $this->createMedicalModal = false;
+        }else{
+            $this->student->medical()->create($this->only(['field1']));
+            request()->session()->flash("success", "Le dossier médical a été crée");
+            $this->createMedicalModal = false;
+        }
     }
 
     public function showCreateMedicalModal()
