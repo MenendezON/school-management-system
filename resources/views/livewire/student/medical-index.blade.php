@@ -1,4 +1,3 @@
 <div>
-    <livewire:student.medical-create />
-
+    {{ $medical }}
 </div>

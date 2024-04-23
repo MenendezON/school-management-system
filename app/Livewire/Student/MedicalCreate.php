@@ -4,6 +4,7 @@ namespace App\Livewire\Student;
 
 use App\Models\Medical;
 use App\Models\Student;
+use Livewire\Attributes\Layout;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
@@ -11,22 +12,20 @@ class MedicalCreate extends Component
 {
     public $createMedicalModal = false;
     public $editMode = false;
+    public ?Student $student;
 
-    public ?Medical $medical;
+    public $field1;
 
-    public $field1 = 'Hello world';
-
-    public $student;
-
-    public function mount()
-    {
-        $this->student = Student::findOrFail(1);
+    public $id;
+    public function mount($student){
+        $this->id = $student->id;
     }
 
     public function setMedical(Medical $medical)
     {
         $this->medical = $medical;
         $this->editMode = true;
+        $this->field1 = $medical->field1;
     }
 
     public function create()
@@ -37,24 +36,25 @@ class MedicalCreate extends Component
         $this->createMedicalModal = false;
     }
 
+    public function showCreateMedicalModal()
+    {
+        $this->createMedicalModal = true;
+    }
+
     #[On('edit-medical')]
     public function editMedical($id)
     {
-        $medical = Medical::findOrFail($id);
+        $medical = Medical::find($id);
         $this->setMedical($medical);
 
         $this->showCreateMedicalModal();
     }
 
-    public function showCreateMedicalModal()
-    {
-        $this->createMedicalModal = true;
-    }
     public function render()
     {
-        $medical = Student::all();
+        $medical = Medical::where('student_id', $this->id)->first();
         return view('livewire.student.medical-create', [
-            'medical' => $medical
+            'medical'=> $medical
         ]);
     }
 }

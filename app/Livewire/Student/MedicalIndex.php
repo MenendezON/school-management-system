@@ -8,15 +8,15 @@ use Livewire\Component;
 
 class MedicalIndex extends Component
 {
-    public ?Student $student;
-    public function mount($student)
-    {
-        $this->student = $student;
+    public $id;
+    public function mount($student){
+        $this->id = $student->id;
     }
-
     public function render()
     {
-        $medical = Medical::all();
-        return view('livewire.student.medical-index');
+        $medical = Medical::where('student_id', $this->id)->first();
+        return view('livewire.student.medical-index', [
+            'medical'=> $medical
+        ]);
     }
 }
