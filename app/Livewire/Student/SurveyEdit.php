@@ -82,6 +82,7 @@ class SurveyEdit extends Component
         // // Optionally, redirect or show a success message
         session()->flash('success', "L'évaluation a été bien enregistrée!");
         // $this->createQuestionModal = false;
+        return redirect()->route('student-show', ['id' =>$this->student->id]);
     }
 
     public function render()

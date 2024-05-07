@@ -7,6 +7,7 @@ use App\Models\Option;
 use App\Models\Question;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Livewire\Attributes\Layout;
 use Livewire\Component;
 
 class Evaluation extends Component
@@ -16,7 +17,7 @@ class Evaluation extends Component
     public $quarterid;
 
     public $reports = array();
-    public $option;
+    public $options;
 
     public function mount(Request $request, $id, $q)
     {
@@ -24,17 +25,18 @@ class Evaluation extends Component
         $this->studentid = $id;
 
         $this->categories = Question::select('category')
-            ->where('survey_id', 1)
+            //->where('survey_id', 2)
             ->distinct()
             ->pluck('category');
 
-            $this->data_analyse($request);
+        $this->data_analyse($request);
+
     }
 
     public function data_analyse($request)
     {
         foreach($this->categories as $category){
-            $this->option = DB::table('options')
+            $this->options = DB::table('options')
             ->join('questions', 'questions.id', '=', 'options.question_id')
             ->join('students', 'options.student_id', '=', 'students.id')
             ->where('student_id', $this->studentid)
@@ -43,8 +45,10 @@ class Evaluation extends Component
             ->where('academic_year', $request->input('ay'))
             ->get();
 
-            foreach($this->option as $opt){
-                $this->reports[$category][$opt->question_id] = $this->extract_result($opt);
+            //dd($this->options);
+
+            foreach($this->options as $option){
+                $this->reports[$category][$option->question_id] = $this->extract_result($option);
             }
         }
     }
@@ -73,10 +77,13 @@ class Evaluation extends Component
         return $answer;
     }
 
+    #[Layout('layouts.app')] 
     public function render()
     {
+        
+        //dd($this->options);
         return view('livewire.student.evaluation', [
             'categories' => $this->categories,
-        ])->layout('layouts.app');
+        ]);
     }
 }
