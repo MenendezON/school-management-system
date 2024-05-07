@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('question_id');
             $table->unsignedBigInteger('student_id');
-            $table->string('option_text');
+            $table->integer('option_text')->default(0);
             $table->integer('quarter');
             $table->string('academic_year');
             $table->timestamps();

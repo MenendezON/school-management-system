@@ -16,6 +16,9 @@ return new class extends Migration
             $table->unsignedBigInteger('survey_id');
             $table->string('category');
             $table->text('question_text');
+            $table->string('fait_seul');
+            $table->string('avec_aide');
+            $table->string('fait_pas');
             $table->timestamps();
 
             $table->foreign('survey_id')->references('id')->on('surveys')
