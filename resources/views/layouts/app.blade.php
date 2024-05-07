@@ -87,11 +87,13 @@
                                                 {{ __('Team Settings') }}
                                             </x-dropdown-link>
 
+                                            @if(Auth::user()->hasTeamRole(Auth::user()->currentTeam, 'admin'))
                                             @can('create', Laravel\Jetstream\Jetstream::newTeamModel())
                                             <x-dropdown-link href="{{ route('teams.create') }}">
                                                 {{ __('Create New Team') }}
                                             </x-dropdown-link>
                                             @endcan
+                                            @endif
 
                                             <!-- Team Switcher -->
                                             @if (Auth::user()->allTeams()->count() > 1)
