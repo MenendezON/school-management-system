@@ -31,7 +31,7 @@
                                 <span class="text-gray-700 dark:text-gray-400">
                                     Type de classe
                                 </span>
-                                <select wire:model="type" class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
+                                <select wire:model.live="type" class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
                                     <option>Sélectionner une valeur...</option>
                                     @foreach(\App\Enums\ClassroomType::cases() as $type)
                                     <option value="{{ $type->value }}">{{ $type->name }}</option>

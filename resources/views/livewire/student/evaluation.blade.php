@@ -19,8 +19,8 @@
                     <tr>
                         <th>Nom & prénom </th>
                         <th>:
-                        @foreach($option as $op)
-                            {{ $op->first_name }}
+                        @foreach($options as $option)
+                            {{ $option->first_name }}
                             @break
                         @endforeach
                         </th>
@@ -28,8 +28,8 @@
                     <tr>
                         <th>Age </th>
                         <th>:
-                        @foreach($option as $op)
-                            {{ \Carbon\Carbon::parse($op->date_of_birth)->diffForHumans() }}
+                        @foreach($options as $option)
+                            {{ \Carbon\Carbon::parse($option->date_of_birth)->diffForHumans() }}
                             @break
                         @endforeach
                         </th>
@@ -37,8 +37,8 @@
                     <tr>
                         <th>Année scolaire </th>
                         <th>:
-                        @foreach($option as $op)
-                            {{ $op->academic_year }}
+                        @foreach($options as $option)
+                            {{ $option->academic_year }}
                             @break
                         @endforeach
                         </th>
@@ -47,7 +47,7 @@
                     <tr>
                         <th>Trim/Date </th>
                         <th>:
-                        @foreach($option as $op)
+                        @foreach($options as $option)
                             {{ Date('d-m-Y') }}
                             @break
                         @endforeach
@@ -64,6 +64,7 @@
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+                        
                     @foreach($reports as $key => $rslt)
                         <tr class="text-gray-700 dark:text-gray-400">
                             <td class="px-4 py-3 text-sm font-semibold">{{ $key }}</td>
