@@ -9,6 +9,8 @@ use App\Actions\Jetstream\DeleteUser;
 use App\Actions\Jetstream\InviteTeamMember;
 use App\Actions\Jetstream\RemoveTeamMember;
 use App\Actions\Jetstream\UpdateTeamName;
+use App\Models\Classroom;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Jetstream\Jetstream;
 
@@ -20,6 +22,13 @@ class JetstreamServiceProvider extends ServiceProvider
     public function register(): void
     {
         //
+    }
+    protected $policies = [];
+    protected function registerPolicies()
+    {
+        foreach ($this->policies as $model => $policy) {
+            Gate::policy($model, $policy);
+        }
     }
 
     /**
@@ -45,22 +54,27 @@ class JetstreamServiceProvider extends ServiceProvider
     {
         Jetstream::defaultApiTokenPermissions(['read']);
 
-        Jetstream::role('admin', 'Administrator', [
+        Jetstream::role('admin', 'Administrateur', [
             'create',
             'read',
             'update',
             'delete',
-        ])->description('Administrator users can perform any action.');
+        ])->description("Les utilisateurs administrateurs peuvent effectuer n'importe quelle action.");
 
-        Jetstream::role('editor', 'Editor', [
+        Jetstream::role('editor', 'Editeur', [
             'read',
             'create',
             'update',
-        ])->description('Editor users have the ability to read, create, and update.');
+        ])->description("Les Editeurs ont la possibilité de lire, créer et mettre à jour les documents suivants.");
 
-        Jetstream::role('supervisor', 'Supervisor', [
+        Jetstream::role('supervisor', 'Superviseur', [
             'read',
             'update',
-        ])->description('Supervisor users have the ability to read, and update.');
+        ])->description("Les superviseurs ont la possibilité de lire et de mettre à jour.");
+
+        
+        Jetstream::role('guest', 'Invités', [
+            'read',
+        ])->description('Les invités ont la possibilité de lire.');
     }
 }
