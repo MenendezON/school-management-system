@@ -65,7 +65,6 @@
                             <td class="px-4 py-3 text-sm">{{ $question->question_text }}</td>
                             <td class="px-4 py-3 text-sm">
                                 <select wire:model.live="option.{{ $index }}.{{ $question->id }}" class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
-                                    <option>Sélectionner une valeur...</option>
                                     @foreach(\App\Enums\SurveyValue::cases() as $type)
                                     <option value="{{ $type->value }}">{{ $type->name }}</option>
                                     @endforeach
@@ -85,12 +84,12 @@
             </div>
             <div class="w-full overflow-x-auto px-4 py-3">
                 <div class="px-2 my-2">
-                    <div class="w-full md:w-3/3 mr-4 ml-4">
-                        <button type="submit" wire:click.prevent="save">{{ __('Valider') }}</button>
-
+                    <div class="w-full md:w-3/3 mr-4">
+                        <x-button type="submit" wire:click.prevent="save">{{ __('Valider') }}</x-button>
                     </div>
                 </div>
             </div>
+            
         </div>
     </form>
 </div>

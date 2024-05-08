@@ -6,6 +6,7 @@ use App\Models\Option;
 use App\Models\Student;
 use App\Models\Survey;
 use App\Models\Tutor;
+use Livewire\Attributes\Layout;
 use Livewire\Attributes\Rule;
 use Livewire\Attributes\On;
 use Livewire\Component;
@@ -97,14 +98,14 @@ class StudentShow extends Component
         $this->createTutorModal = true;
     }
 
+    #[Layout('layouts.app')] 
     public function render()
     {
         
 
-        //dd($evaluation);
         return view('livewire.student.student-show', [
             'student' => $this->student,
             'evaluations' => $this->evaluations,
-            ])->layout('layouts.app');
+        ]);
     }
 }

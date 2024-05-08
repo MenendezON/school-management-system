@@ -340,7 +340,8 @@
 
         <!-- begin Tutor's tab -->
         <div x-show="tab == '#tab2'" x-cloak>
-
+            <livewire:student.medical-create :student="$student" />
+            <livewire:student.medical-index :student="$student"  />
         </div>
 
         <!-- begin Academic year's tab -->
@@ -389,12 +390,17 @@
                                         <x-slot name="content">
                                             <div class="w-66">
                                                 @if(route('student-show', ['id' => $student->id]))
-                                                @if(strtoupper($classroom->name) === "INDIGO")
-                                                <x-dropdown-link href="{{ route('student-survey-show', ['id' => $student->id, 'idsurvey' => 1]) }}?ay={{ $classroom->pivot->academic_year }}">{{ __('Progression des apprentissages') }}</x-dropdown-link>
-                                                @endif
-                                                @if($classroom->name === "Académique")
-                                                <x-dropdown-link href="{{ route('student-survey-show', ['id' => $student->id, 'idsurvey' => 2]) }}">{{ __('Progression des apprentissages') }}</x-dropdown-link>
-                                                @endif
+                                                    @if(strtoupper($classroom->name) === "INDIGO")
+                                                        <x-dropdown-link href="{{ route('student-survey-show', ['id' => $student->id, 'idsurvey' => 1]) }}?ay={{ $classroom->pivot->academic_year }}">{{ __('Progression des apprentissages') }}</x-dropdown-link>
+                                                    @endif
+
+                                                    @if($classroom->type === "Spécialisée")
+                                                        <x-dropdown-link href="{{ route('student-survey-show', ['id' => $student->id, 'idsurvey' => 2]) }}?ay={{ $classroom->pivot->academic_year }}">{{ __('Grille Teacch') }}</x-dropdown-link>
+                                                    @endif
+                                                    
+                                                    @if($classroom->name === "Académique")
+                                                        <x-dropdown-link href="{{ route('student-survey-show', ['id' => $student->id, 'idsurvey' => 2]) }}">{{ __('Progression des apprentissages') }}</x-dropdown-link>
+                                                    @endif
                                                 @endif
                                             </div>
                                         </x-slot>

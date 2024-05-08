@@ -5,6 +5,7 @@ namespace App\Livewire\Student;
 use Livewire\Attributes\Rule;
 use Livewire\Component;
 use App\Models\Student;
+use App\Models\User;
 use Livewire\Attributes\On;
 use Livewire\WithPagination;
 
@@ -92,6 +93,12 @@ class StudentIndex extends Component
         }
     }
 
+    public function view(User $user, Student $student): bool
+    {
+        return $user->belongsToTeam($student->team) &&
+               $user->hasTeamPermission($student->team, 'view');
+    }
+
     public function removeflash()
     {
         session()->remove('success');
@@ -116,9 +123,8 @@ class StudentIndex extends Component
     {
         $students = Student::orderBy('id', 'desc')
             ->where('first_name', 'like', '%' . $this->keyword . '%')
-            ->where('last_name', 'like', '%' . $this->keyword . '%')
-            ->where('address', 'like', '%' . $this->keyword . '%')
-            ->where('first_name', 'like', '%' . $this->keyword . '%')
+            ->orWhere('last_name', 'like', '%' . $this->keyword . '%')
+            ->orwhere('address', 'like', '%' . $this->keyword . '%')
             ->paginate(10);
         return view('livewire.student.student-index', [
             'students' => $students,

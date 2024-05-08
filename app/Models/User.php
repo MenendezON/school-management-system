@@ -13,6 +13,7 @@ use Laravel\Sanctum\HasApiTokens;
 
 use App\Models\Student;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Auth;
 
 class User extends Authenticatable
 {
@@ -69,4 +70,25 @@ class User extends Authenticatable
     public function classrooms(): HasMany{
         return $this->hasMany(classroom::class);
     }
+
+    public function canRead()
+    {
+        return $this->hasTeamPermission(Auth::user()->currentTeam, 'read');
+    }
+
+    public function canCreate()
+    {
+        return $this->hasTeamPermission(Auth::user()->currentTeam, 'create');
+    }
+
+    public function canUpdate()
+    {
+        return $this->hasTeamPermission(Auth::user()->currentTeam, 'update');
+    }
+
+    public function canDestroy()
+    {
+        return $this->hasTeamPermission(Auth::user()->currentTeam, 'delete');
+    }
+
 }

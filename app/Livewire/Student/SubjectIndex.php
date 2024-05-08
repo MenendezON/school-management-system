@@ -5,13 +5,12 @@ namespace App\Livewire\Student;
 use Livewire\Attributes\Rule;
 use Livewire\Attributes\On;
 use App\Models\Classroom;
-use App\Models\Teacher;
 use App\Models\Subject;
 use Livewire\Component;
 
 class SubjectIndex extends Component
 {
-    public ?Subject $subjet;
+    public ?Subject $subject;
     public $editMode = false;
 
     public ?Classroom $classroom;
