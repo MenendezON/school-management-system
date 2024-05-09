@@ -5,7 +5,9 @@ namespace App\Livewire\Student;
 use App\Models\Answer;
 use App\Models\Option;
 use App\Models\Question;
+use App\Models\Team;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
@@ -80,8 +82,8 @@ class Evaluation extends Component
     #[Layout('layouts.app')] 
     public function render()
     {
-        
-        //dd($this->options);
+        (!auth()->user()->canRead() || Auth::user()->currentTeam->id !== Team::find(1)->id) && abort(403, 'Unauthorized action.');
+
         return view('livewire.student.evaluation', [
             'categories' => $this->categories,
         ]);
