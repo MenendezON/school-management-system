@@ -5,10 +5,12 @@ namespace App\Livewire\Student;
 use App\Models\Answer;
 use App\Models\Option;
 use App\Models\Question;
+use App\Models\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class Evaluation extends Component
 {
@@ -30,6 +32,29 @@ class Evaluation extends Component
             ->pluck('category');
 
         $this->data_analyse($request);
+
+    }
+
+    public function generateFileName($id)
+    {
+        $student = Student::findOrFail($id);
+        return str_replace(" ", "_", time()."-".ucwords($student->first_name).ucwords($student->last_name).".pdf");
+    }
+
+    public function generatePdf()
+    {
+        $data = [
+            'options' => $this->options,
+            'categories' => $this->categories,
+            'reports' => $this->reports,
+        ];
+
+        $pdf = Pdf::loadView('livewire.pdf-evaluation', $data)
+        ->setPaper('a4', 'portrait');
+
+        return response()->streamDownload(function() use($pdf){ 
+            echo $pdf->stream();
+        }, $this->generateFileName($this->studentid));
 
     }
 
@@ -80,8 +105,7 @@ class Evaluation extends Component
     #[Layout('layouts.app')] 
     public function render()
     {
-        
-        //dd($this->options);
+        //dd(Date('d/m/Y'));
         return view('livewire.student.evaluation', [
             'categories' => $this->categories,
         ]);

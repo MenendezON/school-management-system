@@ -97,9 +97,9 @@
                             <h3 class="font-bold">Ecole précédente</h3>
                             <p>{{ $student->previous_school }}</p>
                         </div>
-                    </div>                 
+                    </div>
                 </div>
-                <div class="p-4 pt-0">                
+                <div class="p-4 pt-0">
                     <div class="flex border-1 mb-0 p-3 hover:bg-gray-200">
                         <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
                             <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z">
@@ -341,7 +341,7 @@
         <!-- begin Tutor's tab -->
         <div x-show="tab == '#tab2'" x-cloak>
             <livewire:student.medical-create :student="$student" />
-            <livewire:student.medical-index :student="$student"  />
+            <livewire:student.medical-index :student="$student" />
         </div>
 
         <!-- begin Academic year's tab -->
@@ -390,17 +390,17 @@
                                         <x-slot name="content">
                                             <div class="w-66">
                                                 @if(route('student-show', ['id' => $student->id]))
-                                                    @if(strtoupper($classroom->name) === "INDIGO")
-                                                        <x-dropdown-link href="{{ route('student-survey-show', ['id' => $student->id, 'idsurvey' => 1]) }}?ay={{ $classroom->pivot->academic_year }}">{{ __('Progression des apprentissages') }}</x-dropdown-link>
-                                                    @endif
+                                                @if(strtoupper($classroom->name) === "INDIGO")
+                                                <x-dropdown-link href="{{ route('student-survey-show', ['id' => $student->id, 'idsurvey' => 1]) }}?ay={{ $classroom->pivot->academic_year }}">{{ __('Progression des apprentissages') }}</x-dropdown-link>
+                                                @endif
 
-                                                    @if($classroom->type === "Spécialisée")
-                                                        <x-dropdown-link href="{{ route('student-survey-show', ['id' => $student->id, 'idsurvey' => 2]) }}?ay={{ $classroom->pivot->academic_year }}">{{ __('Grille Teacch') }}</x-dropdown-link>
-                                                    @endif
-                                                    
-                                                    @if($classroom->name === "Académique")
-                                                        <x-dropdown-link href="{{ route('student-survey-show', ['id' => $student->id, 'idsurvey' => 2]) }}">{{ __('Progression des apprentissages') }}</x-dropdown-link>
-                                                    @endif
+                                                @if($classroom->type === "Spécialisée")
+                                                <x-dropdown-link href="{{ route('student-survey-show', ['id' => $student->id, 'idsurvey' => 2]) }}?ay={{ $classroom->pivot->academic_year }}">{{ __('Grille Teacch') }}</x-dropdown-link>
+                                                @endif
+
+                                                @if($classroom->name === "Académique")
+                                                <x-dropdown-link href="{{ route('student-survey-show', ['id' => $student->id, 'idsurvey' => 2]) }}">{{ __('Progression des apprentissages') }}</x-dropdown-link>
+                                                @endif
                                                 @endif
                                             </div>
                                         </x-slot>
@@ -411,27 +411,27 @@
                                 <td class="px-4 py-3 text-sm">&nbsp;</td>
                                 <td colspan="4" class="px-4 py-3">
                                     @if(sizeof($evaluations)!=0)
-                                        @if($classroom->pivot->academic_year === json_decode($evaluations, true)[0]['academic_year'] )
-                                        <table class="w-full whitespace-no-wrap">
-                                            <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
-                                                @foreach($evaluations as $eval)
-                                                <tr class="text-gray-700 dark:text-gray-400" wire:key="">
-                                                    <td class="px-4 py-3 text-sm">{{ $eval->title }}</td>
-                                                    <td class="px-4 py-3">
-                                                        {{ $eval->quarter }}{{ $eval->quarter=='1'?'er':'ème' }} {{ _("trimestre") }} 
-                                                    </td>
-                                                    <td class="px-4 py-3">
-                                                        <x-nav-link href="{{ route('evaluation-index', ['id' => $student->id, 'q' => $eval->quarter, 'ay' => $eval->academic_year]) }}" wire:navigate class="flex items-center text-sm">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                                                <path d="M3 15v4c0 1.1.9 2 2 2h14a2 2 0 0 0 2-2v-4M17 9l-5 5-5-5M12 12.8V2.5" />
-                                                            </svg>
-                                                        </x-nav-link>
-                                                    </td>
-                                                </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
-                                        @endif
+                                    @if($classroom->pivot->academic_year === json_decode($evaluations, true)[0]['academic_year'] )
+                                    <table class="w-full whitespace-no-wrap">
+                                        <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+                                            @foreach($evaluations as $eval)
+                                            <tr class="text-gray-700 dark:text-gray-400" wire:key="">
+                                                <td class="px-4 py-3 text-sm">{{ $eval->title }}</td>
+                                                <td class="px-4 py-3">
+                                                    {{ $eval->quarter }}{{ $eval->quarter=='1'?'er':'ème' }} {{ _("trimestre") }}
+                                                </td>
+                                                <td class="px-4 py-3">
+                                                    <x-nav-link href="{{ route('evaluation-index', ['id' => $student->id, 'q' => $eval->quarter, 'ay' => $eval->academic_year]) }}" wire:navigate class="flex items-center text-sm">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                            <path d="M3 15v4c0 1.1.9 2 2 2h14a2 2 0 0 0 2-2v-4M17 9l-5 5-5-5M12 12.8V2.5" />
+                                                        </svg>
+                                                    </x-nav-link>
+                                                </td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                    @endif
                                     @endif
                                 </td>
                             </tr>
@@ -440,60 +440,7 @@
                     </table>
                 </div>
             </div>
-            <!-- Evaluation's tab -->
-            <div class="flex mt-6">
-                <h2 class="my-2 mr-3 text-2xl font-normal text-gray-700 dark:text-gray-200">
-                    {{ _('Evaluation') }}
-                </h2>
-            </div>
-            <div class="w-full overflow-hidden rounded-lg shadow-xs">
-                <div class="w-full overflow-x-auto">
-                    <table class="w-full whitespace-no-wrap">
-                        <thead>
-                            <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-                                <th class="px-4 py-3">
-                                    <div class="flex item-center">Année scolaire</div>
-                                </th>
-                                <th class="px-4 py-3">
-                                    <div class="flex item-center">Période</div>
-                                </th>
-                                <th class="px-4 py-3">
-                                    <div class="flex item-center">Année académique</div>
-                                </th>
-                                <th class="px-4 py-3">&nbsp;</th>
-                            </tr>
-                        </thead>
-                        <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
-                            @foreach($evaluations as $eval)
-                            <tr class="text-gray-700 dark:text-gray-400" wire:key="">
-                                <td class="px-4 py-3 text-sm">{{ $eval->title }}</td>
-                                <td class="px-4 py-3">
-                                    @switch($eval->quarter)
-                                    @case(1)
-                                    {{ $eval->quarter }} trimestre
-                                    @break
-                                    @case(2)
-                                    {{ $eval->quarter }} trimestre
-                                    @break
-                                    @case(3)
-                                    {{ $eval->quarter }} trimestre
-                                    @break
-                                    @endswitch
-                                </td>
-                                <td class="px-4 py-3 text-sm">{{ $eval->academic_year }}</td>
-                                <td class="px-4 py-3">
-                                    <x-nav-link href="{{ route('evaluation-index', ['id' => $student->id, 'q' => $eval->quarter, 'ay' => $eval->academic_year]) }}" wire:navigate class="flex items-center text-sm">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                            <path d="M3 15v4c0 1.1.9 2 2 2h14a2 2 0 0 0 2-2v-4M17 9l-5 5-5-5M12 12.8V2.5" />
-                                        </svg>
-                                    </x-nav-link>
-                                </td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+            
         </div>
 
         <!-- begin Evaluation's tab -->
