@@ -40,7 +40,12 @@
                         </svg>
                     </button>
                     <!-- Search input -->
-                    @livewire('student.search')
+                    <div class="flex justify-center flex-1 lg:mr-32">
+                        <div class="relative w-full max-w-xl mr-6 focus-within:text-purple-500">
+                            <div class="absolute inset-y-0 flex items-center pl-2">
+                            </div>
+                        </div>
+                    </div>
                     <ul class="flex items-center flex-shrink-0 space-x-6">
                         <!-- Theme toggler -->
                         <li class="flex">
@@ -87,11 +92,13 @@
                                                 {{ __('Team Settings') }}
                                             </x-dropdown-link>
 
+                                            @if(Auth::user()->hasTeamRole(Auth::user()->currentTeam, 'admin'))
                                             @can('create', Laravel\Jetstream\Jetstream::newTeamModel())
                                             <x-dropdown-link href="{{ route('teams.create') }}">
                                                 {{ __('Create New Team') }}
                                             </x-dropdown-link>
                                             @endcan
+                                            @endif
 
                                             <!-- Team Switcher -->
                                             @if (Auth::user()->allTeams()->count() > 1)

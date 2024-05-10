@@ -3,6 +3,10 @@
 namespace App\Livewire\Student;
 
 use App\Models\Classroom;
+use App\Models\Team;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Rule;
 use Livewire\Attributes\On;
@@ -44,7 +48,9 @@ class ClassroomIndex extends Component
 
     public function deleteClassroom(Classroom $classroom)
     {
+        (!auth()->user()->canDestroy() || Auth::user()->currentTeam->id !== Team::find(1)->id) && abort(403, 'Unauthorized action.');
         $classroom->delete();
+        return redirect()->route('classroom-index')->with('success', 'Classroom deleted successfully');
     }
 
     public function showCreateClassroomModal()
@@ -56,17 +62,19 @@ class ClassroomIndex extends Component
     {
         $this->validate();
 
-        if($this->editMode)
-        {
+        if ($this->editMode) {
+            (!auth()->user()->canUpdate() || Auth::user()->currentTeam->id !== Team::find(1)->id) && abort(403, 'Unauthorized action.');
             $this->classroom->update($this->all());
             $this->reset();
             request()->session()->flash('success', 'La classe a été mis à jour!');
             $this->createClassroomModal = false;
-        }else{
+        } else {
+            (!auth()->user()->canCreate() || Auth::user()->currentTeam->id !== Team::find(1)->id) && abort(403, 'Unauthorized action.');
             Classroom::create($this->only(['name', 'type', 'capacity']));
             $this->reset();
             session()->flash('success', 'La classe a été créée!');
             $this->createClassroomModal = false;
+            return redirect()->route('classroom-index')->with('success', 'Classroom deleted successfully');
         }
     }
 
@@ -75,9 +83,11 @@ class ClassroomIndex extends Component
         session()->remove('success');
     }
 
-    #[Layout('layouts.app')] 
+    #[Layout('layouts.app')]
     public function render()
     {
+        (!auth()->user()->canRead() || Auth::user()->currentTeam->id !== Team::find(1)->id) && abort(403, 'Unauthorized action.');
+
         $classrooms = Classroom::orderBy('id', 'desc')
             ->paginate(13);
         return view('livewire.student.classroom-index', ['classrooms' => $classrooms]);

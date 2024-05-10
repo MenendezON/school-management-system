@@ -5,6 +5,7 @@ namespace App\Livewire\Student;
 use Livewire\Attributes\Rule;
 use Livewire\Component;
 use App\Models\Student;
+use App\Models\User;
 use Livewire\Attributes\On;
 use Livewire\WithPagination;
 
@@ -90,6 +91,12 @@ class StudentIndex extends Component
             request()->session()->flash('success', _('The student has been added successfully!'));
             $this->createPostModal = false;
         }
+    }
+
+    public function view(User $user, Student $student): bool
+    {
+        return $user->belongsToTeam($student->team) &&
+               $user->hasTeamPermission($student->team, 'view');
     }
 
     public function removeflash()
