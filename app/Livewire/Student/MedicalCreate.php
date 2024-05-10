@@ -4,6 +4,8 @@ namespace App\Livewire\Student;
 
 use App\Models\Medical;
 use App\Models\Student;
+use App\Models\Team;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\On;
 use Livewire\Component;
