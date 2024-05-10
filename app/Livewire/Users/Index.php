@@ -24,19 +24,27 @@ class Index extends Component
     use PasswordValidationRules;
     public $createUserModal = false;
     public ?User $user;
+    public $editMode = false;
     public $name;
     public $email;
     public $password;
     public $password_confirmation;
-    public $role;
     public $currentTeam;
 
+    public function setUser(User $user)
+    {
+        $this->user = $user;
+        $this->editMode = true;
+        $this->name = $user->name;
+        $this->email = $user->email;
+        $this->password = $user->password;
+    }
     public function mount()
     {
         $this->user = Auth::user();
         $this->currentTeam = $this->user->currentTeam;
     }
-
+    
     public function save()
     {
         $input = [

@@ -51,9 +51,8 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
     Route::get('/studentclassroom', StudentclassroomIndex::class)->name('studentclassroom-index');
     Route::get('/tuition', TuitionIndex::class)->name('tuition-index');
     Route::get('/teacher', TeacherIndex::class)->name('teacher-index');
-Route::get('/users', Index::class)->name('users.index');
-Route::get('/users/create', Create::class)->name('users.create');
-Route::get('/users/{user}/edit', Edit::class)->name('users.edit');
-Route::delete('/users/{user}', Delete::class)->name('users.delete');
-
+    Route::get('/users', Index::class)->name('users.index');
+    Route::get('/users/create', Create::class)->name('users.create');
+    Route::get('/users/{user}/edit', Edit::class)->name('users.edit');
+    Route::delete('/users/{user}', Delete::class)->name('users.delete');
 });
