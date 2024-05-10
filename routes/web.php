@@ -33,33 +33,18 @@ Route::get('/', function () {
 });
 
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified', ])->group(function () {
-    // Route::get('/dashboard', function () {
-    //     return view('dashboard');
-    // })->name('dashboard');
-    
-    // Route::get('/students', function () {
-    //     return view('students');
-    // })->name('students');
-
     Route::get('/dashboard', Dashboard::class)->name('dashboard');
     Route::get('/students', StudentIndex::class)->name('student-index');
     Route::get('/students/{id}', StudentShow::class)->name('student-show');
-
-
     Route::get('/students/{id}/evaluation/{q}', Evaluation::class)->name('evaluation-index');
-
     Route::get('/students/{id}/survey/{idsurvey}', SurveyEdit::class)->name('student-survey-show');
     Route::get('/survey', SurveyIndex::class)->name('survey-index');
     Route::get('/survey/{idsurvey}', SurveyShow::class)->name('survey-show');
-    //Route::get('/students/{id}/tutors', StudentShow::class)->name('student-tutor-index');
     Route::get('/classrooms', ClassroomIndex::class)->name('classroom-index');
     Route::get('/classrooms/{id}', ShowClassroom::class)->name('classroom-show');
     Route::get('/classrooms/{id}/subjects', SubjectIndex::class)->name('subject-index');
     Route::get('/classrooms/{idclassroom}/subjects/{idsubject}/notes', NoteIndex::class)->name('note-index');
-
-
     Route::get('/studentclassroom', StudentclassroomIndex::class)->name('studentclassroom-index');
     Route::get('/tuition', TuitionIndex::class)->name('tuition-index');
     Route::get('/teacher', TeacherIndex::class)->name('teacher-index');
-
 });
