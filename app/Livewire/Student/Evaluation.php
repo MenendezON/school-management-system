@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class Evaluation extends Component
 {
@@ -32,6 +33,29 @@ class Evaluation extends Component
             ->pluck('category');
 
         $this->data_analyse($request);
+
+    }
+
+    public function generateFileName($id)
+    {
+        $student = Student::findOrFail($id);
+        return str_replace(" ", "_", time()."-".ucwords($student->first_name).ucwords($student->last_name).".pdf");
+    }
+
+    public function generatePdf()
+    {
+        $data = [
+            'options' => $this->options,
+            'categories' => $this->categories,
+            'reports' => $this->reports,
+        ];
+
+        $pdf = Pdf::loadView('livewire.pdf-evaluation', $data)
+        ->setPaper('a4', 'portrait');
+
+        return response()->streamDownload(function() use($pdf){ 
+            echo $pdf->stream();
+        }, $this->generateFileName($this->studentid));
 
     }
 

@@ -33,7 +33,6 @@ class MedicalCreate extends Component
 
     public function create()
     {
-        
         if($this->editMode){
             (!auth()->user()->canUpdate() || Auth::user()->currentTeam->id !== Team::find(1)->id) && abort(403, 'Unauthorized action.');
             $this->student->medical()->update($this->only(['field1']));
