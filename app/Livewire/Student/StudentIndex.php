@@ -5,7 +5,9 @@ namespace App\Livewire\Student;
 use Livewire\Attributes\Rule;
 use Livewire\Component;
 use App\Models\Student;
+use App\Models\Team;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\On;
 use Livewire\WithPagination;
 
@@ -80,23 +82,19 @@ class StudentIndex extends Component
         $this->validate();
 
         if ($this->editMode) {
+            (!auth()->user()->canUpdate() || Auth::user()->currentTeam->id !== Team::find(1)->id) && abort(403, 'Unauthorized action.');
             $this->student->update($this->all());
             $this->reset();
             request()->session()->flash('success', _("L'élève a été mise à jour!"));
             $this->createPostModal = false;
         } else {
+            (!auth()->user()->canCreate() || Auth::user()->currentTeam->id !== Team::find(1)->id) && abort(403, 'Unauthorized action.');
             auth()->user()->students()->create($this->only(['first_name', 'last_name', 'date_of_birth', 'nationality', 'gender', 'phone', 'place_of_birth', 'city', 'email', 'address', 'previous_school', 'blood_group', 'medical_history', 'allergies', 'decision']));
             $this->reset();
 
             request()->session()->flash('success', _('The student has been added successfully!'));
             $this->createPostModal = false;
         }
-    }
-
-    public function view(User $user, Student $student): bool
-    {
-        return $user->belongsToTeam($student->team) &&
-               $user->hasTeamPermission($student->team, 'view');
     }
 
     public function removeflash()
@@ -107,6 +105,7 @@ class StudentIndex extends Component
     #[On('edit-student')]
     public function editStudent($id)
     {
+        
         $student = Student::findOrFail($id);
         $this->setStudent($student);
 
@@ -115,12 +114,15 @@ class StudentIndex extends Component
 
     public function deleteStudent(Student $student)
     {
+        (!auth()->user()->canDestroy() || Auth::user()->currentTeam->id !== Team::find(1)->id) && abort(403, 'Unauthorized action.');
         $student->delete();
     }
 
 
     public function render()
     {
+        (!auth()->user()->canRead() || Auth::user()->currentTeam->id !== Team::find(1)->id) && abort(403, 'Unauthorized action.');
+
         $students = Student::orderBy('id', 'desc')
             ->where('first_name', 'like', '%' . $this->keyword . '%')
             ->orWhere('last_name', 'like', '%' . $this->keyword . '%')
@@ -128,7 +130,6 @@ class StudentIndex extends Component
             ->paginate(10);
         return view('livewire.student.student-index', [
             'students' => $students,
-        ])
-            ->layout('layouts.app');
+        ])->layout('layouts.app');
     }
 }

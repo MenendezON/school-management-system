@@ -60,9 +60,16 @@ class MedicalCreate extends Component
         $this->showCreateMedicalModal();
     }
 
+    public function destroy()
+    {
+        (!auth()->user()->canDestroy() || Auth::user()->currentTeam->id !== Team::find(1)->id) && abort(403, 'Unauthorized action.');
+
+    }
+
     public function render()
     {
         (!auth()->user()->canRead() || Auth::user()->currentTeam->id !== Team::find(1)->id) && abort(403, 'Unauthorized action.');
+
         $medical = Medical::where('student_id', $this->id)->first();
         return view('livewire.student.medical-create', [
             'medical'=> $medical
