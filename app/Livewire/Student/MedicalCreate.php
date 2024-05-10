@@ -13,6 +13,7 @@ class MedicalCreate extends Component
     public $createMedicalModal = false;
     public $editMode = false;
     public ?Student $student;
+    public ?Medical $medical;
 
     public $field1;
 
@@ -30,12 +31,13 @@ class MedicalCreate extends Component
 
     public function create()
     {
-        //$this->validate();
         if($this->editMode){
+            (!auth()->user()->canUpdate() || Auth::user()->currentTeam->id !== Team::find(1)->id) && abort(403, 'Unauthorized action.');
             $this->student->medical()->update($this->only(['field1']));
             request()->session()->flash("success", "Le dossier médical a été crée");
             $this->createMedicalModal = false;
         }else{
+            (!auth()->user()->canCreate() || Auth::user()->currentTeam->id !== Team::find(1)->id) && abort(403, 'Unauthorized action.');
             $this->student->medical()->create($this->only(['field1']));
             request()->session()->flash("success", "Le dossier médical a été crée");
             $this->createMedicalModal = false;
@@ -58,6 +60,7 @@ class MedicalCreate extends Component
 
     public function render()
     {
+        (!auth()->user()->canRead() || Auth::user()->currentTeam->id !== Team::find(1)->id) && abort(403, 'Unauthorized action.');
         $medical = Medical::where('student_id', $this->id)->first();
         return view('livewire.student.medical-create', [
             'medical'=> $medical
