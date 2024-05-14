@@ -4,6 +4,8 @@ namespace App\Livewire\Student;
 
 use App\Models\Classroom;
 use App\Models\Subject;
+use App\Models\Team;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class NoteIndex extends Component
@@ -18,6 +20,7 @@ class NoteIndex extends Component
 
     public function render()
     {
+        (!auth()->user()->canRead() || Auth::user()->currentTeam->id !== Team::find(1)->id) && abort(403, 'Unauthorized action.');
         return view('livewire.student.note-index')->layout('layouts.app');
     }
 }

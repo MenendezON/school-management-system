@@ -4,6 +4,8 @@ namespace App\Livewire\Student;
 
 use App\Models\Classroom;
 use App\Models\Student;
+use App\Models\Team;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Livewire\Attributes\Rule;
 use Livewire\Component;
@@ -35,6 +37,8 @@ class TuitionIndex extends Component
     }
 
     public function create(){
+        (!auth()->user()->canCreate() || Auth::user()->currentTeam->id !== Team::find(1)->id) && abort(403, 'Unauthorized action.');
+            
         $this->validate();
         $tab = explode(',',$this->classroomId);
         
@@ -65,6 +69,8 @@ class TuitionIndex extends Component
 
     public function render()
     {
+        (!auth()->user()->canRead() || Auth::user()->currentTeam->id !== Team::find(1)->id) && abort(403, 'Unauthorized action.');
+            
         $students = DB::table('tuitions')
         ->join('students', 'tuitions.student_id', '=', 'students.id')
         ->join('classrooms', 'tuitions.classroom_id', '=', 'classrooms.id')

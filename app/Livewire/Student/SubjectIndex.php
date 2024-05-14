@@ -6,6 +6,8 @@ use Livewire\Attributes\Rule;
 use Livewire\Attributes\On;
 use App\Models\Classroom;
 use App\Models\Subject;
+use App\Models\Team;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class SubjectIndex extends Component
@@ -44,10 +46,12 @@ class SubjectIndex extends Component
 
        if($this->editMode)
        {
+            (!auth()->user()->canUpdate() || Auth::user()->currentTeam->id !== Team::find(1)->id) && abort(403, 'Unauthorized action.');
             $this->classroom->subjects()->where('id', $this->subject->id)->update(['category'=> $this->category, 'teacher_id'=>$this->teacher_id, 'label' => $this->label, 'value'=>$this->value]);
             session()->flash('success', 'La matière a été modifié!');
             $this->createSubjectModal = false;
        }else{
+            (!auth()->user()->canCreate() || Auth::user()->currentTeam->id !== Team::find(1)->id) && abort(403, 'Unauthorized action.');
             $this->classroom->subjects()->create(['category'=> $this->category, 'teacher_id'=>$this->teacher_id, 'label' => $this->label, 'value'=>$this->value]);
             session()->flash('success', 'La matière a été ajoutée!');
             $this->createSubjectModal = false;
@@ -65,6 +69,8 @@ class SubjectIndex extends Component
 
     public function deleteSubject(Subject $subject)
     {
+        (!auth()->user()->canDestroy() || Auth::user()->currentTeam->id !== Team::find(1)->id) && abort(403, 'Unauthorized action.');
+            
         $subject->delete();
     }
 
@@ -75,6 +81,8 @@ class SubjectIndex extends Component
 
     public function render()
     {
+        (!auth()->user()->canRead() || Auth::user()->currentTeam->id !== Team::find(1)->id) && abort(403, 'Unauthorized action.');
+            
         return view('livewire.student.subject-index')->layout('layouts.app');
     }
 }

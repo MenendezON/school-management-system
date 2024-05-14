@@ -6,6 +6,8 @@ use App\Models\Answer;
 use App\Models\Question;
 use App\Models\Student;
 use App\Models\Survey;
+use App\Models\Team;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class SurveyShow extends Component
@@ -75,6 +77,8 @@ class SurveyShow extends Component
 
     public function create_answer()
     {
+        (!auth()->user()->canUpdate() || Auth::user()->currentTeam->id !== Team::find(1)->id) && abort(403, 'Unauthorized action.');
+            
         if($this->editMode){
             $this->question->update($this->only(['fait_seul', 'avec_aide', 'fait_pas']));
             $this->reset('fait_seul', 'avec_aide', 'fait_pas');
@@ -85,6 +89,8 @@ class SurveyShow extends Component
 
     public function create()
     {
+        (!auth()->user()->canCreate() || Auth::user()->currentTeam->id !== Team::find(1)->id) && abort(403, 'Unauthorized action.');
+            
         $this->validate([
             'questions.*.text' => 'required',
         ]);
@@ -111,6 +117,8 @@ class SurveyShow extends Component
 
     public function render()
     {
+        (!auth()->user()->canRead() || Auth::user()->currentTeam->id !== Team::find(1)->id) && abort(403, 'Unauthorized action.');
+            
         return view('livewire.student.survey-show', [
             'survey' => $this->survey,
             'categories' => $this->categories,

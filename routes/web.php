@@ -14,10 +14,10 @@ use App\Livewire\Student\SurveyEdit;
 use App\Livewire\Student\SurveyIndex;
 use App\Livewire\Student\SurveyShow;
 use App\Livewire\Student\TeacherIndex;
-use App\Livewire\Users\Create;
-use App\Livewire\Users\Edit;
-use App\Livewire\Users\Index;
-use App\Livewire\Users\Delete;
+use App\Livewire\User\Create;
+use App\Livewire\User\Edit;
+use App\Livewire\User\Index;
+use App\Livewire\User\Delete;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -51,8 +51,8 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
     Route::get('/studentclassroom', StudentclassroomIndex::class)->name('studentclassroom-index');
     Route::get('/tuition', TuitionIndex::class)->name('tuition-index');
     Route::get('/teacher', TeacherIndex::class)->name('teacher-index');
-    Route::get('/users', Index::class)->name('users.index');
-    Route::get('/users/create', Create::class)->name('users.create');
-    Route::get('/users/{user}/edit', Edit::class)->name('users.edit');
-    Route::delete('/users/{user}', Delete::class)->name('users.delete');
+    Route::get('/users', Index::class)->name('user.index');
+    Route::get('/users/create', Create::class)->name('user.create');
+    Route::get('/users/{user}/edit', Edit::class)->name('user.edit');
+    Route::delete('/users/{user}', Delete::class)->name('user.delete');
 });

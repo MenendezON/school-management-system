@@ -6,6 +6,8 @@ use Livewire\Component;
 use Livewire\Attributes\Rule;
 use App\Models\Classroom;
 use App\Models\Student;
+use App\Models\Team;
+use Illuminate\Support\Facades\Auth;
 use Livewire\WithPagination;
 
 class StudentClassroomIndex extends Component
@@ -22,10 +24,7 @@ class StudentClassroomIndex extends Component
     public $selectStudent = null;
     #[Rule('required')]
     public $selectClassroom = null;
-    //public $classroomId;
     public $observations = '';
-
-    //public $speclassroom = [];
 
     public $createStudentClassroomModal = false;
 
@@ -37,12 +36,16 @@ class StudentClassroomIndex extends Component
 
     public function updatedSelectStudent($student)
     {
+        (!auth()->user()->canUpdate() || Auth::user()->currentTeam->id !== Team::find(1)->id) && abort(403, 'Unauthorized action.');
+            
         $decision = Student::find($student)->decision;
         $this->classrooms = Classroom::where('type', $decision)->get();
     }
 
     public function create()
     {
+        (!auth()->user()->canCreate() || Auth::user()->currentTeam->id !== Team::find(1)->id) && abort(403, 'Unauthorized action.');
+            
         $this->validate();
         $student = Student::find($this->selectStudent);
         $classroom = Classroom::find($this->selectClassroom);
@@ -73,12 +76,13 @@ class StudentClassroomIndex extends Component
 
     public function render()
     {
+        (!auth()->user()->canRead() || Auth::user()->currentTeam->id !== Team::find(1)->id) && abort(403, 'Unauthorized action.');
+            
         $students = Student::orderBy('last_name', 'asc')->paginate(10);
         
         return view('livewire.student.studentclassroom-index', [
             'liststudents' => $students,
             'generateSchoolYears' => $this->generateSchoolYears(),
-            //'speclassroom' => $this->speclassroom,
         ])->layout('layouts.app');
     }
 }

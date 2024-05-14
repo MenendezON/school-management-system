@@ -4,6 +4,8 @@ namespace App\Livewire\Student;
 
 use App\Models\Question;
 use App\Models\Survey;
+use App\Models\Team;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Rule;
 use Livewire\Attributes\On;
 use Livewire\Component;
@@ -36,6 +38,8 @@ class SurveyIndex extends Component
 
     public function deleteSurvey(Survey $survey)
     {
+        (!auth()->user()->canDestroy() || Auth::user()->currentTeam->id !== Team::find(1)->id) && abort(403, 'Unauthorized action.');
+            
         $survey->delete();
     }
 
@@ -49,12 +53,15 @@ class SurveyIndex extends Component
         $this->validate();
 
         if($this->editSurveyMode){
+            (!auth()->user()->canUpdate() || Auth::user()->currentTeam->id !== Team::find(1)->id) && abort(403, 'Unauthorized action.');
+            
             $this->survey->update($this->all());
             $this->reset();
 
             request()->session()->flash('success', 'La grille a été modifiée!');
             $this->createSurveyModal = false;
         }else{
+            (!auth()->user()->canCreate() || Auth::user()->currentTeam->id !== Team::find(1)->id) && abort(403, 'Unauthorized action.');
             Survey::create($this->only(['title', 'description']));
             $this->reset();
 
@@ -70,6 +77,8 @@ class SurveyIndex extends Component
 
     public function render()
     {
+        (!auth()->user()->canRead() || Auth::user()->currentTeam->id !== Team::find(1)->id) && abort(403, 'Unauthorized action.');
+        
         $surveys = Survey::all();
         return view('livewire.student.survey-index', [
             'surveys' => $surveys,

@@ -5,7 +5,9 @@ namespace App\Livewire\Student;
 use App\Models\Option;
 use App\Models\Student;
 use App\Models\Survey;
+use App\Models\Team;
 use App\Models\Tutor;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Rule;
 use Livewire\Attributes\On;
@@ -69,13 +71,15 @@ class StudentShow extends Component
         $this->validate();
 
         if($this->editTutorMode){
+            (!auth()->user()->canUpdate() || Auth::user()->currentTeam->id !== Team::find(1)->id) && abort(403, 'Unauthorized action.');
             $this->tutor->update($this->all());
             request()->session()->flash('success', "Un lien parenté a été modifié avec succès");
             $this->createTutorModal = false;
         }else{
-        $this->student->tutors()->create($this->only(['first_name', 'last_name','relationship', 'nationality', 'address', 'occupation', 'duty_station', 'phone', 'email']));
-        request()->session()->flash('success', 'The tutor has been added successfully!');
-        $this->createTutorModal = false;
+            (!auth()->user()->canCreate() || Auth::user()->currentTeam->id !== Team::find(1)->id) && abort(403, 'Unauthorized action.');
+            $this->student->tutors()->create($this->only(['first_name', 'last_name','relationship', 'nationality', 'address', 'occupation', 'duty_station', 'phone', 'email']));
+            request()->session()->flash('success', 'The tutor has been added successfully!');
+            $this->createTutorModal = false;
         }
     }
 
@@ -90,6 +94,7 @@ class StudentShow extends Component
 
     public function deleteTutor(Tutor $tutor)
     {
+        (!auth()->user()->canDestroy() || Auth::user()->currentTeam->id !== Team::find(1)->id) && abort(403, 'Unauthorized action.');
         $tutor->delete();
     }
 
@@ -101,8 +106,8 @@ class StudentShow extends Component
     #[Layout('layouts.app')] 
     public function render()
     {
-        
-
+        (!auth()->user()->canRead() || Auth::user()->currentTeam->id !== Team::find(1)->id) && abort(403, 'Unauthorized action.');
+            
         return view('livewire.student.student-show', [
             'student' => $this->student,
             'evaluations' => $this->evaluations,

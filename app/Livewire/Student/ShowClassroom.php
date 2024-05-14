@@ -3,12 +3,13 @@
 namespace App\Livewire\Student;
 
 use App\Models\Classroom;
+use App\Models\Team;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
 class ShowClassroom extends Component
 {
-
     public $id;
     public $yearfilter = '';
 
@@ -32,6 +33,7 @@ class ShowClassroom extends Component
 
     public function render()
     {
+        (!auth()->user()->canRead() || Auth::user()->currentTeam->id !== Team::find(1)->id) && abort(403, 'Unauthorized action.');
         $classroom = DB::table('registrations')
             ->join('students', 'registrations.student_id', '=', 'students.id')
             ->join('classrooms', 'registrations.classroom_id', '=', 'classrooms.id')

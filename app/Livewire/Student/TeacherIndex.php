@@ -5,6 +5,8 @@ namespace App\Livewire\Student;
 use Livewire\Attributes\Rule;
 use Livewire\Attributes\On;
 use App\Models\Teacher;
+use App\Models\Team;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class TeacherIndex extends Component
@@ -43,11 +45,15 @@ class TeacherIndex extends Component
 
         if($this->editMode)
         {
+            (!auth()->user()->canUpdate() || Auth::user()->currentTeam->id !== Team::find(1)->id) && abort(403, 'Unauthorized action.');
+            
             $this->teacher->update($this->all());
             $this->reset();
             request()->session()->flash('success', "L'enseignant a été mis à jour!");
             $this->createTeacherModal = false;
         }else{
+            (!auth()->user()->canCreate() || Auth::user()->currentTeam->id !== Team::find(1)->id) && abort(403, 'Unauthorized action.');
+            
             Teacher::create($this->all());
             $this->reset();
             session()->flash('success', "L'enseignant a été créée!");
@@ -66,6 +72,7 @@ class TeacherIndex extends Component
 
     public function deleteTeacher(Teacher $teacher)
     {
+        (!auth()->user()->canDestroy() || Auth::user()->currentTeam->id !== Team::find(1)->id) && abort(403, 'Unauthorized action.');
         $teacher->delete();
     }
 
@@ -75,6 +82,8 @@ class TeacherIndex extends Component
     }
     public function render()
     {
+        (!auth()->user()->canRead() || Auth::user()->currentTeam->id !== Team::find(1)->id) && abort(403, 'Unauthorized action.');
+            
         $teachers = Teacher::with('subjects')->get();
         return view('livewire.student.teacher-index',[
             'teachers' => $teachers,

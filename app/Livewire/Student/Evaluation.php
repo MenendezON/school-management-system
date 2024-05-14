@@ -5,6 +5,7 @@ namespace App\Livewire\Student;
 use App\Models\Answer;
 use App\Models\Option;
 use App\Models\Question;
+use App\Models\Student;
 use App\Models\Team;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -28,7 +29,6 @@ class Evaluation extends Component
         $this->studentid = $id;
 
         $this->categories = Question::select('category')
-            //->where('survey_id', 2)
             ->distinct()
             ->pluck('category');
 
