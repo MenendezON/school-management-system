@@ -192,6 +192,9 @@
             });
         });
 
+        const allContents = document.querySelectorAll('.accordion-content')[0];
+        allContents.classList.remove('hidden');
+
         function toggleAccordion(event, element) {
             event.preventDefault(); // Prevent default action
             // Get all accordion content elements
