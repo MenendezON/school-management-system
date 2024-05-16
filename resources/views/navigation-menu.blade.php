@@ -6,6 +6,7 @@
             {{ config('app.name', 'Laravel') }}
         </a>
         <ul class="mt-6">
+            @if(Auth::user()->email !== "satabah@yahoo.fr")
             <li class="relative px-6 py-3">
                 <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')" wire:navigate>
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-speedometer" viewBox="0 0 16 16">
@@ -65,7 +66,7 @@
                     <span class="ml-4">{{ __('Enseignants') }}</span>
                 </x-nav-link>
             </li>
-
+            @endif
             <li class="relative px-6 py-3">
                 <x-nav-link href="{{ route('survey-index') }}" :active="request()->routeIs('survey-index')" wire:navigate>
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list-task" viewBox="0 0 16 16">
