@@ -19,6 +19,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js" defer></script>
     <script src="{{ URL::asset('assets/js/charts-lines.js') }}" defer></script>
     <script src="{{ URL::asset('assets/js/charts-pie.js') }}" defer></script>
+    
 
     <!-- Styles -->
     @livewireStyles
@@ -190,6 +191,23 @@
                 window.location.reload();
             });
         });
+
+        function toggleAccordion(event, element) {
+            event.preventDefault(); // Prevent default action
+            // Get all accordion content elements
+            const allContents = document.querySelectorAll('.accordion-content');
+
+            // Close all accordion content elements
+            allContents.forEach(content => {
+                if (content !== element.nextElementSibling) {
+                    content.classList.add('hidden');
+                }
+            });
+
+            // Toggle the clicked accordion content
+            const content = element.nextElementSibling;
+            content.classList.toggle('hidden');
+        }
     </script>
 </body>
 
