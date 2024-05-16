@@ -40,6 +40,77 @@
             </div>
         </div>
 
+        <div class="w-full overflow-hidden rounded-lg shadow-xs">
+            <div class="w-full overflow-x-auto">
+            <div class="relative mb-3">
+    <h6 class="mb-0">
+      <button
+        class="relative flex items-center w-full p-4 font-semibold text-left transition-all ease-in border-b border-solid cursor-pointer border-slate-100 text-slate-700 rounded-t-1 group text-dark-500"
+        data-collapse-target="collapse-1"
+      >
+        <span>What is Material Tailwind?</span>
+        <i class="absolute right-0 pt-1 text-xs fa fa-plus group-open:opacity-0"></i>
+        <i class="absolute right-0 pt-1 text-xs opacity-0 fa fa-minus group-open:opacity-100"></i>
+      </button>
+    </h6>
+    <div
+      data-collapse="collapse-1"
+      class="h-0 overflow-hidden transition-all duration-300 ease-in-out"
+    >
+      <div class="p-4 text-sm leading-normal text-blue-gray-500/80">
+        We're not always in the position that we want to be at. We're constantly
+        growing. We're constantly making mistakes. We're constantly trying to
+        express ourselves and actualize our dreams.
+      </div>
+    </div>
+  </div>
+  <div class="relative mb-3">
+    <h6 class="mb-0">
+      <button
+        class="relative flex items-center w-full p-4 font-semibold text-left transition-all ease-in border-b border-solid cursor-pointer border-slate-100 text-slate-700 rounded-t-1 group text-dark-500"
+        data-collapse-target="collapse-2"
+      >
+        <span>How to use Material Tailwind?</span>
+        <i class="absolute right-0 pt-1 text-xs fa fa-plus group-open:opacity-0"></i>
+        <i class="absolute right-0 pt-1 text-xs opacity-0 fa fa-minus group-open:opacity-100"></i>
+      </button>
+    </h6>
+    <div
+      data-collapse="collapse-2"
+      class="h-0 overflow-hidden transition-all duration-300 ease-in-out"
+    >
+      <div class="p-4 text-sm leading-normal text-blue-gray-500/80">
+        We're not always in the position that we want to be at. We're constantly
+        growing. We're constantly making mistakes. We're constantly trying to
+        express ourselves and actualize our dreams.
+      </div>
+    </div>
+  </div>
+  <div class="relative mb-3">
+    <h6 class="mb-0">
+      <button
+        class="relative flex items-center w-full p-4 font-semibold text-left transition-all ease-in border-b border-solid cursor-pointer border-slate-100 text-slate-700 rounded-t-1 group text-dark-500"
+        data-collapse-target="collapse-3"
+      >
+        <span>What can I do with Material Tailwind?</span>
+        <i class="absolute right-0 pt-1 text-xs fa fa-plus group-open:opacity-0"></i>
+        <i class="absolute right-0 pt-1 text-xs opacity-0 fa fa-minus group-open:opacity-100"></i>
+      </button>
+    </h6>
+    <div
+      data-collapse="collapse-3"
+      class="h-0 overflow-hidden transition-all duration-300 ease-in-out"
+    >
+      <div class="p-4 text-sm leading-normal text-blue-gray-500/80">
+        We're not always in the position that we want to be at. We're constantly
+        growing. We're constantly making mistakes. We're constantly trying to
+        express ourselves and actualize our dreams.
+      </div>
+    </div>
+  </div>
+            </div>
+        </div>
+
 
         <div class="w-full overflow-hidden rounded-lg shadow-xs">
             <div class="w-full overflow-x-auto">
@@ -65,6 +136,7 @@
                             <td class="px-4 py-3 text-sm">{{ $question->question_text }}</td>
                             <td class="px-4 py-3 text-sm">
                                 <select wire:model.live="option.{{ $index }}.{{ $question->id }}" class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
+                                    <option value="0" selected>Non_eval</option>
                                     @foreach(\App\Enums\SurveyValue::cases() as $type)
                                     <option value="{{ $type->value }}">{{ $type->name }}</option>
                                     @endforeach
