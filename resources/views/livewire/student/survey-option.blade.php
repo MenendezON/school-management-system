@@ -40,7 +40,7 @@
             </div>
         </div>
 
-        <div class="w-full overflow-hidden rounded-lg shadow-xs">
+        <div class="w-full overflow-hidden rounded-lg shadow-xs pt-4">
             <div class="w-full overflow-x-auto">
                 <!-- Accordion Item 2 -->
                 @foreach($categories as $category)
