@@ -17,6 +17,7 @@ use Barryvdh\DomPDF\Facade\Pdf;
 class Evaluation extends Component
 {
     public $categories;
+    public $student;
     public $studentid;
     public $quarterid;
 
@@ -25,6 +26,7 @@ class Evaluation extends Component
 
     public function mount(Request $request, $id, $q)
     {
+        $this->student = Student::findOrFail($id);
         $this->quarterid = $q;
         $this->studentid = $id;
 
@@ -71,8 +73,6 @@ class Evaluation extends Component
             ->where('academic_year', $request->input('ay'))
             ->get();
 
-            //dd($this->options);
-
             foreach($this->options as $option){
                 $this->reports[$category][$option->question_id] = $this->extract_result($option);
             }
@@ -89,8 +89,10 @@ class Evaluation extends Component
             case 2:
                 $result = $this->returnAnswer($opt, 'fait_pas');
               break;
-            default:
+            case 1:
                 $result = $this->returnAnswer($opt, 'avec_aide');
+            default:
+                $result = null;
         }
         $result .= '.';
         return trim($result);
@@ -103,13 +105,11 @@ class Evaluation extends Component
         return $answer;
     }
 
-    #[Layout('layouts.app')] 
+    #[Layout('layouts.app')]
     public function render()
     {
         (!auth()->user()->canRead() || Auth::user()->currentTeam->id !== Team::find(1)->id) && abort(403, 'Unauthorized action.');
 
-        return view('livewire.student.evaluation', [
-            'categories' => $this->categories,
-        ]);
+        return view('livewire.student.evaluation');
     }
 }
