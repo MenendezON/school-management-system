@@ -64,6 +64,8 @@ class StudentShow extends Component
         ->where('options.student_id', $id)
         ->groupBy('options.quarter', 'surveys.title', 'options.academic_year')
         ->get();
+
+        //dd($this->evaluations);
     }
 
     // Create a new tutor for a specific student

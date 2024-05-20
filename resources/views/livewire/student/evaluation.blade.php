@@ -24,40 +24,11 @@
             <table border="1">
                 <tr>
                     <th style="width:200px; text-align:start;">Nom & prénom </th>
-                    <td>:
-                        @foreach($options as $option)
-                        {{ ucwords($option->first_name) }} {{ strtoupper($option->last_name) }}
-                        @break
-                        @endforeach
-                    </td>
+                    <td>: {{ ucwords($student->first_name) }} {{ strtoupper($student->last_name) }}</td>
                 </tr>
                 <tr>
                     <th style="width:200px; text-align:start;">Age </th>
-                    <td>:
-                        @foreach($options as $option)
-                        {{ \Carbon\Carbon::parse($option->date_of_birth)->diffForHumans() }}
-                        @break
-                        @endforeach
-                    </td>
-                </tr>
-                <tr>
-                    <th style="width:200px; text-align:start;">Année scolaire </th>
-                    <td>:
-                        @foreach($options as $option)
-                        {{ $option->academic_year }}
-                        @break
-                        @endforeach
-                    </td>
-                </tr>
-
-                <tr>
-                    <th style="width:200px; text-align:start;">Trim/Date </th>
-                    <td>:
-                        @foreach($options as $option)
-                        {{ Date('d-m-Y') }}
-                        @break
-                        @endforeach
-                    </td>
+                    <td>: {{ \Carbon\Carbon::parse($student->date_of_birth)->diffForHumans() }}</td>
                 </tr>
             </table>
             <table class="w-full whitespace-no-wrap">
