@@ -10,12 +10,13 @@ class SurveyEvalIndex extends Component
 {
     public $evaluations;
 
-    public function mount()
+    public function mount($id)
     {
-        $this->evaluations = Option::select('options.student_id', 'options.quarter', 'surveys.title', 'options.academic_year')
+        $this->evaluations = Option::select('options.created_at', 'options.student_id', 'options.quarter', 'surveys.title', 'options.academic_year')
         ->join('questions', 'options.question_id', '=', 'questions.id')
         ->join('surveys', 'questions.survey_id', '=', 'surveys.id')
-        ->groupBy('options.student_id', 'options.quarter', 'surveys.title', 'options.academic_year')
+        ->groupBy('options.created_at', 'options.student_id', 'options.quarter', 'surveys.title', 'options.academic_year')
+        ->where('surveys.id', $id)
         ->get();
     }
     
