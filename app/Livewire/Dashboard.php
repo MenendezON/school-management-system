@@ -25,6 +25,11 @@ class Dashboard extends Component
     }
     public function render()
     {
+        if(Auth::user()->email === "satabah@yahoo.fr"){
+            redirect()->route('survey-index');
+        }
+            
+
         $students = Student::all();
         return view('livewire.dashboard', ['students' => $students])->layout('layouts.app');
     }
