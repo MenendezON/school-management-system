@@ -78,7 +78,7 @@
                 </x-nav-link>
             </li>
 
-            @if(Auth::user()->hasTeamRole(Auth::user()->currentTeam, 'admin'))
+            @if(Auth::user()->hasTeamRole(Auth::user()->currentTeam, 'admin') && Auth::user()->email !== "satabah@yahoo.fr")
             <li class="relative px-6 py-3">
                 <x-nav-link href="{{ route('user.index') }}" :active="request()->routeIs('user.index')" wire:navigate>
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-gear" viewBox="0 0 16 16">
