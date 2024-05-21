@@ -27,22 +27,17 @@
                     <span class="text-xs text-red-600 dark:text-gray-400">{{ $message }}</span>
                     @enderror
                 </div>
-                <div class="w-full md:w-1/1mr-4 ml-4">
-                            <label class="block mt-4 text-sm">
-                                <span class="text-gray-700 dark:text-gray-400">
-                                    School Year
-                                </span>
-                                <select wire:model="academic_year" class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
-                                    <option>Sélectionner une année scolaire</option>
-                                    @foreach($generateSchoolYears as $year)
-                                    <option>{{ $year }}-{{ $year+1 }}</option>
-                                    @endforeach
-                                </select>
-                                @error('academic_year')
-                                <span class="text-xs text-red-600 dark:text-gray-400">{{ $message }}</span>
-                                @enderror
-                            </label>
-                        </div>
+                <div>
+                        <select wire:model="academic_year" class="block w-full mt-1 rounded text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
+                            <option>Sélectionner une année scolaire</option>
+                            @foreach($generateSchoolYears as $year)
+                            <option>{{ $year }}-{{ $year+1 }}</option>
+                            @endforeach
+                        </select>
+                        @error('academic_year')
+                        <span class="text-xs text-red-600 dark:text-gray-400">{{ $message }}</span>
+                        @enderror
+                </div>
                 <div>
                     <select wire:model="quarter" class="block w-44 mt-1 text-sm rounded dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
                         <option>Sélectionner la période</option>
@@ -62,8 +57,9 @@
                 <!-- Accordion Item 2 -->
                 @foreach($categories as $category)
                 <div class="accordion-item mb-4">
-                    <x-button class="accordion-button w-full text-left py-2 px-4 bg-gray-200 hover:bg-gray-300 rounded-lg" onclick="toggleAccordion(event, this)" style="background:#023565">
-                        {{ $category }}
+                    <x-button class="flex justify-between accordion-button w-full text-left py-2 px-4 bg-gray-200 hover:bg-gray-300 rounded-lg" onclick="toggleAccordion(event, this)" style="background:#023565">
+                        <span>{{ $category }}</span>
+                        <span> {{ \App\Models\Question::where('category', $category)->where('survey_id', $survey->id)->count() }} questions</span>
                     </x-button>
                     <div class="accordion-content hidden mt-2 p-4 border border-t-0 border-gray-200 rounded-b-lg">
                         <table class="w-full whitespace-no-wrap">

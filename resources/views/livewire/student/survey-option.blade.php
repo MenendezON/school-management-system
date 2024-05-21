@@ -45,8 +45,9 @@
                 <!-- Accordion Item 2 -->
                 @foreach($categories as $category)
                 <div class="accordion-item mb-4">
-                    <x-button class="accordion-button w-full text-left py-2 px-4 bg-gray-200 hover:bg-gray-300 rounded-lg" onclick="toggleAccordion(event, this)">
-                        {{ $category }}
+                    <x-button class="flex justify-between accordion-button w-full text-left py-2 px-4 bg-gray-200 hover:bg-gray-300 rounded-lg" onclick="toggleAccordion(event, this)">
+                        <span>{{ $category }}</span>    
+                        <span> {{ \App\Models\Question::where('category', $category)->where('survey_id', $survey->id)->count() }} questions</span>
                     </x-button>
                     <div class="accordion-content hidden mt-2 p-4 border border-t-0 border-gray-200 rounded-b-lg">
                         <table class="w-full whitespace-no-wrap">
