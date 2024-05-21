@@ -10,8 +10,12 @@ class SurveyEvalIndex extends Component
 {
     public $evaluations;
 
+    public $surveyid;
+
     public function mount($id)
     {
+        $this->surveyid = $id;
+        
         $this->evaluations = Option::select('options.created_at', 'options.student_id', 'options.quarter', 'surveys.title', 'options.academic_year')
         ->join('questions', 'options.question_id', '=', 'questions.id')
         ->join('surveys', 'questions.survey_id', '=', 'surveys.id')

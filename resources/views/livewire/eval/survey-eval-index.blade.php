@@ -10,7 +10,12 @@
     <h2 class="my-2 text-2xl text-center font-semibold text-gray-700 dark:text-gray-200">
         {{ Str::of("Rapport d'évaluation")->headline() }}
     </h2>
-
+    <div>
+        
+    <x-nav-link href="{{ route('survey-eval-create', ['id' => $surveyid]) }}" class="bg-blue-500 pt-2 py-2 px-2 rounded text-white" wire:navigate>
+                                    Nouvelle évaluation
+                                </x-nav-link>
+    </div>
     @if(sizeof($evaluations)!=0)
     <table class="w-full whitespace-no-wrap">
         <thead>
