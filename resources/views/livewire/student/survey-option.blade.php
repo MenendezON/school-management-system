@@ -56,7 +56,7 @@
                                 <td>&nbsp;</td>
                                 <td class="px-4 py-3 text-sm">{{ $question->question_text }}</td>
                                 <td class="px-4 py-3 text-sm">
-                                    <select wire:model.live="option.{{ $index }}.{{ $question->id }}" class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
+                                    <select wire:model="option.{{ $index }}.{{ $question->id }}" class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
                                         <option value="0" selected>Non_eval</option>
                                         @foreach(\App\Enums\SurveyValue::cases() as $type)
                                         <option value="{{ $type->value }}">{{ $type->name }}</option>
