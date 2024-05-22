@@ -23,9 +23,11 @@ class Evaluation extends Component
 
     public $reports = array();
     public $options;
+    public $survey;
 
     public function mount(Request $request, $id, $q)
     {
+        $this->survey = $request->input('s');
         $this->student = Student::findOrFail($id);
         $this->quarterid = $q;
         $this->studentid = $id;
@@ -91,6 +93,7 @@ class Evaluation extends Component
               break;
             case 1:
                 $result = $this->returnAnswer($opt, 'avec_aide');
+                break;
             default:
                 $result = null;
         }

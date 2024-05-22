@@ -85,7 +85,7 @@ class SurveyEvalCreate extends Component
         // // Optionally, redirect or show a success message
         session()->flash('success', "L'évaluation a été bien enregistrée!");
         // $this->createQuestionModal = false;
-        return redirect()->route('survey-eval-index', ['id' =>$this->studentId]);
+        return redirect()->route('survey-eval-index', ['id' =>$this->survey->id]);
     }
 
     #[Layout('layouts.app')]
