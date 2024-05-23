@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\DB;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 use Barryvdh\DomPDF\Facade\Pdf;
+use PhpOffice\PhpWord\SimpleType\Jc;
 
 class Evaluation extends Component
 {
@@ -47,56 +48,76 @@ class Evaluation extends Component
 
     public function generateDoc()
     {
-
-        // Creating the new document...
         $phpWord = new \PhpOffice\PhpWord\PhpWord();
 
-        /* Note: any element you append to a document must reside inside of a Section. */
-
-        // Adding an empty Section to the document...
+        // déclarer une nouvelle section
         $section = $phpWord->addSection();
-        // Adding Text element to the Section having font styled by default...
-        $section->addText(
-            '"Learn from yesterday, live for today, hope for tomorrow. '
-                . 'The important thing is not to stop questioning." '
-                . '(Albert Einstein)'
-        );
+        // définir les numéros de page
+        $section->getStyle()->setPageNumberingStart(1);
+        
+        $section->addImage(public_path('./assets/img/etincelle-logo.jpg'), array(
+            'width'         => 100,
+            'alignment' => Jc::CENTER, // Centered alignment
+            'marginTop'     => -1,
+            'marginLeft'    => -1,
+            'wrappingStyle' => 'behind'
+        ));
 
-        /*
- * Note: it's possible to customize font style of the Text element you add in three ways:
- * - inline;
- * - using named font style (new font style object will be implicitly created);
- * - using explicitly created font style object.
- */
 
-        // Adding Text element with font customized inline...
-        $section->addText(
-            '"Great achievement is usually born of great sacrifice, '
-                . 'and is never the result of selfishness." '
-                . '(Napoleon Hill)',
-            array('name' => 'Tahoma', 'size' => 10)
-        );
+        $lineStyle = array('weight' => 1, 'width' => 450, 'height' => 0, 'color' => 000000);
+        $section->addLine($lineStyle);
 
-        // Adding Text element with font customized using named font style...
-        $fontStyleName = 'oneUserDefinedStyle';
-        $phpWord->addFontStyle(
-            $fontStyleName,
-            array('name' => 'Tahoma', 'size' => 10, 'color' => '1B2232', 'bold' => true)
-        );
-        $section->addText(
-            '"The greatest accomplishment is not in never falling, '
-                . 'but in rising again after you fall." '
-                . '(Vince Lombardi)',
-            $fontStyleName
-        );
+        $fontStyleTitle = [
+            'name' => 'Times New Roman', // Font family
+            'size' => 12, // Font size
+            'bold' => true, // Bold text
+            'italic' => false, // Not italic
+            'color' => '000000', // Font color (black)
+        ];
 
-        // Adding Text element with font customized using explicitly created font style object...
-        $fontStyle = new \PhpOffice\PhpWord\Style\Font();
-        $fontStyle->setBold(true);
-        $fontStyle->setName('Tahoma');
-        $fontStyle->setSize(13);
-        $myTextElement = $section->addText('"Believe you can and you\'re halfway there." (Theodor Roosevelt)');
-        $myTextElement->setFontStyle($fontStyle);
+        $paragraphStyleTitle = [
+            'alignment' => Jc::BOTH, // Justified alignment
+            'lineHeight' => 1.15, // Line spacing of 1.15
+        ];
+
+        $fontStyleParagraph = [
+            'name' => 'Times New Roman', // Font family
+            'size' => 12, // Font size
+            'bold' => false, // Bold text
+            'italic' => false, // Not italic
+            'color' => '000000', // Font color (black)
+        ];
+
+        $paragraphStyle = [
+            'alignment' => Jc::BOTH, // Justified alignment
+            'lineHeight' => 1.15, // Line spacing of 1.15
+            'spaceAfter' => \PhpOffice\PhpWord\Shared\Converter::pointToTwip(10), // Space after in points (e.g., 10 points)
+        ];
+
+        foreach($this->reports as $key => $rslt)
+        {
+            //$section->addText($key, $fontStyleTitle, $paragraphStyleTitle);
+            $phpWord->addTitleStyle(1, $fontStyleTitle, $paragraphStyleTitle);
+
+            $section->addTitle($key, 1, 0);
+
+            $text = "";
+            foreach($rslt as $val)
+            {
+                $text .= $val." ";
+            }
+            $section->addText($text, $fontStyleParagraph, $paragraphStyle);
+        }
+
+        
+        $footer = $section->addFooter();
+        // Define paragraph style for footer text
+        $footerParagraphStyle = [
+            'alignment' => Jc::CENTER // Centered alignment
+        ];
+        // Add the page number field to the footer
+        $footer->addPreserveText('Page {PAGE} of {NUMPAGES}', null, $footerParagraphStyle);
+
 
         // Saving the document as OOXML file...
         $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
@@ -144,17 +165,19 @@ class Evaluation extends Component
         switch ($opt->option_text) {
             case 3:
                 $result = $this->returnAnswer($opt, 'fait_seul');
+                $result .= '.';
                 break;
             case 2:
                 $result = $this->returnAnswer($opt, 'fait_pas');
+                $result .= '.';
                 break;
             case 1:
                 $result = $this->returnAnswer($opt, 'avec_aide');
+                $result .= '.';
                 break;
             default:
                 $result = null;
         }
-        $result .= '.';
         return trim($result);
     }
 
