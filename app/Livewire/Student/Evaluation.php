@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\DB;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 use Barryvdh\DomPDF\Facade\Pdf;
+use PhpOffice\PhpWord\Shared\Converter;
 use PhpOffice\PhpWord\SimpleType\Jc;
 
 class Evaluation extends Component
@@ -64,6 +65,24 @@ class Evaluation extends Component
         ));
 
 
+        $fontStyle = array('bold' => true);
+        $centeredStyle = array(
+            'alignment' => Jc::CENTER,
+            'lineHeight' => 1,
+            'spaceAfter' => Converter::pointToTwip(0),
+        );
+
+        $nom = "";
+        $prenom = "";
+        $datenaissance = "";
+        for($j=0; $j<sizeof($this->options); $j++){
+            dd($j);
+        }
+                
+        $section->addText($prenom." ".$nom, $fontStyle, $centeredStyle);
+        $section->addText($datenaissance, $fontStyle, $centeredStyle);
+
+
         $lineStyle = array('weight' => 1, 'width' => 450, 'height' => 0, 'color' => 000000);
         $section->addLine($lineStyle);
 
@@ -91,7 +110,7 @@ class Evaluation extends Component
         $paragraphStyle = [
             'alignment' => Jc::BOTH, // Justified alignment
             'lineHeight' => 1.15, // Line spacing of 1.15
-            'spaceAfter' => \PhpOffice\PhpWord\Shared\Converter::pointToTwip(10), // Space after in points (e.g., 10 points)
+            'spaceAfter' => Converter::pointToTwip(10), // Space after in points (e.g., 10 points)
         ];
 
         foreach($this->reports as $key => $rslt)
