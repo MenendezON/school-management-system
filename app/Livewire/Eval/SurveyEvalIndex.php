@@ -14,6 +14,17 @@ class SurveyEvalIndex extends Component
 
     public $surveyid;
 
+    public function editEvaluation($s, $q, $a)
+    {
+        session([
+            'studentid' => $s,
+            'quarter' => $q,
+            'academic_year' => $a,
+            'edit' => true
+        ]);
+        return redirect()->route('survey-eval-create', ['id' =>$this->surveyid]);
+    }
+
     public function mount($id)
     {
         $this->surveyid = $id;
@@ -35,7 +46,7 @@ class SurveyEvalIndex extends Component
             ->delete();
 
         session()->flash('success', "L'évaluation a été bien enregistrée!");
-        return redirect()->route('survey-eval-index', ['id' =>$this->survey->id]);
+        return redirect()->route('survey-eval-index', ['id' =>$this->surveyid]);
     }
 
     #[Layout('layouts.app')]

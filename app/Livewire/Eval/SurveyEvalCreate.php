@@ -22,7 +22,7 @@ class SurveyEvalCreate extends Component
     public $quarter;
     #[Rule('required')]
     public $academic_year;
-
+    public $editMode = false;
     public $survey;
     public $categories;
     public $questions = [];
@@ -30,6 +30,26 @@ class SurveyEvalCreate extends Component
 
     public function mount($id)
     {
+        $this->academic_year = session('academic_year');
+        $this->quarter = session('quarter');
+        $this->studentId = session('studentid');
+        $this->editMode = session('edit');
+
+        session()->forget(['academic_year', 'quarter', 'studentid', 'edit']);
+        $eval = Option::where('student_id', $this->studentId)
+            ->where('quarter', $this->quarter)
+            ->where('academic_year', $this->academic_year)
+            ->get();
+
+        //dd($eval[2]->question_id, $eval[2]->option_text);
+        //$this->option[] = [800 => 3];
+        foreach($eval as $e)
+        {
+            $this->option[] = [$e->question_id => $e->option_text];
+        }
+
+        //dd($this->option);
+
         $this->survey = Survey::find($id);
 
         $this->categories = Question::select('category')
@@ -63,24 +83,24 @@ class SurveyEvalCreate extends Component
         //(!auth()->user()->canCreate() || Auth::user()->currentTeam->id !== Team::find(1)->id) && abort(403, 'Unauthorized action.');
             
         $this->validate();
-        $this->fill_question();
+        //$this->fill_question();
+        
 
-        $val = '';
         foreach ($this->option as $opt) {
             foreach ($opt as $key => $value) {
-                $opt = new Option([
+                $ot = new Option([
                     'student_id' => $this->studentId,
                     'question_id' => $key,
                     'option_text' => $value,
                     'quarter' => $this->quarter,
                     'academic_year' => $this->academic_year
                 ]);
-                $opt->save();
+                $ot->save();
             }
         }
 
         // Reset input fields
-        $this->questions = [];
+        //$this->questions = [];
 
         // // Optionally, redirect or show a success message
         session()->flash('success', "L'évaluation a été bien enregistrée!");
