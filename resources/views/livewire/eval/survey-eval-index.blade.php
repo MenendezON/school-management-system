@@ -43,9 +43,10 @@
                             <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"></path>
                         </svg>
                     </x-button>
-                    <x-nav-link href="{{ route('evaluation-index', ['id' => $eval->student_id, 'q' => $eval->quarter, 'ay' => $eval->academic_year, 's' => $eval->survey_id]) }}" class="bg-blue-500 pt-2 py-2 px-2 rounded text-white" wire:navigate>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M3 15v4c0 1.1.9 2 2 2h14a2 2 0 0 0 2-2v-4M17 9l-5 5-5-5M12 12.8V2.5" />
+                    <x-nav-link href="{{ route('evaluation-index', ['id' => $eval->student_id, 'q' => $eval->quarter, 'ay' => $eval->academic_year, 's' => $eval->survey_id]) }}" class="bg-blue-500 pt-2 py-2 px-4 rounded text-white" wire:navigate>
+
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
                         </svg>
                     </x-nav-link>
                 </td>
