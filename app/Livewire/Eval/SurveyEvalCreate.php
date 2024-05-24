@@ -41,8 +41,6 @@ class SurveyEvalCreate extends Component
             ->where('academic_year', $this->academic_year)
             ->get();
 
-        //dd($eval[2]->question_id, $eval[2]->option_text);
-        //$this->option[] = [800 => 3];
         foreach($eval as $e)
         {
             $this->option[] = [$e->question_id => $e->option_text];
@@ -88,14 +86,27 @@ class SurveyEvalCreate extends Component
 
         foreach ($this->option as $opt) {
             foreach ($opt as $key => $value) {
-                $ot = new Option([
-                    'student_id' => $this->studentId,
-                    'question_id' => $key,
-                    'option_text' => $value,
-                    'quarter' => $this->quarter,
-                    'academic_year' => $this->academic_year
-                ]);
-                $ot->save();
+                // $ot = new Option([
+                //     'student_id' => $this->studentId,
+                //     'question_id' => $key,
+                //     'option_text' => $value,
+                //     'quarter' => $this->quarter,
+                //     'academic_year' => $this->academic_year
+                // ]);
+                // $ot->save();
+
+                $ot = Option::updateOrCreate(
+                    [
+                        'student_id' => $this->studentId,
+                        'question_id' => $key,
+                        'quarter' => $this->quarter,
+                        'academic_year' => $this->academic_year
+                    ],
+                    [
+                        'option_text' => $value
+                    ]
+                );
+                
             }
         }
 

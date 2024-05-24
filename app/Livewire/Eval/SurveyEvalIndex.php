@@ -29,10 +29,10 @@ class SurveyEvalIndex extends Component
     {
         $this->surveyid = $id;
 
-        $this->evaluations = Option::select('questions.survey_id', 'options.created_at', 'options.student_id', 'options.quarter', 'surveys.title', 'options.academic_year')
+        $this->evaluations = Option::select('questions.survey_id', 'options.student_id', 'options.quarter', 'surveys.title', 'options.academic_year')
             ->join('questions', 'options.question_id', '=', 'questions.id')
             ->join('surveys', 'questions.survey_id', '=', 'surveys.id')
-            ->groupBy('questions.survey_id', 'options.created_at', 'options.student_id', 'options.quarter', 'surveys.title', 'options.academic_year')
+            ->groupBy('questions.survey_id', 'options.student_id', 'options.quarter', 'surveys.title', 'options.academic_year')
             ->where('surveys.id', $id)
             ->get();
     }

@@ -71,16 +71,9 @@ class Evaluation extends Component
             'lineHeight' => 1,
             'spaceAfter' => Converter::pointToTwip(0),
         );
-
-        $nom = "";
-        $prenom = "";
-        $datenaissance = "";
-        for($j=0; $j<sizeof($this->options); $j++){
-            dd($j);
-        }
                 
-        $section->addText($prenom." ".$nom, $fontStyle, $centeredStyle);
-        $section->addText($datenaissance, $fontStyle, $centeredStyle);
+        $section->addText(ucwords($this->student->first_name)." ".strtoupper($this->student->last_name), $fontStyle, $centeredStyle);
+        $section->addText(\Carbon\Carbon::parse($this->student->date_of_birth)->format('d M Y')." (".\Carbon\Carbon::parse($this->student->date_of_birth)->diffForHumans().")", $fontStyle, $centeredStyle);
 
 
         $lineStyle = array('weight' => 1, 'width' => 450, 'height' => 0, 'color' => 000000);
@@ -140,8 +133,8 @@ class Evaluation extends Component
 
         // Saving the document as OOXML file...
         $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
-        $objWriter->save('helloWorld.docx');
-        return response()->download(public_path('helloWorld.docx'));
+        $objWriter->save('RapportPedagogique.docx');
+        return response()->download(public_path('RapportPedagogique.docx'));
     }
 
     public function generatePdf()
