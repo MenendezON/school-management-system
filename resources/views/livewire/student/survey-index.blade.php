@@ -72,7 +72,7 @@
                 <thead>
                     <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
                         <th class="px-4 py-3">
-                            <div class="flex item-center">Title</div>
+                            <div class="flex item-center">Grille</div>
                         </th>
                         <th class="px-4 py-3">
                             <div class="flex item-center">Description</div>
@@ -110,6 +110,9 @@
                                         <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"></path>
                                     </svg>
                                 </x-button>
+                                <x-nav-link href="{{ route('survey-eval-index', ['id' => $survey->id]) }}" class="bg-blue-500 pt-2 py-2 px-2 rounded text-white" wire:navigate>
+                                    Evaluation
+                                </x-nav-link>
                             </div>
                         </td>
                     </tr>

@@ -4,3 +4,12 @@
 - Fichier CSV:
     - grille 1.csv
     - grille 2.csv
+
+
+Command
+Check the livewire version
+- composer show livewire/livewire
+Update the livewire version
+- composer update livewire/livewire
+Clear all cache
+- php artisan optimize:clear

@@ -18,10 +18,10 @@ return new class extends Migration
             $table->string('last_name');
             $table->date('date_of_birth');
             $table->string('place_of_birth');
-            $table->string('gender');
-            $table->string('nationality');
-            $table->string('address');
-            $table->string('city');
+            $table->string('gender')->default('Masculin');
+            $table->string('nationality')->default('Senegal') ;
+            $table->string('address')->nullable();
+            $table->string('city')->default('Dakar');
             $table->string('email')->nullable();
             $table->string('phone')->nullable();
             $table->string('previous_school');

@@ -1,6 +1,8 @@
 <?php
 
 use App\Livewire\Dashboard;
+use App\Livewire\Eval\SurveyEvalCreate;
+use App\Livewire\Eval\SurveyEvalIndex;
 use App\Livewire\Student\ClassroomIndex;
 use App\Livewire\Student\Evaluation;
 use App\Livewire\Student\NoteIndex;
@@ -44,6 +46,10 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
     Route::get('/students/{id}/survey/{idsurvey}', SurveyEdit::class)->name('student-survey-show');
     Route::get('/survey', SurveyIndex::class)->name('survey-index');
     Route::get('/survey/{idsurvey}', SurveyShow::class)->name('survey-show');
+
+    Route::get('/survey/{id}/eval', SurveyEvalIndex::class)->name('survey-eval-index');
+    Route::get('/survey/{id}/eval/new', SurveyEvalCreate::class)->name('survey-eval-create');
+
     Route::get('/classrooms', ClassroomIndex::class)->name('classroom-index');
     Route::get('/classrooms/{id}', ShowClassroom::class)->name('classroom-show');
     Route::get('/classrooms/{id}/subjects', SubjectIndex::class)->name('subject-index');

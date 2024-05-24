@@ -64,6 +64,8 @@ class StudentShow extends Component
         ->where('options.student_id', $id)
         ->groupBy('options.quarter', 'surveys.title', 'options.academic_year')
         ->get();
+
+        //dd($this->evaluations);
     }
 
     // Create a new tutor for a specific student
@@ -90,6 +92,18 @@ class StudentShow extends Component
         $this->setTutor($tutor);
 
         $this->showCreateTutorModal();
+    }
+
+    public function deleteEvaluation($s, $q, $a)
+    {
+        (!auth()->user()->canDestroy() || Auth::user()->currentTeam->id !== Team::find(1)->id) && abort(403, 'Unauthorized action.');
+        Option::where('student_id', $s)
+            ->where('quarter', $q)
+            ->where('academic_year', $a)
+            ->delete();
+
+        session()->flash('success', "L'évaluation a été bien enregistrée!");
+        return redirect()->route('student-show', ['id' =>$s]);
     }
 
     public function deleteTutor(Tutor $tutor)

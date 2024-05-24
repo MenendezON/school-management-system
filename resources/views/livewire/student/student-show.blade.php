@@ -390,17 +390,9 @@
                                         <x-slot name="content">
                                             <div class="w-66">
                                                 @if(route('student-show', ['id' => $student->id]))
-                                                @if(strtoupper($classroom->name) === "INDIGO")
-                                                <x-dropdown-link href="{{ route('student-survey-show', ['id' => $student->id, 'idsurvey' => 1]) }}?ay={{ $classroom->pivot->academic_year }}">{{ __('Progression des apprentissages') }}</x-dropdown-link>
-                                                @endif
-
-                                                @if($classroom->type === "Spécialisée")
-                                                <x-dropdown-link href="{{ route('student-survey-show', ['id' => $student->id, 'idsurvey' => 2]) }}?ay={{ $classroom->pivot->academic_year }}">{{ __('Grille Teacch') }}</x-dropdown-link>
-                                                @endif
-
-                                                @if($classroom->name === "Académique")
-                                                <x-dropdown-link href="{{ route('student-survey-show', ['id' => $student->id, 'idsurvey' => 2]) }}">{{ __('Progression des apprentissages') }}</x-dropdown-link>
-                                                @endif
+                                                @foreach (\App\Models\Survey::all() as $survey)
+                                                <x-dropdown-link href="{{ route('student-survey-show', ['id' => $student->id, 'idsurvey' => $survey->id]) }}?ay={{ $classroom->pivot->academic_year }}">{{ __($survey->title) }}</x-dropdown-link>
+                                                @endforeach
                                                 @endif
                                             </div>
                                         </x-slot>
@@ -410,28 +402,33 @@
                             <tr class="text-gray-700 dark:text-gray-400" wire:key="">
                                 <td class="px-4 py-3 text-sm">&nbsp;</td>
                                 <td colspan="4" class="px-4 py-3">
-                                    @if(sizeof($evaluations)!=0)
-                                    @if($classroom->pivot->academic_year === json_decode($evaluations, true)[0]['academic_year'] )
+                                    @if(sizeof($evaluations)!==0)
                                     <table class="w-full whitespace-no-wrap">
                                         <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
                                             @foreach($evaluations as $eval)
+                                            @if($classroom->pivot->academic_year === $eval->academic_year)
                                             <tr class="text-gray-700 dark:text-gray-400" wire:key="">
                                                 <td class="px-4 py-3 text-sm">{{ $eval->title }}</td>
                                                 <td class="px-4 py-3">
                                                     {{ $eval->quarter }}{{ $eval->quarter=='1'?'er':'ème' }} {{ _("trimestre") }}
                                                 </td>
                                                 <td class="px-4 py-3">
-                                                    <x-nav-link href="{{ route('evaluation-index', ['id' => $student->id, 'q' => $eval->quarter, 'ay' => $eval->academic_year]) }}" wire:navigate class="flex items-center text-sm">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                    <x-button type="button" wire:click="deleteEvaluation({{$student->id}}, {{$eval->quarter}}, '{{$eval->academic_year}}')" wire:confirm="Etes-vous sûr de vouloir supprimer cette classe?" class="bg-red-500 hover:bg-red-700" aria-label="Delete">
+                                                        <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
+                                                            <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+                                                        </svg>
+                                                    </x-button>
+                                                    <x-nav-link href="{{ route('evaluation-index', ['id' => $student->id, 'q' => $eval->quarter, 'ay' => $eval->academic_year, 's' => 1]) }}" class="bg-blue-500 pt-2 py-2 px-4 rounded text-white" wire:navigate>
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                                             <path d="M3 15v4c0 1.1.9 2 2 2h14a2 2 0 0 0 2-2v-4M17 9l-5 5-5-5M12 12.8V2.5" />
                                                         </svg>
                                                     </x-nav-link>
                                                 </td>
                                             </tr>
+                                            @endif
                                             @endforeach
                                         </tbody>
                                     </table>
-                                    @endif
                                     @endif
                                 </td>
                             </tr>
@@ -440,7 +437,7 @@
                     </table>
                 </div>
             </div>
-            
+
         </div>
 
         <!-- begin Evaluation's tab -->
