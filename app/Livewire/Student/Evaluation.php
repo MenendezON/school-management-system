@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\DB;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 use Barryvdh\DomPDF\Facade\Pdf;
+use PhpOffice\PhpWord\Shared\Converter;
 use PhpOffice\PhpWord\SimpleType\Jc;
 
 class Evaluation extends Component
@@ -64,6 +65,17 @@ class Evaluation extends Component
         ));
 
 
+        $fontStyle = array('bold' => true);
+        $centeredStyle = array(
+            'alignment' => Jc::CENTER,
+            'lineHeight' => 1,
+            'spaceAfter' => Converter::pointToTwip(0),
+        );
+                
+        $section->addText(ucwords($this->student->first_name)." ".strtoupper($this->student->last_name), $fontStyle, $centeredStyle);
+        $section->addText(\Carbon\Carbon::parse($this->student->date_of_birth)->format('d M Y')." (".\Carbon\Carbon::parse($this->student->date_of_birth)->diffForHumans().")", $fontStyle, $centeredStyle);
+
+
         $lineStyle = array('weight' => 1, 'width' => 450, 'height' => 0, 'color' => 000000);
         $section->addLine($lineStyle);
 
@@ -91,7 +103,7 @@ class Evaluation extends Component
         $paragraphStyle = [
             'alignment' => Jc::BOTH, // Justified alignment
             'lineHeight' => 1.15, // Line spacing of 1.15
-            'spaceAfter' => \PhpOffice\PhpWord\Shared\Converter::pointToTwip(10), // Space after in points (e.g., 10 points)
+            'spaceAfter' => Converter::pointToTwip(10), // Space after in points (e.g., 10 points)
         ];
 
         foreach($this->reports as $key => $rslt)
@@ -121,8 +133,8 @@ class Evaluation extends Component
 
         // Saving the document as OOXML file...
         $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
-        $objWriter->save('helloWorld.docx');
-        return response()->download(public_path('helloWorld.docx'));
+        $objWriter->save('RapportPedagogique.docx');
+        return response()->download(public_path('RapportPedagogique.docx'));
     }
 
     public function generatePdf()

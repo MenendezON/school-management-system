@@ -14,14 +14,25 @@ class SurveyEvalIndex extends Component
 
     public $surveyid;
 
+    public function editEvaluation($s, $q, $a)
+    {
+        session([
+            'studentid' => $s,
+            'quarter' => $q,
+            'academic_year' => $a,
+            'edit' => true
+        ]);
+        return redirect()->route('survey-eval-create', ['id' =>$this->surveyid]);
+    }
+
     public function mount($id)
     {
         $this->surveyid = $id;
 
-        $this->evaluations = Option::select('questions.survey_id', 'options.created_at', 'options.student_id', 'options.quarter', 'surveys.title', 'options.academic_year')
+        $this->evaluations = Option::select('questions.survey_id', 'options.student_id', 'options.quarter', 'surveys.title', 'options.academic_year')
             ->join('questions', 'options.question_id', '=', 'questions.id')
             ->join('surveys', 'questions.survey_id', '=', 'surveys.id')
-            ->groupBy('questions.survey_id', 'options.created_at', 'options.student_id', 'options.quarter', 'surveys.title', 'options.academic_year')
+            ->groupBy('questions.survey_id', 'options.student_id', 'options.quarter', 'surveys.title', 'options.academic_year')
             ->where('surveys.id', $id)
             ->get();
     }
@@ -35,7 +46,7 @@ class SurveyEvalIndex extends Component
             ->delete();
 
         session()->flash('success', "L'évaluation a été bien enregistrée!");
-        return redirect()->route('survey-eval-index', ['id' =>$this->survey->id]);
+        return redirect()->route('survey-eval-index', ['id' =>$this->surveyid]);
     }
 
     #[Layout('layouts.app')]
