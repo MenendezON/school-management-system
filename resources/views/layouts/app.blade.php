@@ -28,8 +28,6 @@
 <body>
     <div class="flex h-screen bg-gray-50 dark:bg-gray-900" :class="{ 'overflow-hidden': isSideMenuOpen }">
 
-        @livewire('navigation-menu')
-
         <div class="flex flex-col flex-1 w-full">
 
             <header class="z-10 py-4 bg-white shadow-md dark:bg-gray-800">

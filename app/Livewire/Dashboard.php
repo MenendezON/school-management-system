@@ -26,7 +26,8 @@ class Dashboard extends Component
     public function render()
     {
         if(Auth::user()->email === "satabah@yahoo.fr"){
-            redirect()->route('survey-index');
+            abort(403);
+            //redirect()->route('survey-index');
         }
             
 
