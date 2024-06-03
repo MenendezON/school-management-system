@@ -2,13 +2,15 @@
 
 namespace App\Livewire\Student;
 
-use App\Models\Classroom;
 use App\Models\Option;
 use App\Models\Question;
 use App\Models\Student;
 use App\Models\Survey;
+use App\Models\Team;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Livewire\Attributes\Rule;
 use Livewire\Component;
 
 class SurveyEdit extends Component
@@ -16,6 +18,7 @@ class SurveyEdit extends Component
     public $student;
     public $survey;
     public $classroom;
+    #[Rule("Required")]
     public $quarter;
 
     public $option_text;
@@ -52,9 +55,13 @@ class SurveyEdit extends Component
 
     public function save()
     {
-        $this->validate([
-            'option.*.*' => 'required',
-        ]);
+        // $this->validate([
+            //option.0.32
+        //     'option.*.*' => 'required',
+        // ]);
+        (!auth()->user()->canCreate() || Auth::user()->currentTeam->id !== Team::find(1)->id) && abort(403, 'Unauthorized action.');
+            
+        $this->validate();
         $this->fill_question();
 
 
@@ -78,10 +85,12 @@ class SurveyEdit extends Component
         // // Optionally, redirect or show a success message
         session()->flash('success', "L'évaluation a été bien enregistrée!");
         // $this->createQuestionModal = false;
+        return redirect()->route('student-show', ['id' =>$this->student->id]);
     }
 
     public function render()
     {
+        (!auth()->user()->canRead() || Auth::user()->currentTeam->id !== Team::find(1)->id) && abort(403, 'Unauthorized action.');
         return view('livewire.student.survey-option', [
             'survey' => $this->survey,
             'categories' => $this->categories,

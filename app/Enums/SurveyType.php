@@ -3,16 +3,23 @@ namespace App\Enums;
 
 enum SurveyType: String
 {
-    case Habiletés_Comportementales   = "Habiletés Comportementales";
-    case Habiletés_d_Autonomie = "Habiletés d'Autonomie";
-    case Difficultés_Sensorielles  = "Difficultés - Sensorielles";
-    case Habiletés_d_Attention = "Habiletés d'Attention";
-    case Habiletés_d_Imitation = "Habiletés d'Imitation";
-    case Habiletés_de_Communication_Réceptive = "Habiletés de Communication - Réceptive";
-    case Habiletés_de_Communication_Expressive = "Habiletés de Communication - Expressive";
-    case Développement_social_et_personnel_Habiletés_Sociales = "Développement social et personnel - Habiletés Sociales";
-    case Habiletés_de_Motricité_Fine = "Habiletés de Motricité - Fine";
-    case Habiletés_de_Motricité_Globale = "Habiletés de Motricité - Globale";
-    case Français_Lecture_Écriture = "Français - Lecture - Écriture";
-    case Français_Écriture = "Français - Écriture";
+    case Habiletés_Comportementales   = "Habiletés comportementales";
+    case Habiletés_d_Autonomie = "Habiletés d'autonomie";
+    case Difficultés_Sensorielles  = "Difficultés sensorielles";
+    case Habiletés_d_Attention = "Habiletés d'attention";
+    case Habiletés_d_Imitation = "Habiletés d'imitation";
+    case Habiletés_de_Communication_Réceptive = "Habiletés de communication-receptive";
+    case Habiletés_de_Communication_Expressive = "Habiletés de communication-expressive";
+    case Habiletés_cognitives = "Habiletés cognitives";
+    case Habileté_academiques_sciences = "Habiletés académiques-sciences";
+    case Habileté_academiques_lecture_pre_écriture = "Habiletés académiques-lecture-pré-écriture";
+    case Habileté_sociales_développement_social_et_personnel = "Habiletés sociales-développement social et personnel";
+    case Habiletés_de_Motricité_Fine = "Habiletés de motricité-fine";
+    case Habiletés_de_Motricité_Globale = "Habiletés de motricité-globale";
+    
+    case Habiletés_Comportementales_consciens_de_soi   = "Habiletés comportementales-conscience de soi";
+    
+    case Habiletés_Comportementales_relation_sociales   = "Habiletés comportementales-relations sociales";
+    case Habiletés_Comportementales_jeu_et_loisirs   = "Habiletés comportementales-jeu et loisirs";
+    case Habiletés_Comportementales_vie_quotidienne   = "Habiletés comportementales-vie quotidienne";
 }
